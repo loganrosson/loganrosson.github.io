@@ -1,11 +1,251 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Logan Rosson - Portfolio</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logan Rosson | Information Systems</title>
+<meta name="description" content="Logan Rosson: Information Systems (Honors) student at the University of Utah. IT support, Salesforce, Python, SQL and data projects.">
+<link rel="icon" href="https://github.com/loganrosson.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f7f5; --surface: #ffffff; --text: #16181d; --muted: #5b6270; --line: #e3e4e8;
+    --accent: #be0000; --accent-soft: #fbeaea; --chip: #f0f1f4; --shadow: 0 1px 2px rgba(16,24,40,.06), 0 4px 16px rgba(16,24,40,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0f1115; --surface: #171a21; --text: #e9ebef; --muted: #a2a9b6; --line: #262b35;
+      --accent: #ff5a5a; --accent-soft: #2a1717; --chip: #212631; --shadow: none; }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  nav .brand { font-weight: 700; text-decoration: none; }
+  nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; }
+  nav ul a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; }
+  nav ul a:hover { color: var(--text); }
+  header.hero { padding: 72px 0 56px; }
+  .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+  .hero h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.05; margin: 0 0 12px; letter-spacing: -0.02em; }
+  .hero .role { font-size: 20px; color: var(--muted); margin: 0 0 20px; }
+  .hero p.lead { max-width: 620px; margin: 0 0 28px; }
+  .hero img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; box-shadow: var(--shadow); border: 4px solid var(--surface); }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; border: 1px solid var(--line); background: var(--surface); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn:hover { filter: brightness(0.96); }
+  section { padding: 48px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin: 0 0 24px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+  .card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top left; border-bottom: 1px solid var(--line); background: var(--chip); }
+  .card .body { padding: 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .card h3 { margin: 0; font-size: 17px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .card .links { margin-top: auto; padding-top: 8px; font-size: 14px; font-weight: 600; }
+  .card .links a { color: var(--accent); text-decoration: none; }
+  .card.featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1.2fr 1fr; }
+  .card.featured img { height: 100%; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid var(--line); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 12px; padding: 3px 8px; border-radius: 999px; background: var(--chip); color: var(--muted); font-weight: 500; }
+  .badge { align-self: flex-start; font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+  .timeline { display: grid; gap: 18px; }
+  .item { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+  .item h3 { margin: 0; font-size: 17px; }
+  .item .org { color: var(--muted); font-size: 14.5px; }
+  .item .date { color: var(--muted); font-size: 14px; white-space: nowrap; }
+  .item ul { grid-column: 1 / -1; margin: 8px 0 0; padding-left: 18px; }
+  .item li { margin: 4px 0; }
+  .skills { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+  .skills > div { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .skills h3 { margin: 0 0 10px; font-size: 15px; }
+  footer { padding: 40px 0 60px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  footer .btns { margin-bottom: 16px; }
+  @media (max-width: 720px) {
+    nav ul { display: none; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero img { width: 120px; height: 120px; order: -1; }
+    .card.featured { grid-template-columns: 1fr; }
+    .card.featured img { border-right: 0; border-bottom: 1px solid var(--line); aspect-ratio: 16/10; }
+    .item { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
+<nav><div class="wrap">
+  <a class="brand" href="#top">Logan Rosson</a>
+  <ul><li><a href="#projects">Projects</a></li><li><a href="#experience">Experience</a></li><li><a href="#education">Education</a></li><li><a href="#skills">Skills</a></li><li><a href="#contact">Contact</a></li></ul>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap hero-grid">
+  <div>
     <h1>Logan Rosson</h1>
-    <h2>Information Systems Portfolio</h2>
-    <p>Welcome to my digital resume and project portfolio.</p>
+    <p class="role">Information Systems (Honors) · University of Utah</p>
+    <p class="lead">I work where business and technology meet: IT support, Salesforce, and data. I build tools in Python and SQL that solve real problems, from audiobook generation to study apps that step through code line by line.</p>
+    <div class="btns">
+      <a class="btn primary" href="#projects">View projects</a>
+      <a class="btn" href="https://github.com/loganrosson">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/logan-rosson">LinkedIn</a>
+      <a class="btn" href="mailto:loganrosson@gmail.com">Email</a>
+    </div>
+  </div>
+  <img src="https://github.com/loganrosson.png?size=400" alt="Portrait of Logan Rosson">
+</div></header>
+
+<section id="projects"><div class="wrap">
+  <h2>Projects</h2>
+  <div class="grid">
+    <article class="card featured">
+      <img src="https://raw.githubusercontent.com/loganrosson/pronto-salesforce-ideathon/main/01-site-home.png" alt="Pronto customer site built on Salesforce Experience Cloud" loading="lazy">
+      <div class="body">
+        <span class="badge">Salesforce–Eccles Ideathon · 6th overall</span>
+        <h3>Pronto: Account Takeover Response on Salesforce</h3>
+        <p>With Team Cloud 9, built a Salesforce solution so hijacked customer accounts reach a real person fast: an Experience Cloud site with a no-login report form, an Agentforce service agent, and 10 flows, a queue and a Trust &amp; Safety dashboard that route, protect and time every case.</p>
+        <div class="tags"><span class="tag">Salesforce</span><span class="tag">Agentforce</span><span class="tag">Experience Cloud</span><span class="tag">Flows</span><span class="tag">Dashboards</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/pronto-salesforce-ideathon">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://raw.githubusercontent.com/loganrosson/is4420-sql-midterm-study-tool/main/docs/sqllab.png" alt="SQL Lab stepping through a GROUP BY query" loading="lazy">
+      <div class="body">
+        <h3>SQL Study Tool &amp; SQL Lab</h3>
+        <p>~170 practice questions verified by running real queries, plus a lab that replays any SELECT clause by clause so you can see the rows at each step.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">SQLite</span><span class="tag">Tkinter</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/is4420-sql-midterm-study-tool">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://raw.githubusercontent.com/loganrosson/is4440-networking-midterm-trainer/main/docs/lab.png" alt="Subnetting lab showing a worked solution in binary" loading="lazy">
+      <div class="body">
+        <h3>Networking &amp; Subnetting Trainer</h3>
+        <p>358 Network+ questions, a timed Scantron-style exam simulation, and labs that solve subnetting, routing and frame-traversal problems step by step.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Networking</span><span class="tag">Subnetting</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/is4440-networking-midterm-trainer">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://raw.githubusercontent.com/loganrosson/is4085-python-midterm-study-tool/main/docs/devmode.png" alt="Dev Mode stepping through Python code" loading="lazy">
+      <div class="body">
+        <h3>Python Study Tool with Code Stepper</h3>
+        <p>Runs each question's code in a sandbox and explains every miss. Dev Mode traces the program line by line, showing the call stack and every variable's history.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">sys.settrace</span><span class="tag">Tkinter</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/is4085-python-midterm-study-tool">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://raw.githubusercontent.com/loganrosson/is4487-analytics-midterm-trainer/main/docs/question.png" alt="Business analytics question with pandas code" loading="lazy">
+      <div class="body">
+        <h3>Business Analytics Trainer</h3>
+        <p>Practice midterm, business cases and essays, plus a Code Lab that runs pandas code one statement at a time on real lab data and shows what changed.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Data analytics</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/is4487-analytics-midterm-trainer">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="body">
+        <span class="badge">AI · Text-to-speech</span>
+        <h3>Desktop Book Reader</h3>
+        <p>Reads PDFs and Word documents aloud with a local neural voice model, highlighting each sentence as it goes, and exports page ranges to WAV or MP3 audiobooks using parallel CPU threads.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">ONNX</span><span class="tag">Kokoro TTS</span><span class="tag">Threading</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/desktop-book-reader">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="body">
+        <span class="badge">In progress · Honors thesis</span>
+        <h3>Automated Financial Data Pipeline</h3>
+        <p>A pipeline in Python and R that extracts, cleans and standardizes unstructured financial transaction data, classifies records with an LLM API, and aggregates daily summaries with dplyr and lubridate.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">R</span><span class="tag">LLM APIs</span><span class="tag">ETL</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="body">
+        <h3>Music Cover Maker</h3>
+        <p>Embeds cover art into MP3 files as ID3v2.3 front-cover frames so artwork shows up in Windows and Google Drive.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">mutagen</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/music-cover-maker">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="body">
+        <h3>Blackjack</h3>
+        <p>A terminal Blackjack game with a dealer AI, soft/hard aces, splitting and win tracking.</p>
+        <div class="tags"><span class="tag">Python</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/blackjack">View on GitHub →</a></div>
+      </div>
+    </article>
+  </div>
+</div></section>
+
+<section id="experience"><div class="wrap">
+  <h2>Experience</h2>
+  <div class="timeline">
+    <div class="item">
+      <div><h3>IT Support Specialist</h3><div class="org">BKP Dental · West Valley City, UT</div></div>
+      <div class="date">May 2025 – Present</div>
+      <ul>
+        <li>Manage on-site IT for a 20+ person dental practice, turning hardware, software and network issues into clear steps for non-technical staff.</li>
+        <li>Optimized EagleSoft server communication across 40+ endpoints, reducing latency and speeding access to patient charts and imaging.</li>
+        <li>Evaluate and integrate workstations, intraoral cameras and digital scanners while maintaining 99.9% system uptime.</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div><h3>Teaching Assistant, Principles of Finance (FINAN 3020)</h3><div class="org">University of Utah · Salt Lake City, UT</div></div>
+      <div class="date">Aug 2026 – Present</div>
+      <ul><li>Provide individualized guidance in a 300+ student course on capital budgeting, bond valuation and other finance foundations.</li></ul>
+    </div>
+    <div class="item">
+      <div><h3>Officer, Graduate Student Liaison</h3><div class="org">TEK Club, University of Utah</div></div>
+      <div class="date">Aug 2026 – Present</div>
+      <ul><li>Connect undergraduates with advanced degree programs and alumni through targeted outreach.</li></ul>
+    </div>
+    <div class="item">
+      <div><h3>Team Leader</h3><div class="org">Tree Utah · Salt Lake City, UT</div></div>
+      <div class="date">Dec 2022 – Present</div>
+      <ul><li>Lead 50+ volunteers in tree-planting projects; coordinated the Arbor Day 2024 event with the Salt Lake City Mayor's Office.</li></ul>
+    </div>
+  </div>
+</div></section>
+
+<section id="education"><div class="wrap">
+  <h2>Education</h2>
+  <div class="item">
+    <div><h3>B.S. (Honors), Information Systems</h3><div class="org">David Eccles School of Business, University of Utah · Dean's List</div></div>
+    <div class="date">Expected May 2027</div>
+    <ul><li>Coursework: Database Design &amp; Management, Business Data Analytics, Systems Analysis &amp; Design, Financial Management, Artificial Intelligence in Business</li></ul>
+  </div>
+</div></section>
+
+<section id="skills"><div class="wrap">
+  <h2>Skills</h2>
+  <div class="skills">
+    <div><h3>Programming</h3><div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">R (dplyr, lubridate)</span><span class="tag">HTML/CSS</span></div></div>
+    <div><h3>Data</h3><div class="tags"><span class="tag">Excel modeling</span><span class="tag">ETL pipelines</span><span class="tag">LLM APIs</span><span class="tag">pandas</span></div></div>
+    <div><h3>Salesforce</h3><div class="tags"><span class="tag">Administration</span><span class="tag">Org configuration</span><span class="tag">Flow automation</span><span class="tag">Reports &amp; dashboards</span></div></div>
+    <div><h3>IT Support</h3><div class="tags"><span class="tag">Help desk</span><span class="tag">Hardware deployment</span><span class="tag">EagleSoft server &amp; endpoints</span></div></div>
+  </div>
+</div></section>
+
+<footer id="contact"><div class="wrap">
+  <div class="btns">
+    <a class="btn primary" href="mailto:loganrosson@gmail.com">loganrosson@gmail.com</a>
+    <a class="btn" href="https://www.linkedin.com/in/logan-rosson">LinkedIn</a>
+    <a class="btn" href="https://github.com/loganrosson">GitHub</a>
+  </div>
+  Salt Lake City, UT
+</div></footer>
 </body>
 </html>
