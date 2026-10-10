@@ -1,6 +1,6 @@
 # loganrosson.github.io
 
-Personal portfolio site for **Logan Rosson**, Information Systems (Honors) student at the University of Utah.
+This is my Personal portfolio site. I am an Information Systems (Honors) student at the University of Utah.
 
 **Live site:** https://loganrosson.github.io
 
