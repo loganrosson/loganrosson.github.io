@@ -45,7 +45,10 @@
   @media (prefers-color-scheme: dark) { .peaks .snow { fill: #ffffff; fill-opacity: .55; } }
   #experience { position: relative; overflow: hidden; }
   #experience .wrap { position: relative; z-index: 1; }
-  .peaks.train { bottom: 24px; }
+  .peaks.train { bottom: 33px; }
+  .peaks .shade { fill: #000; fill-opacity: .5; }
+  .rails { position: absolute; left: 0; bottom: 20px; width: 100%; height: 14px; color: var(--muted); opacity: .55; pointer-events: none; display: none; }
+  @media (min-width: 1360px) { .rails { display: block; } }
   .peaks .hole { fill: currentColor; fill-opacity: .35; }
   @media (prefers-color-scheme: dark) { .peaks .hole { fill: #000; fill-opacity: .7; } }
   @media (min-width: 1360px) { .peaks { display: block; } }
@@ -259,29 +262,38 @@
 </div></section>
 
 <section id="experience">
-  <svg class="peaks train left" viewBox="0 0 440 200" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
-    <path d="M300 30q6-6 12 0q6-6 12 0M336 50q5-5 10 0q5-5 10 0"/>
-    <path class="fill" d="M0 180C14 128 44 70 96 64c44-4 66 56 74 116Z"/>
-    <path d="M40 120l-7 11M122 84l7 10M20 160l-5 8"/>
-    <path class="fill" d="M90 58l6-16l6 16zM86 66l10-22l10 22zM96 66v4"/>
-    <path class="hole" stroke="none" d="M100 180V140a26 26 0 0 1 52 0V180Z"/>
-    <path d="M92 180V138a34 34 0 0 1 68 0V180M100 180V140a26 26 0 0 1 52 0V180M126 104v8M104 113l5 6M148 113l-5 6"/>
-    <path d="M60 180H440M62 186H438"/>
-    <path d="M176 177v12M196 177v12M216 177v12M236 177v12M256 177v12M276 177v12M296 177v12M316 177v12M336 177v12M356 177v12M376 177v12M396 177v12M416 177v12"/>
-    <path class="fill" d="M156 128h86a4 4 0 0 1 4 4v38h-90z"/>
-    <path d="M152 124h96M166 138h16v14h-16zM192 138h16v14h-16zM218 138h16v14h-16z"/>
-    <circle class="fill" cx="176" cy="173" r="7"/><circle class="fill" cx="226" cy="173" r="7"/>
-    <path d="M246 164h8"/>
-    <path class="fill" d="M254 112h30v58h-30z"/>
-    <path d="M250 108h38M261 122h16v14h-16z"/>
-    <path class="fill" d="M284 136h44a10 17 0 0 1 0 34h-44z"/>
-    <path class="fill" d="M312 136v-16h-4l2-8h10l2 8h-4v16"/>
-    <path class="fill" d="M296 136v-8a5 5 0 0 1 10 0v8"/>
-    <path class="fill" d="M336 158l14 12h-18z"/>
-    <path d="M338 146h6"/>
-    <circle class="fill" cx="266" cy="172" r="8"/><circle class="fill" cx="292" cy="172" r="8"/><circle class="fill" cx="318" cy="172" r="8"/>
-    <path d="M266 172h52"/>
-    <circle cx="314" cy="102" r="5"/><circle cx="304" cy="88" r="8"/><circle cx="288" cy="72" r="10"/><circle cx="266" cy="60" r="12"/>
+  <svg class="peaks train left" viewBox="0 0 440 140" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
+    <path d="M300 22q6-6 12 0q6-6 12 0M338 38q5-5 10 0q5-5 10 0"/>
+    <path d="M100 50H440"/>
+    <path class="hole" stroke="none" d="M30 140V78a36 36 0 0 1 72 0V140Z"/>
+    <path class="fill" d="M12 72H306C346 72 372 84 402 100C420 108 430 114 430 126H12Z"/>
+    <path d="M12 126H430M12 104H398M12 108H406"/>
+    <path d="M320 76c20 2 40 10 56 18l-11 3c-14-7-30-12-45-13z"/>
+    <path d="M114 78v40h12v-40zM136 81h11v7h-11zM156 81h11v7h-11zM176 81h11v7h-11zM196 81h11v7h-11zM216 81h11v7h-11zM236 81h11v7h-11zM256 81h11v7h-11zM276 81h11v7h-11zM296 81h11v7h-11z"/>
+    <path d="M196 72l9-14l9 14M196 58h18M205 58v-8"/>
+    <path class="fill" d="M84 126h50v6h-50zM250 126h50v6h-50zM344 126h44v6h-44z"/>
+    <circle class="fill" cx="96" cy="134" r="5"/><circle class="fill" cx="122" cy="134" r="5"/><circle class="fill" cx="262" cy="134" r="5"/><circle class="fill" cx="288" cy="134" r="5"/><circle class="fill" cx="354" cy="134" r="5"/><circle class="fill" cx="378" cy="134" r="5"/>
+    <path class="shade" stroke="none" d="M30 140V78a36 36 0 0 1 72 0V140Z"/>
+    <path class="fill" fill-rule="evenodd" d="M8 140V40H124V140ZM30 140V78a36 36 0 0 1 72 0V140Z"/>
+    <path d="M2 40H130M8 34H124M30 140V78a36 36 0 0 1 72 0V140M14 62h8M110 62h8M14 96h8M110 96h8"/>
+  </svg>
+  <svg class="peaks train right" viewBox="0 0 440 150" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
+    <path d="M0 50H440"/>
+    <path d="M90 22q6-6 12 0q6-6 12 0M60 38q5-5 10 0q5-5 10 0"/>
+    <clipPath id="mFuji"><path d="M100 150C160 124 196 94 224 72h32c28 22 64 52 124 78Z"/></clipPath>
+    <path class="fill" stroke="none" d="M100 150C160 124 196 94 224 72h32c28 22 64 52 124 78Z"/>
+    <path class="snow" clip-path="url(#mFuji)" stroke="none" d="M180 64H300V96 L291 101 L282 95 L273 101 L264 95 L255 101 L246 95 L237 101 L228 95 L219 101 L210 95 L201 101 L192 95 L183 101 L180 95 Z"/>
+    <path clip-path="url(#mFuji)" d="M300 96 L291 101 L282 95 L273 101 L264 95 L255 101 L246 95 L237 101 L228 95 L219 101 L210 95 L201 101 L192 95 L183 101 L180 95"/>
+    <path d="M100 150C160 124 196 94 224 72h32c28 22 64 52 124 78"/>
+    <path d="M206 120l-7 9M280 116l8 9"/>
+    <path d="M40 150V40M30 44h30M40 50l14 8"/>
+    <path d="M410 150V40M400 44h30M410 50l-14 8"/>
+  </svg>
+  <svg class="rails" aria-hidden="true" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" filter="url(#sketch)">
+    <defs><pattern id="ties" width="30" height="14" patternUnits="userSpaceOnUse"><path d="M15 1v12"/></pattern></defs>
+    <rect width="100%" height="14" fill="url(#ties)" stroke="none"/>
+    <line x1="0" y1="4" x2="100%" y2="4"/>
+    <line x1="0" y1="10" x2="100%" y2="10"/>
   </svg>
 <div class="wrap">
   <h2>Experience</h2>
