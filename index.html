@@ -35,7 +35,15 @@
   nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; }
   nav ul a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; }
   nav ul a:hover { color: var(--text); }
-  header.hero { padding: 72px 0 56px; }
+  header.hero { padding: 72px 0 56px; position: relative; overflow: hidden; }
+  header.hero .wrap { position: relative; z-index: 1; }
+  .peaks { position: absolute; bottom: 0; width: min(440px, calc((100vw - 1100px) / 2)); height: auto; color: var(--muted); opacity: .55; pointer-events: none; display: none; }
+  .peaks.left { left: 12px; }
+  .peaks.right { right: 12px; }
+  .peaks .fill { fill: var(--bg); }
+  .peaks .snow { fill: currentColor; fill-opacity: .45; }
+  @media (prefers-color-scheme: dark) { .peaks .snow { fill: #ffffff; fill-opacity: .55; } }
+  @media (min-width: 1360px) { .peaks { display: block; } }
   .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
   .hero h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.05; margin: 0 0 12px; letter-spacing: -0.02em; }
   .hero .role { font-size: 20px; color: var(--muted); margin: 0 0 20px; }
@@ -88,7 +96,46 @@
   <ul><li><a href="#projects">Projects</a></li><li><a href="#experience">Experience</a></li><li><a href="#community">Community</a></li><li><a href="#education">Education</a></li><li><a href="#skills">Skills</a></li><li><a href="#contact">Contact</a></li></ul>
 </div></nav>
 
-<header class="hero" id="top"><div class="wrap hero-grid">
+<header class="hero" id="top">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="sketch"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter></defs></svg>
+  <svg class="peaks left" viewBox="0 0 440 240" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
+    <circle cx="70" cy="58" r="17"/>
+    <path d="M70 30v-8M70 94v-8M42 58h-8M106 58h-8M51 39l-5-5M94 82l-5-5M51 77l-5 5M94 34l-5 5"/>
+    <path d="M300 54q7-7 14 0q7-7 14 0M338 78q5-5 10 0q5-5 10 0"/>
+    <clipPath id="mL1"><path d="M8 228C40 190 70 150 104 104c6-8 12-8 18 0c30 40 60 82 96 124Z"/></clipPath>
+    <path class="fill" d="M8 228C40 190 70 150 104 104c6-8 12-8 18 0c30 40 60 82 96 124Z" stroke="none"/>
+    <path class="snow" clip-path="url(#mL1)" stroke="none" d="M60 86H170V124 L161 129 L152 123 L143 129 L134 123 L125 129 L116 123 L107 129 L98 123 L89 129 L80 123 L71 129 L62 123 L60 129 Z"/>
+    <path clip-path="url(#mL1)" d="M170 124 L161 129 L152 123 L143 129 L134 123 L125 129 L116 123 L107 129 L98 123 L89 129 L80 123 L71 129 L62 123 L60 129"/>
+    <path d="M8 228C40 190 70 150 104 104c6-8 12-8 18 0c30 40 60 82 96 124"/>
+    <clipPath id="mL2"><path d="M120 230c34-52 72-112 120-176c8-10 16-10 24 0c46 62 90 120 140 176Z"/></clipPath>
+    <path class="fill" d="M120 230c34-52 72-112 120-176c8-10 16-10 24 0c46 62 90 120 140 176Z" stroke="none"/>
+    <path class="snow" clip-path="url(#mL2)" stroke="none" d="M180 36H330V86 L321 91 L312 85 L303 91 L294 85 L285 91 L276 85 L267 91 L258 85 L249 91 L240 85 L231 91 L222 85 L213 91 L204 85 L195 91 L186 85 L180 91 Z"/>
+    <path clip-path="url(#mL2)" d="M330 86 L321 91 L312 85 L303 91 L294 85 L285 91 L276 85 L267 91 L258 85 L249 91 L240 85 L231 91 L222 85 L213 91 L204 85 L195 91 L186 85 L180 91"/>
+    <path d="M120 230c34-52 72-112 120-176c8-10 16-10 24 0c46 62 90 120 140 176"/>
+    <path d="M232 120l-10 14M276 128l9 12M180 176l-8 10"/>
+    <path class="fill" d="M352 214l12-30l12 30zM346 228l18-40l18 40zM364 228v8"/>
+    <path class="fill" d="M392 218l9-22l9 22zM388 230l13-30l13 30zM401 230v7"/>
+    <path d="M2 234c70-6 140 4 210-2s150-6 226 0"/>
+  </svg>
+  <svg class="peaks right" viewBox="0 0 440 240" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
+    <path d="M60 70q6-6 12 0q6-6 12 0M96 50q7-7 14 0q7-7 14 0"/>
+    <path d="M330 46c-14 2-22 16-16 30c6 13 24 16 34 6c-14 2-24-10-20-24c1-5 1-9 2-12z"/>
+    <clipPath id="mR1"><path d="M200 230c30-44 62-90 100-140c6-8 12-8 18 0c36 48 72 94 114 140Z"/></clipPath>
+    <path class="fill" d="M200 230c30-44 62-90 100-140c6-8 12-8 18 0c36 48 72 94 114 140Z" stroke="none"/>
+    <path class="snow" clip-path="url(#mR1)" stroke="none" d="M250 72H370V112 L361 117 L352 111 L343 117 L334 111 L325 117 L316 111 L307 117 L298 111 L289 117 L280 111 L271 117 L262 111 L253 117 L250 111 Z"/>
+    <path clip-path="url(#mR1)" d="M370 112 L361 117 L352 111 L343 117 L334 111 L325 117 L316 111 L307 117 L298 111 L289 117 L280 111 L271 117 L262 111 L253 117 L250 111"/>
+    <path d="M200 230c30-44 62-90 100-140c6-8 12-8 18 0c36 48 72 94 114 140"/>
+    <clipPath id="mR2"><path d="M20 232c40-56 84-120 130-180c8-10 16-10 24 0c40 52 80 110 126 180Z"/></clipPath>
+    <path class="fill" d="M20 232c40-56 84-120 130-180c8-10 16-10 24 0c40 52 80 110 126 180Z" stroke="none"/>
+    <path class="snow" clip-path="url(#mR2)" stroke="none" d="M90 34H240V82 L231 87 L222 81 L213 87 L204 81 L195 87 L186 81 L177 87 L168 81 L159 87 L150 81 L141 87 L132 81 L123 87 L114 81 L105 87 L96 81 L90 87 Z"/>
+    <path clip-path="url(#mR2)" d="M240 82 L231 87 L222 81 L213 87 L204 81 L195 87 L186 81 L177 87 L168 81 L159 87 L150 81 L141 87 L132 81 L123 87 L114 81 L105 87 L96 81 L90 87"/>
+    <path d="M20 232c40-56 84-120 130-180c8-10 16-10 24 0c40 52 80 110 126 180"/>
+    <path d="M146 116l-9 13M188 124l10 13M98 170l-9 11"/>
+    <path class="fill" d="M30 216l11-28l11 28zM25 230l16-38l16 38zM41 230v7"/>
+    <path class="fill" d="M66 222l8-20l8 20zM62 232l12-28l12 28zM74 232v6"/>
+    <path d="M2 234c76-6 150 4 222-2s146-6 214 0"/>
+  </svg>
+<div class="wrap hero-grid">
   <div>
     <h1>Hi, I'm Logan Rosson.</h1>
     <p class="role">Information Systems (Honors) · University of Utah · Graduating May 2027</p>
