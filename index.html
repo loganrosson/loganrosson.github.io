@@ -72,6 +72,8 @@
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
   .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
   .card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top left; border-bottom: 1px solid var(--line); background: var(--chip); }
+  .sketch-head { aspect-ratio: 16/10; display: grid; place-items: center; background: var(--chip); border-bottom: 1px solid var(--line); color: var(--muted); }
+  .sketch-head svg { width: 58%; height: auto; opacity: .85; }
   .card .body { padding: 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
   .card h3 { margin: 0; font-size: 17px; }
   .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
@@ -180,8 +182,9 @@
     </article>
 
     <article class="card">
+      <div class="sketch-head" aria-hidden="true"><svg viewBox="0 0 160 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path d="M30 18h100v64H30zM30 30h100M42 72V58M54 72V48M66 72V54M78 72V44"/><circle cx="108" cy="58" r="14"/><path d="M108 58V44M108 58l12 7"/></svg></div>
       <div class="body">
-        <span class="badge">Salesforce–Eccles Ideathon · Sep 2025 · 6th overall</span>
+        <span class="badge">Eccles Ideathon · Sep 2025 · 6th overall</span>
         <h3>Student-Athlete Recruiting CRM</h3>
         <p>For the Eccles School's design and development competition, my team built a Salesforce CRM with dashboards and pipelines for prospecting student athletes, then presented it to the judges. We placed 6th overall and were recognized by the panel as one of the strongest teams at presenting.</p>
         <div class="tags"><span class="tag">Salesforce</span><span class="tag">CRM</span><span class="tag">Dashboards</span><span class="tag">Presenting</span></div>
@@ -229,6 +232,7 @@
     </article>
 
     <article class="card">
+      <div class="sketch-head" aria-hidden="true"><svg viewBox="0 0 160 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path d="M40 30c12-6 26-6 38 2v44c-12-8-26-8-38-2zM78 32c12-8 26-8 38-2v44c-12-6-26-6-38 2zM48 42c8-2 16-2 22 2M48 52c8-2 16-2 22 2M86 44c6-4 14-4 22-2M86 54c6-4 14-4 22-2"/><path d="M126 44q6 8 0 16M134 38q11 14 0 28"/></svg></div>
       <div class="body">
         <span class="badge">AI · Text-to-speech</span>
         <h3>Desktop Book Reader</h3>
@@ -239,6 +243,7 @@
     </article>
 
     <article class="card">
+      <div class="sketch-head" aria-hidden="true"><svg viewBox="0 0 160 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path d="M16 40h30v20H16zM66 40h30v20H66zM116 40h30v20h-30zM46 50h20M96 50h20M60 46l6 4-6 4M110 46l6 4-6 4M24 46h14M24 54h10M74 46h14M74 54h14M124 46h14M124 54h8"/><path d="M30 30v-8M30 22h102M132 22v8"/></svg></div>
       <div class="body">
         <span class="badge">In progress · Honors thesis</span>
         <h3>Automated Financial Data Pipeline</h3>
@@ -248,6 +253,7 @@
     </article>
 
     <article class="card">
+      <div class="sketch-head" aria-hidden="true"><svg viewBox="0 0 160 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><circle cx="62" cy="50" r="28"/><circle cx="62" cy="50" r="7"/><path d="M62 30a20 20 0 0 1 20 20"/><path d="M104 70V30l24-7v38"/><circle cx="98" cy="70" r="7"/><circle cx="122" cy="61" r="7"/></svg></div>
       <div class="body">
         <h3>Music Cover Maker</h3>
         <p>A lightweight utility script that embeds cover art directly into MP3 files as ID3v2.3 front-cover frames so they display cleanly across Windows and Google Drive.</p>
@@ -257,6 +263,7 @@
     </article>
 
     <article class="card">
+      <div class="sketch-head" aria-hidden="true"><svg viewBox="0 0 160 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path d="M44 34l32-9l13 46l-32 9z"/><path d="M80 22h36v54H80z"/><path d="M98 40c-7 7-9 10-5 13c2 2 4 1 5-1c1 2 3 3 5 1c4-3 2-6-5-13zM98 51l-2 6h4z"/><path d="M86 30h5M110 68h-5"/></svg></div>
       <div class="body">
         <h3>Blackjack</h3>
         <p>A terminal-based Blackjack game I built to handle dealer logic, soft/hard aces, split mechanics, and win tracking.</p>
@@ -361,6 +368,7 @@
 <footer id="contact"><div class="wrap">
   <div class="btns">
     <a class="btn primary" href="mailto:loganrosson@gmail.com">loganrosson@gmail.com</a>
+    <a class="btn" href="Logan_Rosson_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
     <a class="btn" href="https://www.linkedin.com/in/logan-rosson">LinkedIn</a>
     <a class="btn" href="https://github.com/loganrosson">GitHub</a>
   </div>
