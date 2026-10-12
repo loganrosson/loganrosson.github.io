@@ -53,11 +53,19 @@
   .shinkansen { z-index: 1; opacity: 1; color: color-mix(in srgb, var(--muted) 55%, var(--bg)); left: 0; bottom: 18px; width: 360px; height: auto; transform: translateX(-400px); }
   .shinkansen.run { animation: shinkansen 5s linear 1; }
   @keyframes shinkansen { from { transform: translateX(-400px); } to { transform: translateX(calc(100vw + 40px)); } }
+  .shinkansen.run-rev { animation: shinkansen-rev 5s linear 1; }
+  @keyframes shinkansen-rev { from { transform: translateX(calc(100vw + 40px)) scaleX(-1); } to { transform: translateX(-400px) scaleX(-1); } }
   .rails { z-index: 2; left: 0; bottom: 16px; width: 100%; height: 24px; }
   .rails.wire { bottom: 94px; height: 4px; }
-  @media (prefers-reduced-motion: reduce) { .shinkansen, .shinkansen.run { animation: none; transform: translateX(24px); } }
+  @media (prefers-reduced-motion: reduce) { .shinkansen, .shinkansen.run, .shinkansen.run-rev { animation: none; transform: translateX(24px); } }
   @media (min-width: 1360px) { #experience { padding-bottom: 190px; } .rails, .fuji, .shinkansen { display: block; } }
   @media (min-width: 1360px) { .peaks { display: block; } }
+  .flock { position: absolute; inset: 0 0 auto 0; height: 70px; z-index: 0; pointer-events: none; color: var(--muted); }
+  .flock svg { position: absolute; left: 0; overflow: visible; opacity: .7; transform: translateX(-120px); animation: fly linear infinite; }
+  .flock .b1 { top: 16px; width: 104px; animation-duration: 52s; animation-delay: -14s; }
+  .flock .b2 { top: 46px; width: 32px; animation-duration: 68s; animation-delay: -47s; opacity: .6; }
+  @keyframes fly { 0% { transform: translate(-120px, 0); } 25% { transform: translate(25vw, 6px); } 50% { transform: translate(50vw, -2px); } 75% { transform: translate(75vw, 5px); } 100% { transform: translate(calc(100vw + 40px), 0); } }
+  @media (prefers-reduced-motion: reduce) { .flock { display: none; } }
   .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
   .hero h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.05; margin: 0 0 12px; letter-spacing: -0.02em; }
   .hero .role { font-size: 20px; color: var(--muted); margin: 0 0 20px; }
@@ -112,6 +120,7 @@
 
 <header class="hero" id="top">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="sketch"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter></defs></svg>
+<div class="flock" aria-hidden="true"><svg class="b1" viewBox="0 0 74 30" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><g transform="translate(0 10) scale(0.9)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="0.9s" begin="0s" repeatCount="indefinite"/></path></g><g transform="translate(30 0) scale(0.75)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="1.0s" begin="-0.3s" repeatCount="indefinite"/></path></g><g transform="translate(48 18) scale(0.65)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="0.85s" begin="-0.6s" repeatCount="indefinite"/></path></g></svg><svg class="b2" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><g transform="translate(1 2) scale(1)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="1.1s" begin="-0.2s" repeatCount="indefinite"/></path></g></svg></div>
   <svg class="peaks left" viewBox="0 0 440 240" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
     <circle cx="70" cy="58" r="17"/>
     <path d="M70 30v-8M70 94v-8M42 58h-8M106 58h-8M51 39l-5-5M94 82l-5-5M51 77l-5 5M94 34l-5 5"/>
@@ -371,10 +380,11 @@
 (function(){
   var t=document.querySelector('.shinkansen'), sec=document.getElementById('experience');
   if(!t||!sec||!('IntersectionObserver' in window)) return;
-  t.addEventListener('animationend',function(){ t.classList.remove('run'); });
+  var rev=false, busy=false;
+  t.addEventListener('animationend',function(){ t.classList.remove('run','run-rev'); busy=false; rev=!rev; });
   new IntersectionObserver(function(es){
     es.forEach(function(e){
-      if(e.isIntersecting && !t.classList.contains('run')){ void t.offsetWidth; t.classList.add('run'); }
+      if(e.isIntersecting && !busy){ busy=true; void t.offsetWidth; t.classList.add(rev?'run-rev':'run'); }
     });
   },{threshold:0.35}).observe(sec);
 })();
