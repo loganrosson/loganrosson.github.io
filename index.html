@@ -37,9 +37,9 @@
   nav ul a:hover { color: var(--text); }
   header.hero { padding: 72px 0 56px; position: relative; overflow: hidden; }
   header.hero .wrap { position: relative; z-index: 1; }
-  .peaks { position: absolute; bottom: 0; width: min(440px, calc((100vw - 1100px) / 2)); height: auto; color: var(--muted); opacity: .55; pointer-events: none; display: none; }
-  .peaks.left { left: 12px; }
-  .peaks.right { right: 12px; }
+  .peaks { position: absolute; bottom: 0; width: min(560px, calc((100vw - 1040px) / 2 + 16px)); height: auto; color: var(--muted); opacity: .55; pointer-events: none; display: none; }
+  .peaks.left { left: 4px; }
+  .peaks.right { right: 4px; }
   .peaks .fill { fill: var(--bg); }
   .peaks .snow { fill: currentColor; fill-opacity: .45; }
   @media (prefers-color-scheme: dark) { .peaks .snow { fill: #ffffff; fill-opacity: .55; } }
@@ -65,7 +65,11 @@
   .flock .b1 { top: 16px; width: 104px; animation-duration: 52s; animation-delay: -14s; }
   .flock .b2 { top: 46px; width: 32px; animation-duration: 68s; animation-delay: -47s; opacity: .6; }
   @keyframes fly { 0% { transform: translate(-120px, 0); } 25% { transform: translate(25vw, 6px); } 50% { transform: translate(50vw, -2px); } 75% { transform: translate(75vw, 5px); } 100% { transform: translate(calc(100vw + 40px), 0); } }
-  @media (prefers-reduced-motion: reduce) { .flock { display: none; } }
+  .flock.sky { inset: auto 0 112px 0; height: 60px; display: none; }
+  .flock .b3 { top: 6px; width: 58px; animation-duration: 44s; animation-delay: -30s; }
+  .flock .b4 { top: 30px; width: 26px; animation-duration: 58s; animation-delay: -9s; opacity: .6; }
+  @media (min-width: 1360px) { .flock.sky { display: block; } }
+  @media (prefers-reduced-motion: reduce) { .flock { display: none !important; } }
   .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
   .hero h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.05; margin: 0 0 12px; letter-spacing: -0.02em; }
   .hero .role { font-size: 20px; color: var(--muted); margin: 0 0 20px; }
@@ -124,7 +128,6 @@
   <svg class="peaks left" viewBox="0 0 440 240" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
     <circle cx="70" cy="58" r="17"/>
     <path d="M70 30v-8M70 94v-8M42 58h-8M106 58h-8M51 39l-5-5M94 82l-5-5M51 77l-5 5M94 34l-5 5"/>
-    <path d="M300 54q7-7 14 0q7-7 14 0M338 78q5-5 10 0q5-5 10 0"/>
     <clipPath id="mL1"><path d="M8 228C40 190 70 150 104 104c6-8 12-8 18 0c30 40 60 82 96 124Z"/></clipPath>
     <path class="fill" d="M8 228C40 190 70 150 104 104c6-8 12-8 18 0c30 40 60 82 96 124Z" stroke="none"/>
     <path class="snow" clip-path="url(#mL1)" stroke="none" d="M60 86H170V124 L161 129 L152 123 L143 129 L134 123 L125 129 L116 123 L107 129 L98 123 L89 129 L80 123 L71 129 L62 123 L60 129 Z"/>
@@ -141,7 +144,6 @@
     <path d="M2 234H438"/>
   </svg>
   <svg class="peaks right" viewBox="0 0 440 240" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
-    <path d="M60 70q6-6 12 0q6-6 12 0M96 50q7-7 14 0q7-7 14 0"/>
     <path d="M330 46c-14 2-22 16-16 30c6 13 24 16 34 6c-14 2-24-10-20-24c1-5 1-9 2-12z"/>
     <clipPath id="mR1"><path d="M200 230c30-44 62-90 100-140c6-8 12-8 18 0c36 48 72 94 114 140Z"/></clipPath>
     <path class="fill" d="M200 230c30-44 62-90 100-140c6-8 12-8 18 0c36 48 72 94 114 140Z" stroke="none"/>
@@ -277,8 +279,8 @@
 </div></section>
 
 <section id="experience">
+  <div class="flock sky" aria-hidden="true"><svg class="b3" viewBox="0 0 58 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><g transform="translate(0 10) scale(0.9)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="0.95s" begin="-0.1s" repeatCount="indefinite"/></path></g><g transform="translate(32 0) scale(0.75)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="1.05s" begin="-0.5s" repeatCount="indefinite"/></path></g></svg><svg class="b4" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><g transform="translate(1 2) scale(1)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="1.15s" begin="-0.3s" repeatCount="indefinite"/></path></g></svg></div>
   <svg class="fuji" viewBox="0 0 440 150" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
-    <path d="M90 22q6-6 12 0q6-6 12 0M60 38q5-5 10 0q5-5 10 0"/>
     <clipPath id="mFuji"><path d="M100 150C160 124 196 94 224 72h32c28 22 64 52 124 78Z"/></clipPath>
     <path class="fill" stroke="none" d="M100 150C160 124 196 94 224 72h32c28 22 64 52 124 78Z"/>
     <path class="snow" clip-path="url(#mFuji)" stroke="none" d="M180 64H300V96 L291 101 L282 95 L273 101 L264 95 L255 101 L246 95 L237 101 L228 95 L219 101 L210 95 L201 101 L192 95 L183 101 L180 95 Z"/>
