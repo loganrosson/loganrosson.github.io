@@ -43,6 +43,11 @@
   .peaks .fill { fill: var(--bg); }
   .peaks .snow { fill: currentColor; fill-opacity: .45; }
   @media (prefers-color-scheme: dark) { .peaks .snow { fill: #ffffff; fill-opacity: .55; } }
+  #experience { position: relative; overflow: hidden; }
+  #experience .wrap { position: relative; z-index: 1; }
+  .peaks.train { bottom: 24px; }
+  .peaks .hole { fill: currentColor; fill-opacity: .35; }
+  @media (prefers-color-scheme: dark) { .peaks .hole { fill: #000; fill-opacity: .7; } }
   @media (min-width: 1360px) { .peaks { display: block; } }
   .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
   .hero h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.05; margin: 0 0 12px; letter-spacing: -0.02em; }
@@ -115,7 +120,7 @@
     <path d="M232 120l-10 14M276 128l9 12M180 176l-8 10"/>
     <path class="fill" d="M352 214l12-30l12 30zM346 228l18-40l18 40zM364 228v8"/>
     <path class="fill" d="M392 218l9-22l9 22zM388 230l13-30l13 30zM401 230v7"/>
-    <path d="M2 234c70-6 140 4 210-2s150-6 226 0"/>
+    <path d="M2 234H438"/>
   </svg>
   <svg class="peaks right" viewBox="0 0 440 240" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
     <path d="M60 70q6-6 12 0q6-6 12 0M96 50q7-7 14 0q7-7 14 0"/>
@@ -133,7 +138,7 @@
     <path d="M146 116l-9 13M188 124l10 13M98 170l-9 11"/>
     <path class="fill" d="M30 216l11-28l11 28zM25 230l16-38l16 38zM41 230v7"/>
     <path class="fill" d="M66 222l8-20l8 20zM62 232l12-28l12 28zM74 232v6"/>
-    <path d="M2 234c76-6 150 4 222-2s146-6 214 0"/>
+    <path d="M2 234H438"/>
   </svg>
 <div class="wrap hero-grid">
   <div>
@@ -253,7 +258,32 @@
   </div>
 </div></section>
 
-<section id="experience"><div class="wrap">
+<section id="experience">
+  <svg class="peaks train left" viewBox="0 0 440 200" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
+    <path d="M300 30q6-6 12 0q6-6 12 0M336 50q5-5 10 0q5-5 10 0"/>
+    <path class="fill" d="M0 180C14 128 44 70 96 64c44-4 66 56 74 116Z"/>
+    <path d="M40 120l-7 11M122 84l7 10M20 160l-5 8"/>
+    <path class="fill" d="M90 58l6-16l6 16zM86 66l10-22l10 22zM96 66v4"/>
+    <path class="hole" stroke="none" d="M100 180V140a26 26 0 0 1 52 0V180Z"/>
+    <path d="M92 180V138a34 34 0 0 1 68 0V180M100 180V140a26 26 0 0 1 52 0V180M126 104v8M104 113l5 6M148 113l-5 6"/>
+    <path d="M60 180H440M62 186H438"/>
+    <path d="M176 177v12M196 177v12M216 177v12M236 177v12M256 177v12M276 177v12M296 177v12M316 177v12M336 177v12M356 177v12M376 177v12M396 177v12M416 177v12"/>
+    <path class="fill" d="M156 128h86a4 4 0 0 1 4 4v38h-90z"/>
+    <path d="M152 124h96M166 138h16v14h-16zM192 138h16v14h-16zM218 138h16v14h-16z"/>
+    <circle class="fill" cx="176" cy="173" r="7"/><circle class="fill" cx="226" cy="173" r="7"/>
+    <path d="M246 164h8"/>
+    <path class="fill" d="M254 112h30v58h-30z"/>
+    <path d="M250 108h38M261 122h16v14h-16z"/>
+    <path class="fill" d="M284 136h44a10 17 0 0 1 0 34h-44z"/>
+    <path class="fill" d="M312 136v-16h-4l2-8h10l2 8h-4v16"/>
+    <path class="fill" d="M296 136v-8a5 5 0 0 1 10 0v8"/>
+    <path class="fill" d="M336 158l14 12h-18z"/>
+    <path d="M338 146h6"/>
+    <circle class="fill" cx="266" cy="172" r="8"/><circle class="fill" cx="292" cy="172" r="8"/><circle class="fill" cx="318" cy="172" r="8"/>
+    <path d="M266 172h52"/>
+    <circle cx="314" cy="102" r="5"/><circle cx="304" cy="88" r="8"/><circle cx="288" cy="72" r="10"/><circle cx="266" cy="60" r="12"/>
+  </svg>
+<div class="wrap">
   <h2>Experience</h2>
   <div class="timeline">
     <div class="item">
