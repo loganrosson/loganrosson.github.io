@@ -115,6 +115,14 @@
     .card.featured img { border-right: 0; border-bottom: 1px solid var(--line); aspect-ratio: 16/10; }
     .item { grid-template-columns: 1fr; }
   }
+  #education { position: relative; overflow: hidden; padding-bottom: 100px; }
+  #education .wrap { position: relative; z-index: 1; }
+  .waves { position: absolute; left: 0; bottom: 16px; width: 100%; height: 44px; color: var(--muted); opacity: .55; pointer-events: none; z-index: 0; }
+  .waves .w1 { animation: wave-r 6s linear infinite; }
+  .waves .w2 { animation: wave-l 14s linear infinite; }
+  @keyframes wave-r { from { transform: translateX(-168px); } to { transform: translateX(-84px); } }
+  @keyframes wave-l { from { transform: translateX(-120px); } to { transform: translateX(-240px); } }
+  @media (prefers-reduced-motion: reduce) { .waves .w1, .waves .w2 { animation: none; } }
 </style>
 </head>
 <body>
@@ -360,7 +368,9 @@
   </div>
 </div></section>
 
-<section id="education"><div class="wrap">
+<section id="education">
+  <svg class="waves" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><defs><pattern id="waveA" x="0" y="20" width="84" height="22" patternUnits="userSpaceOnUse"><path filter="url(#sketch)" d="M6 16q10-11 24-6q-8-2-10 5M30 10q8 5 20 6q12 0 22-5"/></pattern><pattern id="waveB" x="0" y="0" width="120" height="16" patternUnits="userSpaceOnUse"><path filter="url(#sketch)" d="M-2 9c14-6 26-6 40 0s26 6 40 0s30-6 44 0"/></pattern></defs><rect class="w2" x="0" y="0" width="6000" height="16" fill="url(#waveB)" stroke="none" opacity=".55"/><rect class="w1" x="0" y="20" width="6000" height="22" fill="url(#waveA)" stroke="none"/></svg>
+  <div class="wrap">
   <h2>Education</h2>
   <div class="item">
     <div><h3>B.S. (Honors), Information Systems</h3><div class="org">David Eccles School of Business, University of Utah · Dean's List</div></div>
