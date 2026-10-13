@@ -123,6 +123,18 @@
   @keyframes wave-in { from { transform: translate(-168px, 2px); } to { transform: translate(-126px, -3px); } }
   @keyframes wave-out { from { transform: translate(-150px, -2px); } to { transform: translate(-180px, 2px); } }
   @media (prefers-reduced-motion: reduce) { .waves .w1, .waves .w2 { animation: none; } }
+  .beach, .boat, .gulls { position: absolute; color: var(--muted); opacity: .55; pointer-events: none; z-index: 0; display: none; }
+  .beach .fill, .boat .fill { fill: var(--bg); }
+  .beach, .boat { opacity: 1; color: color-mix(in srgb, var(--muted) 55%, var(--bg)); }
+  .beach { left: 0; bottom: 0; width: min(240px, calc((100vw - 1040px) / 2)); height: auto; }
+  .beach .fronds { transform-origin: 92px 40px; animation: sway 4.5s ease-in-out infinite alternate; }
+  .boat { right: calc((100vw - 1040px) / 4 - 50px); bottom: 14px; width: 100px; height: auto; transform-origin: 50% 85%; animation: bob 3.6s ease-in-out infinite alternate; }
+  .gulls { right: calc((100vw - 1040px) / 4 - 60px); bottom: 120px; width: 120px; height: auto; animation: glide 6s ease-in-out infinite alternate; }
+  @keyframes sway { from { transform: rotate(-2.5deg); } to { transform: rotate(2.5deg); } }
+  @keyframes bob { from { transform: translateY(2px) rotate(-3deg); } to { transform: translateY(-3px) rotate(3deg); } }
+  @keyframes glide { from { transform: translate(-10px, 4px); } to { transform: translate(12px, -6px); } }
+  @media (min-width: 1360px) { .beach, .boat, .gulls { display: block; } }
+  @media (prefers-reduced-motion: reduce) { .beach .fronds, .boat, .gulls { animation: none; } }
 </style>
 </head>
 <body>
@@ -370,6 +382,9 @@
 
 <section id="education">
   <svg class="waves" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><defs><pattern id="waveA" x="0" y="20" width="84" height="22" patternUnits="userSpaceOnUse"><path filter="url(#sketch)" d="M6 16q10-11 24-6q-8-2-10 5M30 10q8 5 20 6q12 0 22-5"/></pattern><pattern id="waveB" x="0" y="0" width="120" height="16" patternUnits="userSpaceOnUse"><path filter="url(#sketch)" d="M-2 9c14-6 26-6 40 0s26 6 40 0s30-6 44 0"/></pattern></defs><rect class="w2" x="0" y="0" width="6000" height="16" fill="url(#waveB)" stroke="none" opacity=".55"/><rect class="w1" x="0" y="20" width="6000" height="22" fill="url(#waveA)" stroke="none"/></svg>
+  <svg class="beach" viewBox="0 0 200 170" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M-4 174V122c40-12 92-14 130 0c26 10 52 28 78 52Z" stroke="none"/><path d="M-4 122c40-12 92-14 130 0c26 10 52 28 78 52"/><path class="fill" d="M54 124C60 96 68 66 86 42l10 2C80 68 72 96 68 124Z" stroke="none"/><path d="M54 124C60 96 68 66 86 42M68 124C72 96 80 68 96 44M60 106l10 2M64 88l10 2M70 70l10 3M78 54l9 3"/><g class="fronds"><path d="M92 40C78 26 58 24 40 36M92 40C84 18 98 6 118 10M92 40C108 26 130 28 146 44M92 40C108 44 120 58 122 76M92 40C76 42 62 56 60 74"/><path d="M56 30l-2 7M68 27l-1 7M102 12l-6 5M110 10l-4 6M118 30l-3 6M130 33l-4 5M110 52l-6 3M116 62l-6 2M74 50l6 3M66 60l6 2"/></g><path d="M150 148l3-7l3 7l7 1l-6 4l2 7l-6-4l-6 4l2-7l-6-4z"/><path d="M24 134q6-6 12 0z"/></svg>
+  <svg class="boat" viewBox="0 0 100 90" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M10 66h80l-12 16H22Z"/><path d="M50 66V12M50 12l10 4l-10 4"/><path class="fill" d="M53 18v44h30Z"/><path class="fill" d="M47 26v36H24Z"/></svg>
+  <svg class="gulls" viewBox="0 0 120 50" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><g transform="translate(10 24) scale(1.1)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="1.0s" begin="0s" repeatCount="indefinite"/></path></g><g transform="translate(58 6) scale(0.85)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="1.15s" begin="-0.4s" repeatCount="indefinite"/></path></g><g transform="translate(86 30) scale(0.7)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="0.9s" begin="-0.7s" repeatCount="indefinite"/></path></g></svg>
   <div class="wrap">
   <h2>Education</h2>
   <div class="item">
