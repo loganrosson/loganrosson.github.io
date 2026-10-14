@@ -135,6 +135,21 @@
   @keyframes glide { from { transform: translate(-10px, 4px); } to { transform: translate(12px, -6px); } }
   @media (min-width: 1360px) { .sun-rise, .boat, .gulls { display: block; } }
   @media (prefers-reduced-motion: reduce) { .boat, .gulls { animation: none; } }
+  @media (max-width: 1359px) {
+    header.hero { padding-bottom: calc(32px + min(27vw, 150px)); }
+    .peaks { display: block; width: min(50vw, 276px); }
+    .peaks.left { left: 0; }
+    .peaks.right { right: 0; }
+    #experience { padding-bottom: 160px; }
+    .rails, .fuji, .shinkansen { display: block; }
+    .fuji { width: min(110vw, 620px); right: -8vw; bottom: 18px; }
+    .shinkansen { width: 200px; }
+    .rails.wire { bottom: 58px; }
+    .sun-rise, .boat, .gulls { display: block; }
+    .sun-rise { left: 6px; bottom: 49px; width: 120px; }
+    .boat { right: 8px; width: 90px; }
+    .gulls { right: auto; left: 46%; bottom: 66px; width: 80px; }
+  }
 </style>
 </head>
 <body>
