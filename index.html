@@ -68,8 +68,10 @@
   @media (min-width: 1360px) { .peaks { display: block; } }
   .flock { position: absolute; inset: 0 0 auto 0; height: 70px; z-index: 0; pointer-events: none; color: var(--muted); }
   .flock svg { position: absolute; left: 0; overflow: visible; opacity: .7; transform: translateX(-120px); animation: fly linear infinite; }
-  .flock .b1 { top: 16px; width: 104px; animation-duration: 52s; animation-delay: -14s; }
-  .flock .b2 { top: 46px; width: 32px; animation-duration: 68s; animation-delay: -47s; opacity: .6; }
+  .stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; color: var(--muted); }
+  .stars .s { opacity: .5; animation: twinkle 5s ease-in-out infinite alternate; }
+  @keyframes twinkle { from { opacity: .08; } to { opacity: .8; } }
+  @media (prefers-reduced-motion: reduce) { .stars .s { animation: none; opacity: .5; } }
   @keyframes fly { 0% { transform: translate(-120px, 0); } 25% { transform: translate(25vw, 6px); } 50% { transform: translate(50vw, -2px); } 75% { transform: translate(75vw, 5px); } 100% { transform: translate(calc(100vw + 40px), 0); } }
   .flock.sky { inset: auto 0 104px 0; height: 60px; display: none; z-index: 1; }
   .flock .b3 { top: 6px; width: 58px; animation-duration: 44s; animation-delay: -30s; }
@@ -168,40 +170,23 @@
 
 <header class="hero" id="top">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="sketch"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter></defs></svg>
-<div class="flock" aria-hidden="true"><svg class="b1" viewBox="0 0 74 30" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><g transform="translate(0 10) scale(0.9)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="0.9s" begin="0s" repeatCount="indefinite"/></path></g><g transform="translate(30 0) scale(0.75)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="1.0s" begin="-0.3s" repeatCount="indefinite"/></path></g><g transform="translate(48 18) scale(0.65)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="0.85s" begin="-0.6s" repeatCount="indefinite"/></path></g></svg><svg class="b2" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><g transform="translate(1 2) scale(1)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="1.1s" begin="-0.2s" repeatCount="indefinite"/></path></g></svg></div>
+<svg class="stars" viewBox="0 0 1000 320" preserveAspectRatio="xMidYMin slice" aria-hidden="true" fill="currentColor"><circle class="s" style="animation-duration:4.6s;animation-delay:-1.1s" cx="24" cy="96" r="2"/><circle class="s" style="animation-duration:5.9s;animation-delay:-0.5s" cx="52" cy="40" r="1.5"/><circle class="s" style="animation-duration:5.4s;animation-delay:-2.6s" cx="70" cy="128" r="1.3"/><circle class="s" style="animation-duration:3.6s;animation-delay:-3.6s" cx="96" cy="22" r="2.2"/><circle class="s" style="animation-duration:3.5s;animation-delay:-3.0s" cx="118" cy="74" r="1.4"/><circle class="s" style="animation-duration:3.7s;animation-delay:-0.6s" cx="140" cy="112" r="1.8"/><circle class="s" style="animation-duration:5.0s;animation-delay:-5.8s" cx="86" cy="150" r="1.2"/><circle class="s" style="animation-duration:3.9s;animation-delay:-1.6s" cx="160" cy="48" r="1.3"/><circle class="s" style="animation-duration:5.8s;animation-delay:-6.6s" cx="200" cy="30" r="1.4"/><circle class="s" style="animation-duration:5.6s;animation-delay:-2.8s" cx="260" cy="16" r="1.8"/><circle class="s" style="animation-duration:7.1s;animation-delay:-0.3s" cx="330" cy="44" r="1.2"/><circle class="s" style="animation-duration:6.7s;animation-delay:-2.0s" cx="400" cy="22" r="1.6"/><circle class="s" style="animation-duration:3.9s;animation-delay:-0.8s" cx="470" cy="38" r="1.2"/><circle class="s" style="animation-duration:4.6s;animation-delay:-5.7s" cx="540" cy="14" r="2"/><circle class="s" style="animation-duration:4.1s;animation-delay:-4.1s" cx="610" cy="40" r="1.3"/><circle class="s" style="animation-duration:5.8s;animation-delay:-2.6s" cx="680" cy="20" r="1.6"/><circle class="s" style="animation-duration:5.5s;animation-delay:-0.4s" cx="750" cy="46" r="1.2"/><circle class="s" style="animation-duration:3.6s;animation-delay:-1.4s" cx="820" cy="28" r="1.8"/><circle class="s" style="animation-duration:6.0s;animation-delay:-3.0s" cx="862" cy="92" r="1.6"/><circle class="s" style="animation-duration:4.6s;animation-delay:-4.1s" cx="890" cy="36" r="1.4"/><circle class="s" style="animation-duration:5.1s;animation-delay:-2.1s" cx="950" cy="66" r="2"/><circle class="s" style="animation-duration:6.4s;animation-delay:-4.9s" cx="970" cy="18" r="1.4"/><circle class="s" style="animation-duration:4.3s;animation-delay:-4.0s" cx="1000" cy="108" r="1.6"/><circle class="s" style="animation-duration:5.4s;animation-delay:-6.1s" cx="880" cy="122" r="1.2"/><path class="s" style="animation-duration:5.8s;animation-delay:-1.7s" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" d="M118 69v10M113 74h10"/><path class="s" style="animation-duration:6.5s;animation-delay:-0.7s" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" d="M540 9v10M535 14h10"/><path class="s" style="animation-duration:5.0s;animation-delay:-4.5s" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" d="M950 61v10M945 66h10"/></svg>
   <svg class="peaks left" viewBox="0 0 440 240" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
-<g class="sun"><circle class="sunfill" cx="70" cy="60" r="20"/>
-</g>
-<clipPath id="mL1"><path d="M8 228C40 190 70 150 104 104c6-8 12-8 18 0c30 40 60 82 96 124Z"/></clipPath>
-<path class="fill" d="M8 228C40 190 70 150 104 104c6-8 12-8 18 0c30 40 60 82 96 124Z" stroke="none"/>
-<path class="snow" clip-path="url(#mL1)" stroke="none" d="M60 86H170V124 L161 129 L152 123 L143 129 L134 123 L125 129 L116 123 L107 129 L98 123 L89 129 L80 123 L71 129 L62 123 L60 129 Z"/>
-<path clip-path="url(#mL1)" d="M170 124 L161 129 L152 123 L143 129 L134 123 L125 129 L116 123 L107 129 L98 123 L89 129 L80 123 L71 129 L62 123 L60 129"/>
-<path d="M8 228C40 190 70 150 104 104c6-8 12-8 18 0c30 40 60 82 96 124"/>
-<clipPath id="mL2"><path d="M120 230c34-52 72-112 120-176c8-10 16-10 24 0c46 62 90 120 140 176Z"/></clipPath>
-<path class="fill" d="M120 230c34-52 72-112 120-176c8-10 16-10 24 0c46 62 90 120 140 176Z" stroke="none"/>
-<path class="snow" clip-path="url(#mL2)" stroke="none" d="M180 36H330V86 L321 91 L312 85 L303 91 L294 85 L285 91 L276 85 L267 91 L258 85 L249 91 L240 85 L231 91 L222 85 L213 91 L204 85 L195 91 L186 85 L180 91 Z"/>
-<path clip-path="url(#mL2)" d="M330 86 L321 91 L312 85 L303 91 L294 85 L285 91 L276 85 L267 91 L258 85 L249 91 L240 85 L231 91 L222 85 L213 91 L204 85 L195 91 L186 85 L180 91"/>
-<path d="M120 230c34-52 72-112 120-176c8-10 16-10 24 0c46 62 90 120 140 176"/>
-<path d="M232 120l-10 14M276 128l9 12M180 176l-8 10"/>
-<path class="fill" d="M362 187L372.3 201.1L366.3 198.8L374.5 215.2L367.3 212.6L376.2 229.3L346.8 228.5L357 212.4L349.6 216.1L356.8 198.3L352.2 201.1Z"/><path d="M362 229.3V233"/><path class="fill" d="M392 199L397.6 209.4L394.3 207.6L399.8 219.9L395.3 217.1L402.4 230.3L380.7 230.6L388.1 217.9L383.3 219.6L390.1 207.4L386.6 208.8Z"/><path d="M392 230.3V233"/>
-<path d="M2 234H438"/>
-</svg>
+    <g class="sun"><clipPath id="sunClip"><circle cx="214" cy="112" r="72"/></clipPath><circle class="sunfill" cx="214" cy="112" r="72" stroke="none"/><circle cx="214" cy="112" r="72"/><path clip-path="url(#sunClip)" stroke-width="1.8" d="M132 120H296M132 127H296M132 134H296M132 141H296M132 148H296M132 155H296M132 162H296M132 169H296M132 176H296M132 183H296"/><path class="fill" stroke="none" d="M122 136h184v6H122z"/><path stroke-width="1.8" transform="rotate(-8 214 126)" d="M94 126a120 16 0 1 0 240 0a120 16 0 1 0-240 0"/></g>
+    <path class="fill" d="M34 234L96 160L126 128L164 88L190 124L212 110L246 150L284 196L312 234Z"/><path d="M164 88L176 150L160 234M164 88L150 140L130 170M190 124L204 170L226 234M212 110L236 160M246 150L252 190L262 234"/><path class="snow" stroke="none" d="M164 88L150 112L158 118L166 110L174 120L182 112L190 124L176 94Z"/>
+    <path class="fill" d="M250 234L288 180L318 152L346 118L372 150L392 136L440 196L440 234Z"/><path d="M346 118L352 170L336 234M346 118L330 164M372 150L380 200L370 234M392 136L410 180"/>
+    <path d="M18 234l7-18 7 18M32 234l6-14 6 14M48 234l5-12 5 12M400 234l6-14 6 14M416 234l7-18 7 18"/>
+    <path d="M2 234H438"/>
+  </svg>
   <svg class="peaks right" viewBox="0 0 440 240" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
-<g class="moon"><path d="M330 46c-14 2-22 16-16 30c6 13 24 16 34 6c-14 2-24-10-20-24c1-5 1-9 2-12z"/></g>
-<clipPath id="mR1"><path d="M200 230c30-44 62-90 100-140c6-8 12-8 18 0c36 48 72 94 114 140Z"/></clipPath>
-<path class="fill" d="M200 230c30-44 62-90 100-140c6-8 12-8 18 0c36 48 72 94 114 140Z" stroke="none"/>
-<path class="snow" clip-path="url(#mR1)" stroke="none" d="M250 72H370V112 L361 117 L352 111 L343 117 L334 111 L325 117 L316 111 L307 117 L298 111 L289 117 L280 111 L271 117 L262 111 L253 117 L250 111 Z"/>
-<path clip-path="url(#mR1)" d="M370 112 L361 117 L352 111 L343 117 L334 111 L325 117 L316 111 L307 117 L298 111 L289 117 L280 111 L271 117 L262 111 L253 117 L250 111"/>
-<path d="M200 230c30-44 62-90 100-140c6-8 12-8 18 0c36 48 72 94 114 140"/>
-<clipPath id="mR2"><path d="M20 232c40-56 84-120 130-180c8-10 16-10 24 0c40 52 80 110 126 180Z"/></clipPath>
-<path class="fill" d="M20 232c40-56 84-120 130-180c8-10 16-10 24 0c40 52 80 110 126 180Z" stroke="none"/>
-<path class="snow" clip-path="url(#mR2)" stroke="none" d="M90 34H240V82 L231 87 L222 81 L213 87 L204 81 L195 87 L186 81 L177 87 L168 81 L159 87 L150 81 L141 87 L132 81 L123 87 L114 81 L105 87 L96 81 L90 87 Z"/>
-<path clip-path="url(#mR2)" d="M240 82 L231 87 L222 81 L213 87 L204 81 L195 87 L186 81 L177 87 L168 81 L159 87 L150 81 L141 87 L132 81 L123 87 L114 81 L105 87 L96 81 L90 87"/>
-<path d="M20 232c40-56 84-120 130-180c8-10 16-10 24 0c40 52 80 110 126 180"/>
-<path d="M146 116l-9 13M188 124l10 13M98 170l-9 11"/>
-<path class="fill" d="M40 189L50.4 202.5L44.3 200.7L51.7 216L44.9 213.1L52.9 229.5L26.1 229.7L35.8 212.8L27.5 215.4L35.9 199.7L29.4 202.7Z"/><path d="M40 229.5V233"/><path class="fill" d="M68 201L73.2 210.8L70.2 209L77.2 220.6L71.8 217.9L77.7 230.4L58 229.9L64.4 218.3L58.2 220.9L65.9 209.4L62.6 210.8Z"/><path d="M68 230.4V233"/>
-<path d="M2 234H438"/>
-</svg>
+    <defs><pattern id="halftone" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.3" fill="currentColor"/></pattern></defs>
+    <path stroke-dasharray="7 6" stroke-width="1.8" d="M150 170C220 70 330 36 440 64"/>
+    <g class="moon"><clipPath id="moonClip"><circle cx="330" cy="82" r="40"/></clipPath><rect clip-path="url(#moonClip)" x="290" y="42" width="80" height="80" fill="url(#halftone)" stroke="none"/><circle clip-path="url(#moonClip)" class="fill" cx="312" cy="68" r="40" stroke="none"/><circle cx="330" cy="82" r="40"/></g>
+    <path class="fill" d="M0 234L36 198L62 212L96 176L128 200L164 186L198 234Z"/><path d="M96 176L104 210L110 234M62 212L70 234M128 200L134 234"/>
+    <path class="fill" d="M280 234L310 206L336 218L372 192L404 212L440 190L440 234Z"/><path d="M372 192L378 218L386 234M310 206L316 234"/>
+    <text x="22" y="128" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="1" fill="currentColor" stroke="none">SALT LAKE CITY · UTAH</text><text x="22" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="currentColor" stroke="none">40.7608°N  111.8910°W</text>
+    <path d="M2 234H438"/>
+  </svg>
 <div class="wrap hero-grid">
   <div>
     <h1>Hi, I'm Logan Rosson.</h1>
