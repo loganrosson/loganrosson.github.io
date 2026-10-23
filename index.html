@@ -451,7 +451,7 @@
 <script>
 /* The red sun rides along as you scroll, then sets behind Mt. Fuji in the Experience section. */
 (function(){
-  var hero=document.querySelector('.clouds .sun'), fuji=document.querySelector('.fuji'), sun=document.querySelector('.sunfix');
+  var hero=document.querySelector('.clouds .sun'), fuji=document.querySelector('.fuji'), sun=document.querySelector('.sunfix'), heroEl=document.querySelector('header.hero');
   if(!hero||!fuji||!sun||window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   hero.style.visibility='hidden'; sun.classList.add('on');
   var queued=false;
@@ -461,7 +461,7 @@
     var sy=window.scrollY, vh=window.innerHeight;
     var h=hero.getBoundingClientRect(), x0=h.left+h.width/2, y0=h.top+h.height/2+sy;
     var f=fuji.getBoundingClientRect(), fw=f.width, fh=f.height;
-    var cx, cy, vis='visible';
+    var cx, cy, vis='visible', hb=heroEl.getBoundingClientRect().bottom;
     if(fw===0){ cx=x0; cy=y0-sy; }
     else {
       var sx=f.left+fw*(240/440), sTop=f.top+sy+fh*(72/150);
@@ -471,6 +471,8 @@
     }
     sun.style.transform='translate('+(cx-75)+'px,'+(cy-75)+'px)';
     sun.style.visibility=vis;
+    var d=cy-hb, k=1; if(d>-171&&d<-40) k=(-40-d)/131; else if(d>=-40&&d<=75) k=0; else if(d>75&&d<200) k=(d-75)/125;
+    sun.style.opacity=(0.42*k).toFixed(3);
   }
   window.addEventListener('scroll',function(){ if(!queued){ queued=true; requestAnimationFrame(update); } },{passive:true});
   window.addEventListener('resize',update);
