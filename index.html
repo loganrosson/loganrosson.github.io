@@ -87,6 +87,10 @@
   .skyline .parkhyatt { left: 40%; width: 100px; bottom: -30px; }
   .skyline .skytree { left: 64%; width: 44px; bottom: -40px; }
   .skyline .cocoon { left: 85%; width: 56px; bottom: -16px; }
+  .sunfix { position: fixed; left: 0; top: 0; z-index: -1; width: 150px; height: 150px; pointer-events: none; color: var(--accent); fill: var(--accent); fill-opacity: .14; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; filter: url(#sketch); will-change: transform; display: none; }
+  .sunfix.on { display: block; }
+  .fuji { opacity: 1; color: color-mix(in srgb, var(--muted) 55%, var(--bg)); }
+  @media (prefers-color-scheme: dark) { .fuji .snow { fill: #ffffff; fill-opacity: .3; } }
   @keyframes fly { 0% { transform: translate(-120px, 0); } 25% { transform: translate(25vw, 6px); } 50% { transform: translate(50vw, -2px); } 75% { transform: translate(75vw, 5px); } 100% { transform: translate(calc(100vw + 40px), 0); } }
   .flock.sky { inset: auto 0 104px 0; height: 60px; display: none; z-index: 1; }
   .flock .b3 { top: 6px; width: 58px; animation-duration: 44s; animation-delay: -30s; }
@@ -177,6 +181,7 @@
   <a class="brand" href="#top">Logan Rosson</a>
   <ul><li><a href="#projects">Projects</a></li><li><a href="#experience">Experience</a></li><li><a href="#community">Community</a></li><li><a href="#education">Education</a></li><li><a href="#skills">Skills</a></li><li><a href="#contact">Contact</a></li></ul>
 </div></nav>
+<svg class="sunfix" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/></svg>
 
 <header class="hero" id="top">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="sketch"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter></defs></svg>
@@ -424,6 +429,35 @@
       if(e.isIntersecting && !busy){ busy=true; void t.offsetWidth; t.classList.add(rev?'run-rev':'run'); }
     });
   },{threshold:0.35}).observe(sec);
+})();
+</script>
+<script>
+/* The red sun rides along as you scroll, then sets behind Mt. Fuji in the Experience section. */
+(function(){
+  var hero=document.querySelector('.clouds .sun'), fuji=document.querySelector('.fuji'), sun=document.querySelector('.sunfix');
+  if(!hero||!fuji||!sun||window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  hero.style.visibility='hidden'; sun.classList.add('on');
+  var queued=false;
+  function ease(t){ return t*t*(3-2*t); }
+  function update(){
+    queued=false;
+    var sy=window.scrollY, vh=window.innerHeight;
+    var h=hero.getBoundingClientRect(), x0=h.left+h.width/2, y0=h.top+h.height/2+sy;
+    var f=fuji.getBoundingClientRect(), fw=f.width, fh=f.height;
+    var cx, cy, vis='visible';
+    if(fw===0){ cx=x0; cy=y0-sy; }
+    else {
+      var sx=f.left+fw*(240/440), sTop=f.top+sy+fh*(72/150);
+      var Yf=vh*0.5, Sf=Math.max(sTop-Yf,1), D=Math.max(vh*0.5,320);
+      if(sy<=Sf){ var p=ease(Math.min(sy/Sf,1)); cx=x0+(sx-x0)*p; cy=y0+((Yf-63)-y0)*p; }
+      else { var q=Math.min((sy-Sf)/D,1); cx=sx; cy=(sTop-sy)-63+q*200; if(q>=1) vis='hidden'; }
+    }
+    sun.style.transform='translate('+(cx-75)+'px,'+(cy-75)+'px)';
+    sun.style.visibility=vis;
+  }
+  window.addEventListener('scroll',function(){ if(!queued){ queued=true; requestAnimationFrame(update); } },{passive:true});
+  window.addEventListener('resize',update);
+  update();
 })();
 </script>
 </body>
