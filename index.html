@@ -77,7 +77,7 @@
   .clouds .c3 { color: color-mix(in srgb, var(--muted) 36%, var(--bg)); }
   .clouds .c5 { color: color-mix(in srgb, var(--muted) 30%, var(--bg)); }
   .clouds .c6 { color: color-mix(in srgb, var(--muted) 36%, var(--bg)); }
-  .clouds .sun { color: var(--accent); }
+  .clouds .sun { color: var(--accent); opacity: .42; }
   .skyline { position: absolute; inset: 0; z-index: 0; pointer-events: none; color: color-mix(in srgb, var(--muted) 42%, var(--bg)); }
   .skyline { mask-image: linear-gradient(to top, transparent 0, #000 46%); -webkit-mask-image: linear-gradient(to top, transparent 0, #000 46%); }
   .skyline svg { position: absolute; bottom: 0; height: auto; overflow: visible; }
@@ -87,7 +87,7 @@
   .skyline .parkhyatt { left: 40%; width: 100px; bottom: -30px; }
   .skyline .skytree { left: 64%; width: 44px; bottom: -40px; }
   .skyline .cocoon { left: 85%; width: 56px; bottom: -16px; }
-  .sunfix { position: fixed; left: 0; top: 0; z-index: -1; width: 150px; height: 150px; pointer-events: none; color: var(--accent); fill: var(--accent); fill-opacity: .14; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; filter: url(#sketch); will-change: transform; display: none; }
+  .sunfix { position: fixed; left: 0; top: 0; z-index: -1; width: 150px; height: 150px; pointer-events: none; color: var(--accent); fill: var(--accent); fill-opacity: .14; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; filter: url(#sketch); will-change: transform; opacity: .42; display: none; }
   .sunfix.on { display: block; }
   .fuji { opacity: 1; color: color-mix(in srgb, var(--muted) 55%, var(--bg)); }
   @media (prefers-color-scheme: dark) { .fuji .snow { fill: #ffffff; fill-opacity: .3; } }
