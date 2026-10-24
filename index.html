@@ -449,7 +449,7 @@
 })();
 </script>
 <script>
-/* The red sun rides along as you scroll, then sets behind Mt. Fuji in the Experience section. */
+/* The red sun rides along as you scroll, then sets behind Mt. Fuji in the Experience section. On phones it simply sinks behind the Tokyo skyline at the bottom of the header. */
 (function(){
   var hero=document.querySelector('.clouds .sun'), fuji=document.querySelector('.fuji'), sun=document.querySelector('.sunfix'), heroEl=document.querySelector('header.hero');
   if(!hero||!fuji||!sun||window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -467,7 +467,9 @@
     var h=hero.getBoundingClientRect(), x0=h.left+h.width/2, y0=h.top+h.height/2+sy;
     var f=fuji.getBoundingClientRect(), fw=f.width, fh=f.height;
     var cx, cy, vis='visible', m=1, sc=1, hb=heroEl.getBoundingClientRect().bottom;
-    if(fw===0){ cx=x0; cy=y0-sy; }
+    var mobile=window.matchMedia('(max-width: 720px)').matches;
+    if(mobile){ cx=x0; cy=y0; if(cy-hb>=-40) vis='hidden'; }
+    else if(fw===0){ cx=x0; cy=y0-sy; }
     else {
       var u=fh/150, sx=f.left+fw*(240/440), summit=f.top+sy+72*u;
       var Rt=Math.min(R,fh*0.22), rv=(Rt*0.92+3)/u; if(rv!==cacheR){ cacheR=rv; cacheY=hideY(rv); } var hy=cacheY;
