@@ -160,6 +160,12 @@
   .skills h3 { margin: 0 0 10px; font-size: 15px; }
   footer { padding: 40px 0 60px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
   footer .btns { margin-bottom: 16px; }
+.season-pick { display: flex; width: fit-content; align-items: center; gap: 2px; margin: 4px 0 18px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 13px; max-width: 100%; }
+@media (max-width: 720px) { .season-pick span { display: none; } .season-pick button { padding: 7px 10px; } }
+.season-pick span { padding: 0 10px 0 12px; color: var(--muted); white-space: nowrap; }
+.season-pick button { appearance: none; border: 0; background: transparent; color: var(--muted); font: inherit; font-weight: 600; padding: 7px 12px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+.season-pick button:hover { color: var(--text); }
+.season-pick button.on { background: var(--accent); color: #fff; }
   @media (max-width: 720px) {
     nav .wrap { height: auto; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; row-gap: 6px; }
   nav ul { width: 100%; gap: 16px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding-right: 24px; mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); }
@@ -443,6 +449,7 @@
     <a class="btn" href="https://www.linkedin.com/in/logan-rosson" target="_blank" rel="noopener">LinkedIn</a>
     <a class="btn" href="https://github.com/loganrosson" target="_blank" rel="noopener">GitHub</a>
   </div>
+  <div class="season-pick" role="group" aria-label="Preview a season"><span>Season</span><button type="button" data-season="auto">Auto</button><button type="button" data-season="spring">Spring</button><button type="button" data-season="summer">Summer</button><button type="button" data-season="fall">Fall</button><button type="button" data-season="winter">Winter</button></div>
   Salt Lake City, UT
 </div></footer>
 <script>
@@ -506,14 +513,19 @@
 (function(){
   var cv=document.querySelector('canvas.season');
   if(!cv||!cv.getContext||window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  function season(){
-    var m=/[?&]season=(\w+)/.exec(location.search); if(m) return m[1];
+  function autoSeason(){
     var mo=new Date().getMonth(), tz=(Intl.DateTimeFormat().resolvedOptions().timeZone||'');
     if(/^(Australia|Pacific\/(Auckland|Fiji)|Africa\/(Johannesburg|Windhoek|Maputo)|America\/(Sao_Paulo|Argentina|Santiago|Montevideo|Lima|La_Paz|Asuncion))/.test(tz)) mo=(mo+6)%12;
     return mo>=2&&mo<=4?'spring':mo>=5&&mo<=7?'summer':mo>=8&&mo<=10?'fall':'winter';
   }
-  var S=season(); if(!/^(spring|summer|fall|winter)$/.test(S)) return;
-  document.documentElement.setAttribute('data-season',S);
+  function valid(x){ return /^(spring|summer|fall|winter)$/.test(x); }
+  function urlSeason(){ var m=/[?&]season=(\w+)/.exec(location.search); return m?m[1]:''; }
+  function season(){
+    var u=urlSeason(); if(u) return u;
+    try{ var o=sessionStorage.getItem('season'); if(o) return o; }catch(e){}
+    return autoSeason();
+  }
+  var S=season();
   var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;
   var C={
     pink: dark?['rgba(246,170,190,.85)','rgba(240,150,175,.8)','rgba(252,200,214,.8)']:['rgba(226,120,150,.75)','rgba(214,100,135,.7)','rgba(236,150,172,.75)'],
@@ -532,7 +544,7 @@
     winter:function(){ var p=base(); p.kind='crystal'; p.s=rnd(5,11); p.rv=rnd(-0.012,0.012); return p; }
   };
   /* count on phones / on a 1440x900 screen, wind: base, gust strength, gust period, fall speed range */
-  var CFG={ spring:{n:[12,22],wind:[0.4,0.25,20],vy:[0.1,0.5]}, summer:{n:[8,14],wind:[0,0,1],vy:[0,0]}, fall:{n:[10,16],wind:[0.42,0.3,16],vy:[0.08,0.28]}, winter:{n:[9,16],wind:[0.2,0.15,24],vy:[0.2,0.5]} }[S];
+  var CFGS={ spring:{n:[12,22],wind:[0.4,0.25,20],vy:[0.1,0.5]}, summer:{n:[8,14],wind:[0,0,1],vy:[0,0]}, fall:{n:[10,16],wind:[0.42,0.3,16],vy:[0.08,0.28]}, winter:{n:[9,16],wind:[0.2,0.15,24],vy:[0.2,0.5]} }, CFG=CFGS[S]||CFGS.fall;
   var D={
     petal:function(c,p){ var s=p.s; c.fillStyle=p.col; c.beginPath(); c.moveTo(0,-s); c.bezierCurveTo(s*0.95,-s*0.55,s*0.85,s*0.55,0,s); c.bezierCurveTo(-s*0.85,s*0.55,-s*0.95,-s*0.55,0,-s); c.fill(); },
     seed:function(c,p){ var s=p.s; c.strokeStyle=C.fluff; c.lineWidth=1; c.beginPath(); c.moveTo(0,0); c.lineTo(0,s); c.stroke(); c.fillStyle=C.fluff; c.beginPath(); c.arc(0,s+1,1.4,0,6.28); c.fill(); c.beginPath(); for(var i=0;i<9;i++){ var a=-Math.PI/2+(i-4)*0.3; c.moveTo(0,0); c.lineTo(Math.cos(a)*s*0.7,Math.sin(a)*s*0.7); } c.stroke(); },
@@ -559,11 +571,24 @@
   /* The weather is pinned to the top of the page (it scrolls away with the header) and fades out as you scroll down. */
   /* Motion is scaled by real elapsed time, so 60Hz and 120Hz screens move at the same speed. */
   var last=0;
-  function frame(now){ if(!running) return; var dt=last?Math.min(2.5,(now-last)/16.667):1; last=now; var f=1-Math.min(1,window.scrollY/(window.innerHeight*0.55)); cv.style.opacity=f.toFixed(3); if(f>0) tick(dt); raf=requestAnimationFrame(frame); }
-  resize(); init(); raf=requestAnimationFrame(frame);
+  function frame(now){ if(!running||!active) return; var dt=last?Math.min(2.5,(now-last)/16.667):1; last=now; var f=1-Math.min(1,window.scrollY/(window.innerHeight*0.55)); cv.style.opacity=f.toFixed(3); if(f>0) tick(dt); raf=requestAnimationFrame(frame); }
+  var active=false;
+  function start(){ if(active) return; active=true; last=0; raf=requestAnimationFrame(frame); }
+  function stop(){ active=false; cancelAnimationFrame(raf); c.clearRect(0,0,W,H); }
+  function setSeason(name){
+    if(name==='auto'){ name=autoSeason(); try{ sessionStorage.removeItem('season'); }catch(e){} } else { try{ sessionStorage.setItem('season',name); }catch(e){} }
+    if(!valid(name)){ stop(); document.documentElement.removeAttribute('data-season'); return; }
+    S=name; CFG=CFGS[S]; document.documentElement.setAttribute('data-season',S); resize(); init(); start();
+  }
+  resize(); if(valid(S)){ document.documentElement.setAttribute('data-season',S); init(); start(); }
+  /* Footer season picker: try each season, then Auto to go back to the real calendar. Remembered for this tab only. */
+  var picks=document.querySelectorAll('.season-pick button');
+  function markPick(){ var cur=urlSeason(); if(!cur){ try{ cur=sessionStorage.getItem('season')||'auto'; }catch(e){ cur='auto'; } } for(var i=0;i<picks.length;i++) picks[i].classList.toggle('on',picks[i].getAttribute('data-season')===cur); }
+  for(var i=0;i<picks.length;i++) picks[i].addEventListener('click',function(){ if(urlSeason()) history.replaceState(null,'',location.pathname); setSeason(this.getAttribute('data-season')); markPick(); window.scrollTo({top:0,behavior:'smooth'}); });
+  markPick();
   /* Phones fire resize whenever the address bar slides in or out; only rebuild the scene when the width really changes. */
   window.addEventListener('resize',function(){ var w=cv.clientWidth; resize(); if(w!==W) init(); });
-  document.addEventListener('visibilitychange',function(){ running=!document.hidden; last=0; if(running){ cancelAnimationFrame(raf); raf=requestAnimationFrame(frame); } });
+  document.addEventListener('visibilitychange',function(){ running=!document.hidden; last=0; if(running&&active){ cancelAnimationFrame(raf); raf=requestAnimationFrame(frame); } });
   window.__seasonTick=tick; window.__seasonPs=function(){ return ps; };
 })();
 </script>
