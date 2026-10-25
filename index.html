@@ -113,7 +113,7 @@
     .skyline .g6 { left: 90%; width: 34px; bottom: -16px; }
   }
   .haze { position: absolute; left: 0; right: 0; bottom: 0; height: 96px; z-index: 0; pointer-events: none; background: linear-gradient(to top, var(--bg) 0, color-mix(in srgb, var(--bg) 85%, transparent) 40%, transparent 100%); }
-  .sunfix { position: fixed; left: 0; top: 0; z-index: -1; width: 150px; height: 150px; pointer-events: none; color: var(--accent); fill: var(--accent); fill-opacity: .14; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; filter: url(#sketch); will-change: transform; transform-origin: 50% 50%; opacity: .42; display: none; }
+  .sunfix { position: fixed; left: 0; top: 0; z-index: -1; width: 150px; height: 150px; pointer-events: none; color: var(--accent); fill: var(--accent); fill-opacity: .14; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; will-change: transform; transform-origin: 50% 50%; opacity: .42; display: none; }
   .sunfix.on { display: block; }
   .fuji { opacity: 1; color: color-mix(in srgb, var(--muted) 55%, var(--bg)); }
   @media (prefers-color-scheme: dark) { .fuji .snow { fill: #ffffff; fill-opacity: .3; } }
