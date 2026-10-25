@@ -166,6 +166,7 @@
 .season-pick button { appearance: none; border: 0; background: transparent; color: var(--muted); font: inherit; font-weight: 600; padding: 7px 12px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
 .season-pick button:hover { color: var(--text); }
 .season-pick button.on { background: var(--accent); color: #fff; }
+.season-pick[hidden] { display: none; }
   @media (max-width: 720px) {
     nav .wrap { height: auto; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; row-gap: 6px; }
   nav ul { width: 100%; gap: 16px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding-right: 24px; mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); }
@@ -449,7 +450,8 @@
     <a class="btn" href="https://www.linkedin.com/in/logan-rosson" target="_blank" rel="noopener">LinkedIn</a>
     <a class="btn" href="https://github.com/loganrosson" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="season-pick" role="group" aria-label="Preview a season"><span>Season</span><button type="button" data-season="auto">Auto</button><button type="button" data-season="spring">Spring</button><button type="button" data-season="summer">Summer</button><button type="button" data-season="fall">Fall</button><button type="button" data-season="winter">Winter</button></div>
+  <!-- Season picker is switched off. To show it again, delete the word "hidden" on the next line. -->
+  <div class="season-pick" hidden role="group" aria-label="Preview a season"><span>Season</span><button type="button" data-season="auto">Auto</button><button type="button" data-season="spring">Spring</button><button type="button" data-season="summer">Summer</button><button type="button" data-season="fall">Fall</button><button type="button" data-season="winter">Winter</button></div>
   Salt Lake City, UT
 </div></footer>
 <script>
@@ -522,7 +524,8 @@
   function urlSeason(){ var m=/[?&]season=(\w+)/.exec(location.search); return m?m[1]:''; }
   function season(){
     var u=urlSeason(); if(u) return u;
-    try{ var o=sessionStorage.getItem('season'); if(o) return o; }catch(e){}
+    var pk=document.querySelector('.season-pick');
+    if(pk&&!pk.hidden){ try{ var o=sessionStorage.getItem('season'); if(o) return o; }catch(e){} }
     return autoSeason();
   }
   var S=season();
