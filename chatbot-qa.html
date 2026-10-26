@@ -16,8 +16,8 @@ gtag('js', new Date()); gtag('config', 'G-X5ZJKV8DP0');
 <meta name="description" content="How Logan Rosson worked through a 32-check test plan on an AI support chatbot in a live Telegram group: conversation isolation, handovers, screenshots, leaked keys, prompt injection and load.">
 <meta name="author" content="Logan Rosson">
 <link rel="canonical" href="https://loganrosson.github.io/chatbot-qa.html">
-<meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f7f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c1411" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="https://github.com/loganrosson.png">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://loganrosson.github.io/chatbot-qa.html">
@@ -27,7 +27,7 @@ gtag('js', new Date()); gtag('config', 'G-X5ZJKV8DP0');
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #f7f7f5; --surface: #ffffff; --text: #16181d; --muted: #5b6270; --line: #e3e4e8;
@@ -110,6 +110,21 @@ footer .btns { margin-bottom: 16px; }
   .table th, .table td { padding: 10px; }
   .table td.n, .table th.n { width: 64px; }
 }
+
+  /* ===== Theme: Pine & Snow (matches the home page) ===== */
+  :root { --bg: #f4f7f5; --surface: #ffffff; --text: #132019; --muted: #55665c; --line: #dbe4de;
+  --accent: #2f7a55; --accent-soft: #e1f0e7; --chip: #ecf2ee; --on-accent: #ffffff;
+  --display-font: 'Lora', Georgia, 'Times New Roman', serif; --body-font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0c1411; --surface: #121d18; --text: #e5ede8; --muted: #94a79b; --line: #1f2e27;
+  --accent: #86c9a0; --accent-soft: #16291f; --chip: #18261f; --on-accent: #0c1411; } }
+  body { font-family: var(--body-font); }
+  nav .brand, header.case h1, h3 { font-family: var(--display-font); }
+  nav .brand { font-weight: 600; letter-spacing: .01em; }
+  header.case h1 { font-weight: 600; letter-spacing: -0.01em; }
+  .btn { border-radius: 8px; }
+  .btn.primary { color: var(--on-accent); }
+  .btn:hover { filter: none; border-color: var(--accent); }
+  .btn.primary:hover { filter: brightness(1.08); }
 </style>
 </head>
 <body>

@@ -16,8 +16,8 @@
 <meta name="description" content="Logan Rosson: Information Systems (Honors) student at the University of Utah, graduating May 2027. Work at the intersection of business and technology: Python, SQL, Salesforce, IT support and data projects.">
 <meta name="author" content="Logan Rosson">
 <link rel="canonical" href="https://loganrosson.github.io/">
-<meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f7f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c1411" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="https://github.com/loganrosson.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://loganrosson.github.io/">
@@ -28,7 +28,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Logan Rosson","url":"https://loganrosson.github.io/","image":"https://github.com/loganrosson.png?size=400","email":"mailto:loganrosson@gmail.com","jobTitle":"Information Systems (Honors) student","affiliation":{"@type":"CollegeOrUniversity","name":"University of Utah, David Eccles School of Business"},"address":{"@type":"PostalAddress","addressLocality":"Salt Lake City","addressRegion":"UT"},"sameAs":["https://github.com/loganrosson","https://www.linkedin.com/in/logan-rosson"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #f7f7f5; --surface: #ffffff; --text: #16181d; --muted: #5b6270; --line: #e3e4e8;
@@ -143,6 +143,7 @@
   .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
   .card .links { margin-top: auto; padding-top: 8px; font-size: 14px; font-weight: 600; }
   .card .links a { color: var(--accent); text-decoration: none; }
+.card .links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
   .card.featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1.2fr 1fr; }
   .card.featured img { height: 100%; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid var(--line); }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -216,6 +217,32 @@
 .card.clickable .stretch::after { content: ""; position: absolute; inset: 0; z-index: 1; }
 .card.clickable .links a { position: relative; z-index: 2; }
 @media (prefers-reduced-motion: reduce) { .card.clickable, .card.clickable:hover { transition: none; transform: none; } }
+
+  /* ===== Theme: Pine & Snow (evergreen night, sage-jade accent, pale moon) ===== */
+  :root { --bg: #f4f7f5; --surface: #ffffff; --text: #132019; --muted: #55665c; --line: #dbe4de;
+  --accent: #2f7a55; --accent-soft: #e1f0e7; --chip: #ecf2ee; --on-accent: #ffffff; --sun: #9aa79f;
+  --display-font: 'Lora', Georgia, 'Times New Roman', serif; --body-font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0c1411; --surface: #121d18; --text: #e5ede8; --muted: #94a79b; --line: #1f2e27;
+  --accent: #86c9a0; --accent-soft: #16291f; --chip: #18261f; --on-accent: #0c1411; --sun: #e6e3d3; } }
+
+  /* ---- theme: typography + components ---- */
+  body { font-family: var(--body-font); }
+  .hero h1, nav .brand, h2, .card h3, .item h3, .skills h3 { font-family: var(--display-font); }
+  .hero h1 { font-weight: 600; letter-spacing: -0.01em; }
+  nav .brand { font-weight: 600; letter-spacing: .01em; }
+  body { counter-reset: sec; }
+  h2 { font-size: 28px; text-transform: none; letter-spacing: -0.005em; color: var(--text); font-weight: 600; display: flex; align-items: baseline; gap: 14px; }
+  h2::before { counter-increment: sec; content: counter(sec, decimal-leading-zero); font-family: var(--body-font); font-size: 12px; font-weight: 600; letter-spacing: .14em; color: var(--accent); }
+  .btn { border-radius: 8px; background: transparent; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .btn:hover { filter: none; border-color: var(--accent); }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .card .links a { color: var(--accent); }
+  .badge { background: var(--accent-soft); color: var(--accent); }
+  .season-pick button.on { background: var(--accent); color: var(--on-accent); }
+  .sunfix, .clouds .sun { color: var(--sun); fill: var(--sun); }
+  /* five skill groups: on 4-column and 2-column screens the fifth spans the full row instead of sitting alone */
+  @media (min-width: 1008px), (max-width: 761px) { .skills > div:nth-child(5):last-child { grid-column: 1 / -1; } }
 </style>
 </head>
 <body>
@@ -254,7 +281,7 @@
         <h3>Pronto: Account Takeover Response on Salesforce</h3>
         <p>My team and I built a custom Salesforce solution so hijacked customer accounts can reach a real person fast. We built an Experience Cloud site with a no-login report form, an Agentforce service agent, and 10 custom flows that route, protect, and time every case.</p>
         <div class="tags"><span class="tag">Salesforce</span><span class="tag">Agentforce</span><span class="tag">Experience Cloud</span><span class="tag">Flows</span><span class="tag">Dashboards</span></div>
-        <div class="links"><a href="https://github.com/loganrosson/pronto-salesforce-ideathon" target="_blank" rel="noopener">View on GitHub →</a></div>
+        <div class="links"><a href="https://github.com/loganrosson/pronto-salesforce-ideathon" target="_blank" rel="noopener">View on GitHub →</a><a href="https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Floganrosson%2Fpronto-salesforce-ideathon%2Fmain%2Fpresentation%2FPronto_IDEAthon_Deck.pptx" target="_blank" rel="noopener">View slides →</a></div>
       </div>
     </article>
 
