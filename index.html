@@ -280,6 +280,25 @@
   .cover .card-t { fill: currentColor; stroke: none; font: 600 18px/1 var(--display-font); }
   .cover .suit { fill: currentColor; stroke: none; font: 34px/1 var(--display-font); }
   .card.featured .cover { height: 100%; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid var(--line); }
+  /* ---- Easter egg: a narwhal peeks out of the sea, at most once a visit and only after a few minutes; never on phones (add ?narwhal to the URL to see it right away) ---- */
+  .narwhal { position: absolute; bottom: 46px; left: 50%; width: clamp(64px, 6.5vw, 84px); aspect-ratio: 120 / 90; pointer-events: none; z-index: 0; visibility: hidden; color: color-mix(in srgb, var(--muted) 78%, var(--text)); --nw-body: color-mix(in srgb, var(--muted) 26%, var(--bg)); }
+  .narwhal.go { visibility: visible; }
+  @media (max-width: 720px), (pointer: coarse) { .narwhal { display: none; } }
+  .narwhal.flip { transform: scaleX(-1); }
+  .nw-clip { position: absolute; bottom: 0; overflow: hidden; }
+  .nw-head { left: 0; width: 100%; height: 100%; }
+  .nw { display: block; width: 100%; height: auto; transform: translateY(105%); transform-origin: 50% 100%; }
+  .nw-body { fill: var(--nw-body); }
+  .nw-tusk { fill: #fbf8f0; }
+  .nw-eye, .nw-shine { fill: #ffffff; }
+  .nw-blush { fill: #f2a7b5; fill-opacity: .55; }
+  .nw-spots { fill: currentColor; opacity: .3; }
+  .nw-water { position: absolute; left: -26%; width: 152%; bottom: -4px; height: auto; opacity: 0; color: color-mix(in srgb, var(--muted) 55%, var(--bg)); }
+  .nw-water .nw-sea { fill: var(--bg); }
+  .narwhal.go .nw { animation: nw-peek 5.6s ease-in-out both; }
+  .narwhal.go .nw-water { animation: nw-water 5.6s ease-in-out both; }
+  @keyframes nw-peek { 0% { transform: translateY(105%); } 12% { transform: translateY(-5%) rotate(-3deg); } 18% { transform: translateY(0) rotate(-5deg); } 30% { transform: translateY(3%) rotate(3deg); } 42% { transform: translateY(0) rotate(-4deg); } 54% { transform: translateY(4%) rotate(2deg); } 66% { transform: translateY(6%) rotate(0); } 84% { transform: translateY(105%); } 100% { transform: translateY(105%); } }
+  @keyframes nw-water { 0% { opacity: 0; } 12% { opacity: 1; } 86% { opacity: 1; } 100% { opacity: 0; } }
 </style>
 </head>
 <body>
@@ -532,6 +551,7 @@
 <section id="education">
   <svg class="sun-rise" viewBox="0 0 140 70" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M24 66a46 46 0 0 1 92 0Z" stroke="none"/><path d="M24 66a46 46 0 0 1 92 0"/><path class="cloud" d="M2 46h44q7 0 7-6M14 54h30"/><path class="cloud" d="M96 36h40M84 44h34q6 0 6 5"/></svg>
   <svg class="waves" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><defs><pattern id="waveA" x="0" y="20" width="84" height="22" patternUnits="userSpaceOnUse"><path filter="url(#sketch)" d="M6 16q10-11 24-6q-8-2-10 5M30 10q8 5 20 6q12 0 22-5"/></pattern><pattern id="waveB" x="0" y="0" width="120" height="16" patternUnits="userSpaceOnUse"><path filter="url(#sketch)" d="M-2 9c14-6 26-6 40 0s26 6 40 0s30-6 44 0"/></pattern></defs><rect class="w2" x="0" y="0" width="6000" height="16" fill="url(#waveB)" stroke="none" opacity=".55"/><rect class="w1" x="0" y="20" width="6000" height="22" fill="url(#waveA)" stroke="none"/></svg>
+  <div class="narwhal" aria-hidden="true"><div class="nw-clip nw-head"><svg class="nw" viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketch)"><path class="nw-tusk" d="M38 59L5 15L46 54Z"/><path d="M32.8 53.1L38.4 48.3M27.9 46.4L32.5 42.5M23 39.6L26.6 36.6M18.1 32.9L20.7 30.7M13.2 26.2L14.8 24.8M9.9 21.7L10.9 20.9" stroke-width="1.6"/><path class="nw-body" d="M33 112V94C30 74 37 57 52 51C63 47 75 48 85 55C95 62 99 76 99 94V112Z"/><path d="M41 78q6 5 13 1"/></g><ellipse class="nw-blush" cx="49" cy="84" rx="5.4" ry="3.3" stroke="none"/><circle class="nw-eye" cx="59" cy="67" r="6" stroke-width="1.8"/><circle cx="58" cy="68" r="3.6" fill="currentColor" stroke="none"/><circle class="nw-shine" cx="56.5" cy="66.2" r="1.4" stroke="none"/><g class="nw-spots" stroke="none"><circle cx="80" cy="58" r="2"/><circle cx="90" cy="67" r="1.8"/><circle cx="76" cy="70" r="1.5"/><circle cx="93" cy="81" r="1.7"/><circle cx="83" cy="80" r="1.3"/><circle cx="70" cy="56" r="1.2"/></g></svg></div><svg class="nw-water" viewBox="0 0 172 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" filter="url(#sketch)"><path class="nw-sea" stroke="none" d="M0 9.5c10-5 20-5 30 0s18 5 28 0s18-5 28 0s18 5 28 0s18-5 28 0s18 5 30 0V16H0Z"/><path class="nw-line" d="M2 9c10-5 18-5 28 0s18 5 28 0s18-5 28 0s18 5 28 0s18-5 28 0s18 5 28 0"/><path d="M16 14h12M138 14h14M10 5q5-4 10-1M150 4q5-3 10 1"/></svg></div>
   <svg class="boat" viewBox="0 0 130 84" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M78 54V14"/><path d="M78 54V14M78 20h12M78 20h-12"/><circle class="fill" cx="90" cy="27" r="4"/><circle class="fill" cx="66" cy="27" r="4"/><path d="M90 20v3M66 20v3"/><path class="fill" d="M40 54V36h24v18Z"/><path d="M46 42h6v6h-6z"/><path class="fill" d="M10 52q6 12 16 14h76q16-4 24-32q-10 14-24 18Z"/><path d="M14 58h92"/></svg>
   <svg class="gulls" viewBox="0 0 120 50" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><g transform="translate(10 24) scale(1.1)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="1.0s" begin="0s" repeatCount="indefinite"/></path></g><g transform="translate(58 6) scale(0.85)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="1.15s" begin="-0.4s" repeatCount="indefinite"/></path></g><g transform="translate(86 30) scale(0.7)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 6q6 2 12 0q6 2 12 0;M0 6q6-6 12 0q6-6 12 0" dur="0.9s" begin="-0.7s" repeatCount="indefinite"/></path></g></svg>
   <div class="wrap">
@@ -704,6 +724,33 @@
   window.addEventListener('resize',function(){ var w=cv.clientWidth; resize(); if(w!==W) init(); });
   document.addEventListener('visibilitychange',function(){ running=!document.hidden; last=0; if(running&&active){ cancelAnimationFrame(raf); raf=requestAnimationFrame(frame); } });
   window.__seasonTick=tick; window.__seasonPs=function(){ return ps; };
+})();
+</script>
+<script>
+/* Easter egg: very rarely a narwhal peeks out of the sea at the bottom of Education, then dives again.
+   At most once a visit, at a random moment 4 to 8 minutes in, and only once you have scrolled to the sea. Never on phones.
+   Add ?narwhal to the URL to see it about 2 seconds after the sea is on screen. */
+(function(){
+  var n=document.querySelector('.narwhal'), sea=document.querySelector('#education .waves');
+  if(!n||!sea||!window.IntersectionObserver||window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 720px), (pointer: coarse)').matches) return;
+  var visible=false, pending=false, done=false, timer=0, demo=/[?&]narwhal\b/.test(location.search);
+  function spot(){ /* somewhere along the sea that is clear of the sun and the boat */
+    var sec=n.parentNode.getBoundingClientRect(), w=n.offsetWidth, avoid=[];
+    ['.sun-rise','.boat'].forEach(function(q){ var e=n.parentNode.querySelector(q); if(e&&e.offsetParent!==null){ var r=e.getBoundingClientRect(); avoid.push([r.left-sec.left-12,r.right-sec.left+12]); } });
+    for(var i=0;i<30;i++){ var x=sec.width*(0.06+Math.random()*0.8); if(x+w>sec.width-8) continue; if(avoid.every(function(a){ return x+w<a[0]||x>a[1]; })) return x; }
+    return sec.width/2-w/2;
+  }
+  function pop(){
+    if(done) return; done=true; pending=false;
+    n.style.left=spot()+'px'; n.classList.toggle('flip',Math.random()<0.5);
+    n.classList.remove('go'); void n.offsetWidth; n.classList.add('go');
+    setTimeout(function(){ n.classList.remove('go'); },5800);
+    if(window.gtag) gtag('event','narwhal_peek');
+  }
+  function due(){ if(visible) pop(); else pending=true; }
+  new IntersectionObserver(function(es){ visible=es[0].isIntersecting; if(visible&&pending) setTimeout(function(){ if(visible) pop(); },1200); },{threshold:0.5}).observe(sea);
+  timer=setTimeout(due,demo?1500:240000+Math.random()*240000);
+  window.__narwhal=function(){ done=false; pop(); };
 })();
 </script>
 </body>
