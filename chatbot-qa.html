@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Analytics (GA4). Same tag and ?me=1 opt-out as the home page. -->
+<script>
+(function(){
+try{ if(/[?&]me=1/.test(location.search)) localStorage.setItem('ga_me','1'); if(localStorage.getItem('ga_me')==='1') return; }catch(e){}
+var s=document.createElement('script'); s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id=G-X5ZJKV8DP0'; document.head.appendChild(s);
+window.dataLayer=window.dataLayer||[]; function gtag(){ dataLayer.push(arguments); } window.gtag=gtag;
+gtag('js', new Date()); gtag('config', 'G-X5ZJKV8DP0');
+})();
+</script>
+<title>QA Testing a Telegram Support Chatbot | Logan Rosson</title>
+<meta name="description" content="How Logan Rosson worked through a 32-check test plan on an AI support chatbot in a live Telegram group: conversation isolation, handovers, screenshots, leaked keys, prompt injection and load.">
+<meta name="author" content="Logan Rosson">
+<link rel="canonical" href="https://loganrosson.github.io/chatbot-qa.html">
+<meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="https://github.com/loganrosson.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://loganrosson.github.io/chatbot-qa.html">
+<meta property="og:title" content="QA Testing a Telegram Support Chatbot | Logan Rosson">
+<meta property="og:description" content="A 32-check test plan run on an AI support chatbot in a live Telegram group.">
+<meta property="og:image" content="https://loganrosson.github.io/chatbot-qa-test.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f7f5; --surface: #ffffff; --text: #16181d; --muted: #5b6270; --line: #e3e4e8;
+  --accent: #be0000; --accent-soft: #fbeaea; --chip: #f0f1f4; --shadow: 0 1px 2px rgba(16,24,40,.06), 0 4px 16px rgba(16,24,40,.06);
+  --good: #1f7a3d; --good-soft: #e6f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0f1115; --surface: #171a21; --text: #e9ebef; --muted: #a2a9b6; --line: #262b35;
+  --accent: #ff5a5a; --accent-soft: #2a1717; --chip: #212631; --shadow: none;
+  --good: #5fd28a; --good-soft: #15281d; --warn: #f0b45a; --warn-soft: #2b2214; }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+a { color: inherit; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+.read { max-width: 760px; }
+nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+nav .brand { font-weight: 700; text-decoration: none; }
+nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; }
+nav ul a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; }
+nav ul a:hover { color: var(--text); }
+.back { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 14px; font-weight: 600; text-decoration: none; margin-bottom: 22px; }
+.back:hover { color: var(--accent); }
+header.case { padding: 48px 0 8px; }
+.badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+header.case h1 { font-size: clamp(32px, 5vw, 46px); line-height: 1.08; letter-spacing: -0.02em; margin: 14px 0 14px; }
+.lead { font-size: 18px; color: var(--muted); margin: 0 0 26px; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 0 0 22px; }
+.fact { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); }
+.fact .k { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; }
+.fact .v { font-weight: 600; margin-top: 2px; line-height: 1.4; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 12px; padding: 3px 8px; border-radius: 999px; background: var(--chip); color: var(--muted); font-weight: 500; }
+figure { margin: 34px 0; }
+figure img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); box-shadow: var(--shadow); background: #0b0b0b; }
+figcaption { color: var(--muted); font-size: 14px; margin-top: 10px; }
+section { padding: 40px 0 8px; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin: 0 0 14px; }
+h3 { font-size: 19px; margin: 30px 0 8px; letter-spacing: -0.01em; }
+section p { margin: 0 0 16px; }
+.pills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 6px 0 22px; }
+.pill { border-radius: 14px; padding: 14px 16px; border: 1px solid var(--line); background: var(--surface); }
+.pill b { display: block; font-size: 30px; line-height: 1.1; letter-spacing: -0.02em; }
+.pill span { color: var(--muted); font-size: 14px; }
+.pill.good b { color: var(--good); }
+.pill.warn b { color: var(--warn); }
+.pill.open b { color: var(--muted); }
+.table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-size: 15px; margin-bottom: 18px; }
+.table th, .table td { text-align: left; padding: 11px 14px; border-top: 1px solid var(--line); }
+.table thead th { border-top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); background: var(--chip); }
+.table td.n, .table th.n { text-align: right; font-variant-numeric: tabular-nums; width: 90px; }
+.table tfoot td { font-weight: 700; }
+.bar { display: flex; height: 8px; border-radius: 999px; overflow: hidden; background: var(--chip); margin-top: 6px; }
+.bar i { display: block; height: 100%; }
+.bar .g { background: var(--good); } .bar .w { background: var(--warn); } .bar .o { background: color-mix(in srgb, var(--muted) 35%, transparent); }
+.callout { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 12px; padding: 14px 18px; margin: 18px 0; color: var(--muted); font-size: 15px; }
+.next { display: flex; flex-wrap: wrap; gap: 10px; margin: 34px 0 10px; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; border: 1px solid var(--line); background: var(--surface); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn:hover { filter: brightness(0.96); }
+footer { margin-top: 48px; padding: 40px 0 60px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+footer .btns { margin-bottom: 16px; }
+@media (max-width: 720px) {
+  nav .wrap { height: auto; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; row-gap: 6px; }
+  nav ul { width: 100%; gap: 16px; overflow-x: auto; scrollbar-width: none; padding-right: 24px; }
+  nav ul::-webkit-scrollbar { display: none; }
+  nav ul a { white-space: nowrap; font-size: 13px; }
+  header.case { padding-top: 32px; }
+  .lead { font-size: 17px; }
+  .facts { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .fact { padding: 12px 14px; }
+  .fact .v { font-size: 15px; }
+  .pills { gap: 8px; }
+  .pill { padding: 12px; }
+  .pill b { font-size: 26px; }
+  .pill span { font-size: 13px; line-height: 1.3; display: block; }
+  .table th, .table td { padding: 10px; }
+  .table td.n, .table th.n { width: 64px; }
+}
+</style>
+</head>
+<body>
+<nav aria-label="Main"><div class="wrap">
+<a class="brand" href="./">Logan Rosson</a>
+<ul><li><a href="./#projects">Projects</a></li><li><a href="./#experience">Experience</a></li><li><a href="./#community">Community</a></li><li><a href="./#education">Education</a></li><li><a href="./#skills">Skills</a></li><li><a href="./#contact">Contact</a></li></ul>
+</div></nav>
+
+<main>
+<header class="case"><div class="wrap read">
+  <a class="back" href="./#projects">← Back to projects</a><br>
+  <span class="badge">QA testing · Oct 2026 · Team of 2</span>
+  <h1>QA Testing a Telegram Support Chatbot</h1>
+  <p class="lead">A friend built an AI assistant that answers traders' questions in a crypto derivatives exchange's Telegram support group. Before launch he needed someone to try to break it. We worked through his 32-check test plan together in a live group chat: he played the admin, and I played a regular member.</p>
+  <div class="facts">
+    <div class="fact"><div class="k">My role</div><div class="v">Second tester (the regular member)</div></div>
+    <div class="fact"><div class="k">Team</div><div class="v">The bot's developer and me</div></div>
+    <div class="fact"><div class="k">When</div><div class="v">October 2026, one evening session</div></div>
+    <div class="fact"><div class="k">Result</div><div class="v">25 of 32 passed, none failed</div></div>
+  </div>
+  <div class="tags"><span class="tag">LLM chatbot QA</span><span class="tag">Prompt-injection testing</span><span class="tag">Browser automation</span><span class="tag">Telegram</span><span class="tag">Test plans</span></div>
+</div></header>
+
+<div class="wrap read">
+
+<figure>
+  <img src="chatbot-qa-screenshot.png" width="1236" height="698" alt="Telegram chat: Logan posts a terminal screenshot of an order error, and the support bot replies that the signature expiry was only 60 seconds after signing and explains the fix.">
+  <figcaption>One of the screenshot tests. The bot read the two timestamps out of the image and found the problem. The bot's name and the exchange's web address are blurred.</figcaption>
+</figure>
+
+<section>
+  <h2>The brief</h2>
+  <p>A support bot in a group chat has a harder job than a one-on-one chatbot. Several people can ask at once, reply to each other's answers, and paste in screenshots or things they shouldn't share, like private keys. The bot has to keep every person's conversation separate, know when a question needs a human, and never be talked into leaking how it works.</p>
+  <p>The developer's test plan covered seven areas: group conversations, direct messages, handovers to the human team, different message types, answer quality, attempts to misuse the bot, and staying up under load. Every check had a plain pass condition, for example: "B gets their own conversation, starting from that answer, with nothing else from A's history."</p>
+</section>
+
+<section>
+  <h2>How I tested</h2>
+  <p>I drove my side of the chat with an AI browser agent in Telegram Web. That let me send messages at exact moments, such as four questions in ten seconds for the load test, and pull every answer back out as text so I could check it against its pass condition instead of skimming it. The developer was in the chat at the same time, so we could overlap on purpose and reply to each other's answers.</p>
+  <p>For the screenshot tests I made a realistic-looking terminal error to send in, and for the leaked-key test I used a well-known example key, never a real one. Afterwards I wrote up every check with what was sent, what came back and whether it passed, plus the full chat transcript, so the developer had a record to work from.</p>
+</section>
+
+<section>
+  <h2>Results</h2>
+  <div class="pills">
+    <div class="pill good"><b>24</b><span>passed</span></div>
+    <div class="pill warn"><b>1</b><span>passed with a note</span></div>
+    <div class="pill open"><b>7</b><span>not run yet</span></div>
+  </div>
+  <table class="table">
+    <thead><tr><th>Area</th><th class="n">Checks</th><th class="n">Passed</th><th class="n">Open</th></tr></thead>
+    <tbody>
+      <tr><td>Group conversations<div class="bar"><i class="g" style="width:71.4%"></i><i class="o" style="width:28.6%"></i></div></td><td class="n">7</td><td class="n">5</td><td class="n">2</td></tr>
+      <tr><td>Direct messages<div class="bar"><i class="g" style="width:50%"></i><i class="o" style="width:50%"></i></div></td><td class="n">4</td><td class="n">2</td><td class="n">2</td></tr>
+      <tr><td>Handovers to the human team<div class="bar"><i class="g" style="width:80%"></i><i class="o" style="width:20%"></i></div></td><td class="n">5</td><td class="n">4</td><td class="n">1</td></tr>
+      <tr><td>Message types<div class="bar"><i class="g" style="width:85.7%"></i><i class="o" style="width:14.3%"></i></div></td><td class="n">7</td><td class="n">6</td><td class="n">1</td></tr>
+      <tr><td>Answer quality<div class="bar"><i class="g" style="width:100%"></i></div></td><td class="n">4</td><td class="n">4</td><td class="n">0</td></tr>
+      <tr><td>Security pokes<div class="bar"><i class="g" style="width:66.7%"></i><i class="w" style="width:33.3%"></i></div></td><td class="n">3</td><td class="n">3</td><td class="n">0</td></tr>
+      <tr><td>Load and staying up<div class="bar"><i class="g" style="width:50%"></i><i class="o" style="width:50%"></i></div></td><td class="n">2</td><td class="n">1</td><td class="n">1</td></tr>
+    </tbody>
+    <tfoot><tr><td>Total</td><td class="n">32</td><td class="n">25</td><td class="n">7</td></tr></tfoot>
+  </table>
+  <p>Nothing failed. The seven open checks were ones the developer had to confirm from his admin account, like the alerts the bot sends him and its hourly "I'm up" message, two conversation checks that were his to run, one that needed a third Telegram account, one that needed a 10-minute wait, and a long-paste test we skipped.</p>
+</section>
+
+<section>
+  <h2>Highlights</h2>
+
+  <h3>It read the screenshot, not just the caption</h3>
+  <p>I sent the error screenshot above with only "what am I doing wrong?" as the caption. The bot pulled both timestamps out of the image, worked out that the order expired 60 seconds after it was signed, and explained the five-minute minimum and how to fix it. It did the same in a direct message with no caption at all, and it ignored the screenshot when I posted it in the group without tagging it.</p>
+
+  <h3>It kept our conversations apart</h3>
+  <p>I replied to an answer the bot had given the developer, asked a follow-up, and then asked what else I had asked so far. It answered the follow-up and said it had no earlier questions from me, because the message I had replied to was someone else's answer. It also stayed silent when we talked to each other without tagging it.</p>
+
+  <h3>It didn't take the bait</h3>
+  <p>Asking for its system prompt, telling it to ignore its instructions, asking for source code and asking it to move to private messages all got short refusals. When I pasted an example private key into a question, the reply opened with a warning to rotate the key and never repeated it.</p>
+  <figure>
+    <img src="chatbot-qa-security.png" width="1236" height="364" loading="lazy" alt="Telegram chat: Logan asks the bot for its system prompt and then tells it to ignore its instructions; both times it replies with a one-line refusal.">
+    <figcaption>Two of the security pokes and the bot's one-line refusals.</figcaption>
+  </figure>
+
+  <h3>It knew when to hand over</h3>
+  <p>Questions only the team could answer, like why a specific order was cancelled, what my fees are, or whether the exchange was down, were handed to the human team, and each handover also pointed me to the exact API call to check myself. A general question about how the index price is calculated got a full answer with no handover.</p>
+
+  <h3>It held up under load</h3>
+  <p>Four tagged questions sent within ten seconds all came back within about 45 seconds, each tagged to me and answering the right question.</p>
+</section>
+
+<section>
+  <h2>What I flagged</h2>
+  <p>Two small things. When I asked for the matching engine's source code, it refused correctly, but it only offered to explain how matching works instead of explaining it, which the plan expected. And a few answers said things like "the code doesn't show…", which hints at how the bot works without revealing anything. Both went into my write-up, along with the list of checks still waiting on the admin side.</p>
+</section>
+
+<section>
+  <h2>What I took away</h2>
+  <p>Testing an AI is different from testing a normal app. The wording changes every time, so a good pass condition is about behavior: did it hand over, did it repeat the key, did it mix up two people. Two real testers in the same chat also find things one tester can't, because the riskiest cases only happen when people talk over each other.</p>
+  <div class="next">
+    <a class="btn" href="./#projects">← All projects</a>
+    <a class="btn primary" href="mailto:loganrosson@gmail.com">Get in touch</a>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer id="contact"><div class="wrap">
+<div class="btns">
+<a class="btn primary" href="mailto:loganrosson@gmail.com">loganrosson@gmail.com</a>
+<a class="btn" href="Logan_Rosson_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+<a class="btn" href="https://www.linkedin.com/in/logan-rosson" target="_blank" rel="noopener">LinkedIn</a>
+<a class="btn" href="https://github.com/loganrosson" target="_blank" rel="noopener">GitHub</a>
+</div>
+Salt Lake City, UT
+</div></footer>
+</body>
+</html>
