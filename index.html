@@ -17,7 +17,10 @@
 <meta name="author" content="Logan Rosson">
 <link rel="canonical" href="https://loganrosson.github.io/">
 <meta name="theme-color" content="#f4f7f5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0c1411" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0c1411" media="(prefers-color-scheme: dark) and (max-width: 0px)">
+<meta name="theme-color" content="#f4f7f5">
+<!-- Dark mode is off, so everyone sees the light version. To bring it back, delete every " and (max-width: 0px)" in this file and the color-scheme line below. -->
+<meta name="color-scheme" content="only light">
 <link rel="icon" href="https://github.com/loganrosson.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://loganrosson.github.io/">
@@ -34,7 +37,7 @@
     --bg: #f7f7f5; --surface: #ffffff; --text: #16181d; --muted: #5b6270; --line: #e3e4e8;
     --accent: #be0000; --accent-soft: #fbeaea; --chip: #f0f1f4; --shadow: 0 1px 2px rgba(16,24,40,.06), 0 4px 16px rgba(16,24,40,.06);
   }
-  @media (prefers-color-scheme: dark) {
+  @media (prefers-color-scheme: dark) and (max-width: 0px) {
     :root { --bg: #0f1115; --surface: #171a21; --text: #e9ebef; --muted: #a2a9b6; --line: #262b35;
       --accent: #ff5a5a; --accent-soft: #2a1717; --chip: #212631; --shadow: none; }
   }
@@ -56,7 +59,7 @@
   .rails, .fuji, .shinkansen { position: absolute; color: var(--muted); opacity: .55; pointer-events: none; display: none; }
   .fuji .fill, .shinkansen .fill { fill: var(--bg); }
   .fuji .snow { fill: currentColor; fill-opacity: .45; }
-  @media (prefers-color-scheme: dark) { .fuji .snow { fill: #ffffff; fill-opacity: .55; } }
+  @media (prefers-color-scheme: dark) and (max-width: 0px) { .fuji .snow { fill: #ffffff; fill-opacity: .55; } }
   .fuji { z-index: 0; right: 24px; bottom: 18px; width: 960px; height: auto; }
   .shinkansen { z-index: 1; opacity: 1; color: color-mix(in srgb, var(--muted) 55%, var(--bg)); left: 0; bottom: 18px; width: 360px; height: auto; transform: translateX(-400px); }
   .shinkansen.run { animation: shinkansen 5s linear 1; }
@@ -117,7 +120,7 @@
   .sunfix.on { display: block; }
   .season { position: absolute; top: 0; left: 0; width: 100%; height: 150vh; z-index: -1; pointer-events: none; }
   .fuji { opacity: 1; color: color-mix(in srgb, var(--muted) 55%, var(--bg)); }
-  @media (prefers-color-scheme: dark) { .fuji .snow { fill: #ffffff; fill-opacity: .3; } }
+  @media (prefers-color-scheme: dark) and (max-width: 0px) { .fuji .snow { fill: #ffffff; fill-opacity: .3; } }
   @keyframes fly { 0% { transform: translate(-120px, 0); } 25% { transform: translate(25vw, 6px); } 50% { transform: translate(50vw, -2px); } 75% { transform: translate(75vw, 5px); } 100% { transform: translate(calc(100vw + 40px), 0); } }
   .flock.sky { inset: auto 0 104px 0; height: 60px; display: none; z-index: 1; }
   .flock .b3 { top: 6px; width: 58px; animation-duration: 44s; animation-delay: -30s; }
@@ -222,7 +225,7 @@
   :root { --bg: #f4f7f5; --surface: #ffffff; --text: #132019; --muted: #55665c; --line: #dbe4de;
   --accent: #2f7a55; --accent-soft: #e1f0e7; --chip: #ecf2ee; --on-accent: #ffffff; --sun: #9aa79f;
   --display-font: 'Lora', Georgia, 'Times New Roman', serif; --body-font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #0c1411; --surface: #121d18; --text: #e5ede8; --muted: #94a79b; --line: #1f2e27;
+  @media (prefers-color-scheme: dark) and (max-width: 0px) { :root { --bg: #0c1411; --surface: #121d18; --text: #e5ede8; --muted: #94a79b; --line: #1f2e27;
   --accent: #86c9a0; --accent-soft: #16291f; --chip: #18261f; --on-accent: #0c1411; --sun: #e6e3d3; } }
 
   /* ---- theme: typography + components ---- */
@@ -243,6 +246,16 @@
   .sunfix, .clouds .sun { color: var(--sun); fill: var(--sun); }
   /* five skill groups: on 4-column and 2-column screens the fifth spans the full row instead of sitting alone */
   @media (min-width: 1008px), (max-width: 761px) { .skills > div:nth-child(5):last-child { grid-column: 1 / -1; } }
+  /* ---- Projects: See more ---- */
+  .grid.collapsed .extra { display: none; }
+  .grid .extra.reveal { animation: rise .45s ease backwards; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+  .more-wrap { display: flex; justify-content: center; margin-top: 26px; }
+  .see-more { font: inherit; font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; gap: 10px; }
+  .see-more::after { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s ease; }
+  .see-more[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }
+  .see-more[hidden] { display: none; }
+  @media (prefers-reduced-motion: reduce) { .grid .extra.reveal { animation: none; } .see-more::after { transition: none; } }
 </style>
 </head>
 <body>
@@ -273,12 +286,12 @@
 
 <section id="projects"><div class="wrap">
   <h2>Projects</h2>
-  <div class="grid">
-    <article class="card featured">
+  <div class="grid" id="project-grid">
+    <article class="card featured clickable">
       <img src="https://raw.githubusercontent.com/loganrosson/pronto-salesforce-ideathon/main/01-site-home.png" alt="Pronto customer site built on Salesforce Experience Cloud" loading="lazy">
       <div class="body">
         <span class="badge">Salesforce IDEAthon · Oct 2026 · Team of 3</span>
-        <h3>Pronto: Account Takeover Response on Salesforce</h3>
+        <h3><a class="stretch" href="https://github.com/loganrosson/pronto-salesforce-ideathon" target="_blank" rel="noopener">Pronto: Account Takeover Response on Salesforce</a></h3>
         <p>My team and I built a custom Salesforce solution so hijacked customer accounts can reach a real person fast. We built an Experience Cloud site with a no-login report form, an Agentforce service agent, and 10 custom flows that route, protect, and time every case.</p>
         <div class="tags"><span class="tag">Salesforce</span><span class="tag">Agentforce</span><span class="tag">Experience Cloud</span><span class="tag">Flows</span><span class="tag">Dashboards</span></div>
         <div class="links"><a href="https://github.com/loganrosson/pronto-salesforce-ideathon" target="_blank" rel="noopener">View on GitHub →</a><a href="https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Floganrosson%2Fpronto-salesforce-ideathon%2Fmain%2Fpresentation%2FPronto_IDEAthon_Deck.pptx" target="_blank" rel="noopener">View slides →</a></div>
@@ -306,56 +319,6 @@
     </article>
 
     <article class="card">
-      <img src="https://raw.githubusercontent.com/loganrosson/is4420-sql-midterm-study-tool/main/docs/sqllab.png" alt="SQL Lab stepping through a GROUP BY query" loading="lazy">
-      <div class="body">
-        <h3>SQL Study Tool &amp; SQL Lab</h3>
-        <p>I built this to feature ~170 practice questions verified by running real queries. It includes a lab feature that replays any SELECT clause by clause, letting you literally see how the rows change at each step.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">SQLite</span><span class="tag">Tkinter</span></div>
-        <div class="links"><a href="https://github.com/loganrosson/is4420-sql-midterm-study-tool" target="_blank" rel="noopener">View on GitHub →</a></div>
-      </div>
-    </article>
-
-    <article class="card">
-      <img src="https://raw.githubusercontent.com/loganrosson/is4440-networking-midterm-trainer/main/docs/lab.png" alt="Subnetting lab showing a worked solution in binary" loading="lazy">
-      <div class="body">
-        <h3>Networking &amp; Subnetting Trainer</h3>
-        <p>Features over 350 Network+ style questions and a timed exam simulation. I also designed interactive labs that walk through subnetting, routing, and frame-traversal problems step by step.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Networking</span><span class="tag">Subnetting</span></div>
-        <div class="links"><a href="https://github.com/loganrosson/is4440-networking-midterm-trainer" target="_blank" rel="noopener">View on GitHub →</a></div>
-      </div>
-    </article>
-
-    <article class="card">
-      <img src="https://raw.githubusercontent.com/loganrosson/is4085-python-midterm-study-tool/main/docs/devmode.png" alt="Dev Mode stepping through Python code" loading="lazy">
-      <div class="body">
-        <h3>Python Study Tool with Code Stepper</h3>
-        <p>Runs each question's code in a sandbox and explains every miss. My favorite feature is "Dev Mode," which traces the program line by line so you can visualize the call stack and variable history in real time.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">sys.settrace</span><span class="tag">Tkinter</span></div>
-        <div class="links"><a href="https://github.com/loganrosson/is4085-python-midterm-study-tool" target="_blank" rel="noopener">View on GitHub →</a></div>
-      </div>
-    </article>
-
-    <article class="card">
-      <img src="https://raw.githubusercontent.com/loganrosson/is4487-analytics-midterm-trainer/main/docs/question.png" alt="Business analytics question with pandas code" loading="lazy">
-      <div class="body">
-        <h3>Business Analytics Trainer</h3>
-        <p>A practice suite featuring business cases and a custom "Code Lab" that executes pandas code one statement at a time on real data sets, showing you exactly what changes.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Data analytics</span></div>
-        <div class="links"><a href="https://github.com/loganrosson/is4487-analytics-midterm-trainer" target="_blank" rel="noopener">View on GitHub →</a></div>
-      </div>
-    </article>
-
-    <article class="card">
-      <div class="body">
-        <span class="badge">AI · Text-to-speech</span>
-        <h3>Desktop Book Reader</h3>
-        <p>I wanted a better way to listen to documents offline, so I built an app that reads PDFs and Word docs aloud with a local neural voice model, highlighting each sentence as it goes. It can also export whole page ranges as audiobooks, generated in parallel across CPU threads.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">ONNX</span><span class="tag">Kokoro TTS</span><span class="tag">Threading</span></div>
-        <div class="links"><a href="https://github.com/loganrosson/desktop-book-reader" target="_blank" rel="noopener">View on GitHub →</a></div>
-      </div>
-    </article>
-
-    <article class="card">
       <div class="body">
         <span class="badge">Honors thesis · Expected Apr 2027</span>
         <h3>Automated Financial Data Pipeline</h3>
@@ -364,24 +327,95 @@
       </div>
     </article>
 
-    <article class="card">
+    <article class="card clickable">
+      <img src="https://raw.githubusercontent.com/loganrosson/is4420-sql-midterm-study-tool/main/docs/sqllab.png" alt="SQL Lab stepping through a GROUP BY query" loading="lazy">
       <div class="body">
-        <h3>Music Cover Maker</h3>
+        <h3><a class="stretch" href="https://github.com/loganrosson/is4420-sql-midterm-study-tool" target="_blank" rel="noopener">SQL Study Tool &amp; SQL Lab</a></h3>
+        <p>I built this to feature ~170 practice questions verified by running real queries. It includes a lab feature that replays any SELECT clause by clause, letting you literally see how the rows change at each step.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">SQLite</span><span class="tag">Tkinter</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/is4420-sql-midterm-study-tool" target="_blank" rel="noopener">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="card clickable">
+      <img src="https://raw.githubusercontent.com/loganrosson/is4487-analytics-midterm-trainer/main/docs/question.png" alt="Business analytics question with pandas code" loading="lazy">
+      <div class="body">
+        <h3><a class="stretch" href="https://github.com/loganrosson/is4487-analytics-midterm-trainer" target="_blank" rel="noopener">Business Analytics Trainer</a></h3>
+        <p>A practice suite featuring business cases and a custom "Code Lab" that executes pandas code one statement at a time on real data sets, showing you exactly what changes.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Data analytics</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/is4487-analytics-midterm-trainer" target="_blank" rel="noopener">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="card clickable">
+      <div class="body">
+        <span class="badge">AI · Text-to-speech</span>
+        <h3><a class="stretch" href="https://github.com/loganrosson/desktop-book-reader" target="_blank" rel="noopener">Desktop Book Reader</a></h3>
+        <p>I wanted a better way to listen to documents offline, so I built an app that reads PDFs and Word docs aloud with a local neural voice model, highlighting each sentence as it goes. It can also export whole page ranges as audiobooks, generated in parallel across CPU threads.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">ONNX</span><span class="tag">Kokoro TTS</span><span class="tag">Threading</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/desktop-book-reader" target="_blank" rel="noopener">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="extra card clickable">
+      <img src="https://raw.githubusercontent.com/loganrosson/is4085-python-midterm-study-tool/main/docs/devmode.png" alt="Dev Mode stepping through Python code" loading="lazy">
+      <div class="body">
+        <h3><a class="stretch" href="https://github.com/loganrosson/is4085-python-midterm-study-tool" target="_blank" rel="noopener">Python Study Tool with Code Stepper</a></h3>
+        <p>Runs each question's code in a sandbox and explains every miss. My favorite feature is "Dev Mode," which traces the program line by line so you can visualize the call stack and variable history in real time.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">sys.settrace</span><span class="tag">Tkinter</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/is4085-python-midterm-study-tool" target="_blank" rel="noopener">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="extra card clickable">
+      <img src="https://raw.githubusercontent.com/loganrosson/is4440-networking-midterm-trainer/main/docs/lab.png" alt="Subnetting lab showing a worked solution in binary" loading="lazy">
+      <div class="body">
+        <h3><a class="stretch" href="https://github.com/loganrosson/is4440-networking-midterm-trainer" target="_blank" rel="noopener">Networking &amp; Subnetting Trainer</a></h3>
+        <p>Features over 350 Network+ style questions and a timed exam simulation. I also designed interactive labs that walk through subnetting, routing, and frame-traversal problems step by step.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Networking</span><span class="tag">Subnetting</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/is4440-networking-midterm-trainer" target="_blank" rel="noopener">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="extra card clickable">
+      <div class="body">
+        <h3><a class="stretch" href="https://github.com/loganrosson/music-cover-maker" target="_blank" rel="noopener">Music Cover Maker</a></h3>
         <p>A lightweight utility script that embeds cover art directly into MP3 files as ID3v2.3 front-cover frames so they display cleanly across Windows and Google Drive.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">mutagen</span></div>
         <div class="links"><a href="https://github.com/loganrosson/music-cover-maker" target="_blank" rel="noopener">View on GitHub →</a></div>
       </div>
     </article>
 
-    <article class="card">
+    <article class="extra card clickable">
       <div class="body">
-        <h3>Blackjack</h3>
+        <h3><a class="stretch" href="https://github.com/loganrosson/blackjack" target="_blank" rel="noopener">Blackjack</a></h3>
         <p>A terminal-based Blackjack game I built to handle dealer logic, soft/hard aces, split mechanics, and win tracking.</p>
         <div class="tags"><span class="tag">Python</span></div>
         <div class="links"><a href="https://github.com/loganrosson/blackjack" target="_blank" rel="noopener">View on GitHub →</a></div>
       </div>
     </article>
   </div>
+  <div class="more-wrap"><button type="button" class="btn see-more" aria-expanded="false" aria-controls="project-grid" hidden>See more projects</button></div>
+  <script>
+  /* Projects: the first seven show, the rest wait behind "See more". Without JavaScript every project simply shows. */
+  (function(){
+    var grid=document.getElementById('project-grid'), btn=document.querySelector('.see-more');
+    if(!grid||!btn) return;
+    var extra=grid.querySelectorAll('.extra'); if(!extra.length) return;
+    var more='See '+extra.length+' more project'+(extra.length>1?'s':''), less='Show fewer projects';
+    grid.classList.add('collapsed'); btn.textContent=more; btn.hidden=false;
+    btn.addEventListener('click',function(){
+      var opening=grid.classList.contains('collapsed'), top=btn.getBoundingClientRect().top;
+      grid.classList.toggle('collapsed',!opening);
+      btn.setAttribute('aria-expanded',opening?'true':'false'); btn.textContent=opening?less:more;
+      for(var i=0;i<extra.length;i++){ extra[i].classList.remove('reveal'); if(opening){ void extra[i].offsetWidth; extra[i].style.animationDelay=(i*70)+'ms'; extra[i].classList.add('reveal'); } }
+      /* when closing, keep the button where it was on screen instead of leaving you further down the page */
+      if(!opening) window.scrollTo({top:window.scrollY+btn.getBoundingClientRect().top-top,behavior:'instant'});
+      window.dispatchEvent(new Event('scroll'));
+      if(window.gtag) gtag('event', opening?'projects_see_more':'projects_show_fewer');
+    });
+  })();
+  </script>
 </div></section>
 
 <section id="experience">
@@ -576,7 +610,7 @@
     return autoSeason();
   }
   var S=season();
-  var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var dark=window.matchMedia('(prefers-color-scheme: dark) and (max-width: 0px)').matches;
   var C={
     pink: dark?['rgba(246,170,190,.85)','rgba(240,150,175,.8)','rgba(252,200,214,.8)']:['rgba(226,120,150,.75)','rgba(214,100,135,.7)','rgba(236,150,172,.75)'],
     fluff: dark?'rgba(222,226,232,.75)':'rgba(120,124,132,.6)',

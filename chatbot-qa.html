@@ -17,7 +17,10 @@ gtag('js', new Date()); gtag('config', 'G-X5ZJKV8DP0');
 <meta name="author" content="Logan Rosson">
 <link rel="canonical" href="https://loganrosson.github.io/chatbot-qa.html">
 <meta name="theme-color" content="#f4f7f5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0c1411" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0c1411" media="(prefers-color-scheme: dark) and (max-width: 0px)">
+<meta name="theme-color" content="#f4f7f5">
+<!-- Dark mode is off, so everyone sees the light version. To bring it back, delete every " and (max-width: 0px)" in this file and the color-scheme line below. -->
+<meta name="color-scheme" content="only light">
 <link rel="icon" href="https://github.com/loganrosson.png">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://loganrosson.github.io/chatbot-qa.html">
@@ -34,7 +37,7 @@ gtag('js', new Date()); gtag('config', 'G-X5ZJKV8DP0');
   --accent: #be0000; --accent-soft: #fbeaea; --chip: #f0f1f4; --shadow: 0 1px 2px rgba(16,24,40,.06), 0 4px 16px rgba(16,24,40,.06);
   --good: #1f7a3d; --good-soft: #e6f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
 }
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) and (max-width: 0px) {
   :root { --bg: #0f1115; --surface: #171a21; --text: #e9ebef; --muted: #a2a9b6; --line: #262b35;
   --accent: #ff5a5a; --accent-soft: #2a1717; --chip: #212631; --shadow: none;
   --good: #5fd28a; --good-soft: #15281d; --warn: #f0b45a; --warn-soft: #2b2214; }
@@ -115,7 +118,7 @@ footer .btns { margin-bottom: 16px; }
   :root { --bg: #f4f7f5; --surface: #ffffff; --text: #132019; --muted: #55665c; --line: #dbe4de;
   --accent: #2f7a55; --accent-soft: #e1f0e7; --chip: #ecf2ee; --on-accent: #ffffff;
   --display-font: 'Lora', Georgia, 'Times New Roman', serif; --body-font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #0c1411; --surface: #121d18; --text: #e5ede8; --muted: #94a79b; --line: #1f2e27;
+  @media (prefers-color-scheme: dark) and (max-width: 0px) { :root { --bg: #0c1411; --surface: #121d18; --text: #e5ede8; --muted: #94a79b; --line: #1f2e27;
   --accent: #86c9a0; --accent-soft: #16291f; --chip: #18261f; --on-accent: #0c1411; } }
   body { font-family: var(--body-font); }
   nav .brand, header.case h1, h3 { font-family: var(--display-font); }
