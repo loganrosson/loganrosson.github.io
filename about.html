@@ -152,12 +152,17 @@
   @media (min-width: 1700px) { .about .wrap, .about .wrap.read { max-width: 1320px; } .about-head { grid-template-columns: minmax(0, 1fr) 380px; gap: 48px; max-width: 1140px; } .about-head img { width: 210px; height: 210px; } .about section p, ul.fun { max-width: 960px; } .split.has-photo { grid-template-columns: minmax(0, 1fr) 380px; gap: 48px; max-width: 1140px; } }
   @media (max-width: 760px) { .split.has-photo { display: block; } .split.has-photo .photos { max-width: 520px; margin-top: 20px; } }
   @media (max-width: 720px) { .about-head { grid-template-columns: 1fr; gap: 18px; } .about-head img { justify-self: start; width: 120px; height: 120px; order: -1; } .about section h2 { font-size: 22px; } .snow { margin-top: 40px; } }
+  /* ---- Menu: just Projects and an "About me" pill ---- */
+  nav ul { align-items: center; }
+  nav ul a.nav-about { color: var(--accent); font-weight: 600; padding: 6px 14px; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 999px; }
+  nav ul a.nav-about:hover, nav ul a.nav-about[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
+  @media (max-width: 720px) { nav .wrap { height: 56px; flex-wrap: nowrap; padding-top: 0; padding-bottom: 0; } nav ul { width: auto; gap: 14px; overflow: visible; padding-right: 0; mask-image: none; -webkit-mask-image: none; } }
 </style>
 </head>
 <body class="about">
 <nav aria-label="Main"><div class="wrap">
   <a class="brand" href="./">Logan Rosson</a>
-  <ul><li><a href="about.html" aria-current="page">About</a></li><li><a href="./#projects">Projects</a></li><li><a href="./#experience">Experience</a></li><li><a href="./#community">Community</a></li><li><a href="./#education">Education</a></li><li><a href="./#skills">Skills</a></li><li><a href="./#contact">Contact</a></li></ul>
+  <ul><li><a href="./#projects">Projects</a></li><li><a class="nav-about" href="about.html" aria-current="page">About me</a></li></ul>
 </div></nav>
 
 <main>
