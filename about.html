@@ -117,36 +117,40 @@
   @media (min-width: 2250px) { :root { --z: 1.15; } }
   /* ---- About page ---- */
   nav ul a[aria-current="page"] { color: var(--text); }
-  .about .wrap.read { max-width: 1040px; }
+  .about .wrap, .about .wrap.read { max-width: 1120px; }
   .about header.case { padding: 44px 0 6px; }
   .about .eyebrow { margin: 0 0 12px; font: 600 13px/1 var(--body-font); letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
   .about-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: center; }
   .about-head h1 { margin: 0 0 14px; }
-  .about-head .lead { max-width: 640px; margin: 0; }
+  .about-head .lead { max-width: 700px; margin: 0; }
   .about-head img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; box-shadow: var(--shadow); border: 4px solid var(--surface); }
-  /* Body: the story on the left; the photos sit in a column on the right and stay in view while you read. */
-  .about-body { padding-bottom: 8px; }
-  .about-body.has-photo { display: grid; grid-template-columns: minmax(0, 1fr) 300px; column-gap: 64px; align-items: start; }
-  .about-body.has-photo > section { grid-column: 1; }
-  .about-body.has-photo > .photos { grid-column: 2; grid-row: 1 / span 4; position: sticky; top: 92px; margin: 44px 0 0; }
   .about section { padding: 36px 0 4px; }
   .about section h2 { font-family: var(--display-font); font-size: 24px; font-weight: 600; letter-spacing: -0.005em; text-transform: none; color: var(--text); margin: 0 0 10px; }
-  .about section p { max-width: 680px; }
-  ul.fun { list-style: none; margin: 0 0 6px; padding: 0; max-width: 680px; }
+  .about section p, ul.fun { max-width: 880px; }
+  ul.fun { list-style: none; margin: 0 0 6px; padding: 0; }
   ul.fun li { position: relative; padding-left: 24px; margin: 0 0 10px; }
   ul.fun li::before { content: ""; position: absolute; left: 0; top: .78em; width: 12px; height: 2px; border-radius: 2px; background: var(--accent); }
+  /* Outside of work: the text with the two photos right beside it. */
+  .split.has-photo { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; align-items: center; max-width: 1000px; }
+  .split.has-photo p { max-width: none; }
   /* Two photos that cross-fade every few seconds; click (or tap a dot) to flip. Each one only appears once its file exists. */
-  .photos .frame { position: relative; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--chip); cursor: pointer; }
+  .photos { margin: 4px 0 0; }
+  .photos .frame { position: relative; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--chip); cursor: pointer; }
   .photos .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; border-radius: 0; box-shadow: none; opacity: 0; transition: opacity .9s ease; }
   .photos .frame img.on { opacity: 1; }
-  .photos figcaption { margin-top: 10px; }
   .photos .dots { display: flex; gap: 8px; margin-top: 12px; }
   .photos .dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: color-mix(in srgb, var(--muted) 30%, var(--bg)); cursor: pointer; }
   .photos .dots button.on { background: var(--accent); }
+  .photos figcaption { margin-top: 8px; }
   @media (prefers-reduced-motion: reduce) { .photos .frame img { transition: none; } }
-  @media (min-width: 1700px) { .about .wrap.read { max-width: 1240px; } .about-body.has-photo { grid-template-columns: minmax(0, 1fr) 340px; column-gap: 80px; } .about section p, ul.fun { max-width: 760px; } }
-  @media (max-width: 900px) { .about-body.has-photo { display: block; } .about-body.has-photo > .photos { position: static; max-width: 420px; margin: 32px 0 4px; } }
-  @media (max-width: 720px) { .about-head { grid-template-columns: 1fr; gap: 18px; } .about-head img { width: 120px; height: 120px; order: -1; } .about section h2 { font-size: 22px; } }
+  /* Skiing photo across the bottom of the page: it fades in out of the page and runs into the footer. */
+  .snow { margin: 56px 0 0; }
+  .snow img { display: block; width: 100%; height: clamp(280px, 34vw, 720px); object-fit: cover; object-position: 50% 50%; border: 0; border-radius: 0; box-shadow: none; background: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 24%, #000 88%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 24%, #000 88%, transparent 100%); }
+  .about footer { margin-top: 0; border-top: 0; padding-top: 24px; }
+  @media (min-width: 1700px) { .about .wrap, .about .wrap.read { max-width: 1320px; } .about section p, ul.fun { max-width: 960px; } .split.has-photo { grid-template-columns: minmax(0, 1fr) 380px; gap: 48px; max-width: 1140px; } }
+  @media (max-width: 760px) { .split.has-photo { display: block; } .split.has-photo .photos { max-width: 520px; margin-top: 20px; } }
+  @media (max-width: 720px) { .about-head { grid-template-columns: 1fr; gap: 18px; } .about-head img { width: 120px; height: 120px; order: -1; } .about section h2 { font-size: 22px; } .snow { margin-top: 40px; } }
 </style>
 </head>
 <body class="about">
@@ -168,7 +172,7 @@
   </div>
 </div></header>
 
-<div class="wrap read about-body">
+<div class="wrap read">
 
   <section>
     <h2>Where I'm from</h2>
@@ -182,18 +186,21 @@
   </section>
 
   <section>
-    <h2>Outside of work</h2>
-    <p>In winter I'm skiing at Alta and Snowbird, usually more than 40 days a season. The rest of the year I'm bouldering at the Front, riding trails on my Privateer 141, or out with my dog, Luna. I've traveled to Japan, France and Vietnam, and I listen to a lot of melodic house, like Lane 8 and Tinlicker.</p>
-    <p>I also like giving back outdoors. I've led Tree Utah planting crews since 2022, and I coordinate volunteers for Joe's Valley Fest, a bouldering festival in Castle Dale.</p>
-  </section>
-
-    <figure class="photos" hidden>
-      <div class="frame">
-        <img src="img/about-canyon.webp" width="720" height="960" style="object-position: 50% 70%" data-cap="A fall day in the mountains." alt="Logan and his partner sitting on a rock by a mountain road on a sunny fall day, with aspens and sagebrush on the hillside behind them.">
-        <img src="img/about-green-river.webp" width="1200" height="904" style="object-position: 40% 50%" data-cap="Hiking in canyon country." alt="Logan and a friend in sun hats on a red-rock ridge high above a winding river canyon.">
+    <div class="split">
+      <div>
+        <h2>Outside of work</h2>
+        <p>In winter I'm skiing at Alta and Snowbird, usually more than 40 days a season. The rest of the year I'm bouldering at the Front, riding trails on my Privateer 141, or out with my dog, Luna. I've traveled to Japan, France and Vietnam, and I listen to a lot of melodic house, like Lane 8 and Tinlicker.</p>
+        <p>I also like giving back outdoors. I've led Tree Utah planting crews since 2022, and I coordinate volunteers for Joe's Valley Fest, a bouldering festival in Castle Dale.</p>
       </div>
-      <figcaption></figcaption>
-    </figure>
+      <figure class="photos" hidden>
+        <div class="frame">
+          <img src="img/about-canyon.webp" width="720" height="960" style="object-position: 50% 86%" data-cap="A fall day in the mountains." alt="Logan and his partner sitting on a rock by a mountain road on a sunny fall day, with aspens and sagebrush on the hillside behind them.">
+          <img src="img/about-green-river.webp" width="1200" height="904" style="object-position: 45% 50%" data-cap="Hiking in canyon country." alt="Logan and a friend in sun hats on a red-rock ridge high above a winding river canyon.">
+        </div>
+        <figcaption></figcaption>
+      </figure>
+    </div>
+  </section>
 
   <section>
     <h2>A few fun facts</h2>
@@ -202,14 +209,11 @@
       <li>I've loved roller coasters since I was a kid, and I still can't fully explain why.</li>
       <li>I love trains, especially high-speed rail, and I'm hoping America gets real high-speed trains soon.</li>
     </ul>
-    <div class="next">
-      <a class="btn primary" href="Logan_Rosson_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
-      <a class="btn" href="./#projects">See my projects</a>
-      <a class="btn" href="mailto:loganrosson@gmail.com">Get in touch</a>
-    </div>
   </section>
 
 </div>
+
+<figure class="snow"><img src="img/about-ski.webp" width="1920" height="1446" loading="lazy" alt="Backcountry skiers skinning up a snowy ridge past aspens and snow-covered firs on a stormy day."></figure>
 </main>
 
 <footer id="contact"><div class="wrap">
@@ -232,7 +236,7 @@
     cap.textContent=shown[cur].getAttribute('data-cap'); if(dots) [].forEach.call(dots.children,function(d,k){ d.classList.toggle('on',k===cur); d.setAttribute('aria-pressed',k===cur); }); }
   function play(){ clearInterval(timer); if(shown.length>1&&!calm) timer=setInterval(function(){ show(cur+1); },5000); }
   function ready(im){ if(shown.indexOf(im)>-1) return; shown.push(im); shown.sort(function(a,b){ return all.indexOf(a)-all.indexOf(b); });
-    fig.hidden=false; fig.closest('.about-body').classList.add('has-photo');
+    fig.hidden=false; fig.closest('.split').classList.add('has-photo');
     if(shown.length>1&&!dots){ dots=document.createElement('div'); dots.className='dots';
       shown.forEach(function(im,k){ var b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label','Show photo '+(k+1)); b.addEventListener('click',function(e){ e.stopPropagation(); show(k); play(); }); dots.appendChild(b); });
       fig.insertBefore(dots,cap); }
