@@ -201,10 +201,10 @@
   .sun-rise, .boat, .gulls { position: absolute; color: var(--muted); opacity: .55; pointer-events: none; z-index: 0; display: none; }
   .boat .fill { fill: var(--bg); }
   .boat { opacity: 1; color: color-mix(in srgb, var(--muted) 55%, var(--bg)); }
-  .sun-rise { left: calc((100vw - 1040px) / 4 - 85px); bottom: 29.6px; width: 170px; height: auto; }
+  .sun-rise { left: calc((100vw - var(--colw, 1040px) * var(--z, 1)) / 4 - 85px); bottom: 29.6px; width: 170px; height: auto; }
   .sun-rise .fill { fill: currentColor; fill-opacity: .18; }
-  .boat { right: calc((100vw - 1040px) / 4 - 62px); bottom: 14px; width: 124px; height: auto; transform-origin: 50% 80%; animation: bob 3.6s ease-in-out infinite alternate; }
-  .gulls { right: calc((100vw - 1040px) / 4 - 60px); bottom: 130px; width: 120px; height: auto; animation: glide 6s ease-in-out infinite alternate; }
+  .boat { right: calc((100vw - var(--colw, 1040px) * var(--z, 1)) / 4 - 62px); bottom: 14px; width: 124px; height: auto; transform-origin: 50% 80%; animation: bob 3.6s ease-in-out infinite alternate; }
+  .gulls { right: calc((100vw - var(--colw, 1040px) * var(--z, 1)) / 4 - 60px); bottom: 130px; width: 120px; height: auto; animation: glide 6s ease-in-out infinite alternate; }
     @keyframes bob { from { transform: translateY(2px) rotate(-3deg); } to { transform: translateY(-3px) rotate(3deg); } }
   @keyframes glide { from { transform: translate(-10px, 4px); } to { transform: translate(12px, -6px); } }
   @media (min-width: 1360px) { .sun-rise, .boat, .gulls { display: block; } }
@@ -306,6 +306,13 @@
   .haze { display: none; }
   .skyline, .clouds { -webkit-mask-image: linear-gradient(to top, transparent 0, rgba(0,0,0,.15) 38px, #000 96px); mask-image: linear-gradient(to top, transparent 0, rgba(0,0,0,.15) 38px, #000 96px); }
   .season { z-index: 0; }
+  /* ---- Bigger on big screens: from 1700px wide the content column gets wider (1240px) and scales up a little.
+     Laptops are unchanged. --colw/--z also keep the side art in the margins. ---- */
+  .wrap { zoom: var(--z, 1); }
+  @media (min-width: 1500px) { :root { --z: 1.06; } }
+  @media (min-width: 1700px) { :root { --colw: 1240px; --z: 1.06; } .wrap { max-width: 1240px; } .hero p.lead { max-width: 700px; } }
+  @media (min-width: 2000px) { :root { --z: 1.1; } }
+  @media (min-width: 2250px) { :root { --z: 1.15; } }
 </style>
 </head>
 <body>

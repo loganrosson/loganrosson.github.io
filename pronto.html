@@ -107,6 +107,13 @@
     .table th, .table td { padding: 9px 10px; }
     .table td:first-child { width: 45%; }
   }
+  /* ---- Bigger on big screens (matches the home page): from 1700px wide the nav and footer get wider and everything
+     scales up a little; the reading column keeps its width. Laptops are unchanged. ---- */
+  .wrap { zoom: var(--z, 1); }
+  @media (min-width: 1500px) { :root { --z: 1.06; } }
+  @media (min-width: 1700px) { .wrap:not(.read) { max-width: 1240px; } }
+  @media (min-width: 2000px) { :root { --z: 1.1; } }
+  @media (min-width: 2250px) { :root { --z: 1.15; } }
 </style>
 </head>
 <body>
