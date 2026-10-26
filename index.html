@@ -124,7 +124,7 @@
   .haze { position: absolute; left: 0; right: 0; bottom: 0; height: 96px; z-index: 0; pointer-events: none; background: linear-gradient(to top, var(--bg) 0, color-mix(in srgb, var(--bg) 85%, transparent) 40%, transparent 100%); }
   .sunfix { position: fixed; left: 0; top: 0; z-index: -1; width: 150px; height: 150px; pointer-events: none; color: var(--accent); fill: var(--accent); fill-opacity: .14; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; will-change: transform; transform-origin: 50% 50%; opacity: .42; display: none; }
   .sunfix.on { display: block; }
-  .season { position: absolute; top: 0; left: 0; width: 100%; height: 150vh; z-index: -1; pointer-events: none; }
+  .season { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
   .fuji { opacity: 1; color: color-mix(in srgb, var(--muted) 55%, var(--bg)); }
   @media (prefers-color-scheme: dark) and (max-width: 0px) { .fuji .snow { fill: #ffffff; fill-opacity: .3; } }
   @keyframes fly { 0% { transform: translate(-120px, 0); } 25% { transform: translate(25vw, 6px); } 50% { transform: translate(50vw, -2px); } 75% { transform: translate(75vw, 5px); } 100% { transform: translate(calc(100vw + 40px), 0); } }
@@ -672,7 +672,7 @@
     winter:function(){ var p=base(); p.kind='crystal'; p.s=rnd(5,11); p.rv=rnd(-0.012,0.012); return p; }
   };
   /* count on phones / on a 1440x900 screen, wind: base, gust strength, gust period, fall speed range */
-  var CFGS={ spring:{n:[12,22],wind:[0.4,0.25,20],vy:[0.1,0.5]}, summer:{n:[8,14],wind:[0,0,1],vy:[0,0]}, fall:{n:[10,16],wind:[0.42,0.3,16],vy:[0.08,0.28]}, winter:{n:[9,16],wind:[0.2,0.15,24],vy:[0.2,0.5]} }, CFG=CFGS[S]||CFGS.fall;
+  var CFGS={ spring:{n:[8,14],wind:[0.4,0.25,20],vy:[0.1,0.5]}, summer:{n:[8,14],wind:[0,0,1],vy:[0,0]}, fall:{n:[7,10],wind:[0.42,0.3,16],vy:[0.08,0.28]}, winter:{n:[6,10],wind:[0.2,0.15,24],vy:[0.2,0.5]} }, CFG=CFGS[S]||CFGS.fall;
   var D={
     petal:function(c,p){ var s=p.s; c.fillStyle=p.col; c.beginPath(); c.moveTo(0,-s); c.bezierCurveTo(s*0.95,-s*0.55,s*0.85,s*0.55,0,s); c.bezierCurveTo(-s*0.85,s*0.55,-s*0.95,-s*0.55,0,-s); c.fill(); },
     seed:function(c,p){ var s=p.s; c.strokeStyle=C.fluff; c.lineWidth=1; c.beginPath(); c.moveTo(0,0); c.lineTo(0,s); c.stroke(); c.fillStyle=C.fluff; c.beginPath(); c.arc(0,s+1,1.4,0,6.28); c.fill(); c.beginPath(); for(var i=0;i<9;i++){ var a=-Math.PI/2+(i-4)*0.3; c.moveTo(0,0); c.lineTo(Math.cos(a)*s*0.7,Math.sin(a)*s*0.7); } c.stroke(); },
@@ -696,31 +696,34 @@
       c.save(); c.translate(p.x,p.y); c.rotate(p.r); D[p.kind](c,p); c.restore();
     }
   }
-  /* The weather is pinned to the top of the page (it scrolls away with the header). As soon as you start scrolling it fades out
-     over 5 seconds, however fast you scroll, and it fades back in over 3 seconds when you return to the top. */
+  /* The weather follows you down the page (the canvas is fixed to the screen). As soon as you start scrolling it fades out
+     over 5 seconds, however fast or slow you scroll, and then it is gone for the rest of the visit, even back at the top. */
   /* Motion is scaled by real elapsed time, so 60Hz and 120Hz screens move at the same speed. */
-  var last=0, fade=window.scrollY>2?0:1, sleeping=false;
+  var last=0, fade=window.scrollY>2?0:1, fading=false, anchor=window.scrollY;
   function frame(now){ if(!running||!active) return; var ms=last?Math.min(100,now-last):16.7, dt=ms/16.667; last=now;
-    var up=window.scrollY<=2; fade=Math.max(0,Math.min(1,fade+(up?ms/3000:-ms/5000))); var f=fade*fade*(3-2*fade); cv.style.opacity=f.toFixed(3);
-    if(f>0) tick(dt); if(fade===0&&!up){ sleeping=true; return; } raf=requestAnimationFrame(frame); }
-  window.addEventListener('scroll',function(){ if(sleeping&&active&&running&&window.scrollY<=2){ sleeping=false; last=0; raf=requestAnimationFrame(frame); } },{passive:true});
+    if(!fading&&Math.abs(window.scrollY-anchor)>2) fading=true;
+    if(fading) fade=Math.max(0,fade-ms/5000);
+    var f=fade*fade*(3-2*fade); cv.style.opacity=f.toFixed(3);
+    if(f>0) tick(dt);
+    if(fade===0){ stop(); cv.width=cv.height=0; return; } /* done: free the canvas */
+    raf=requestAnimationFrame(frame); }
   var active=false;
   function start(){ if(active) return; active=true; last=0; raf=requestAnimationFrame(frame); }
   function stop(){ active=false; cancelAnimationFrame(raf); c.clearRect(0,0,W,H); }
   function setSeason(name){
     if(name==='auto'){ name=autoSeason(); try{ sessionStorage.removeItem('season'); }catch(e){} } else { try{ sessionStorage.setItem('season',name); }catch(e){} }
     if(!valid(name)){ stop(); document.documentElement.removeAttribute('data-season'); return; }
-    S=name; CFG=CFGS[S]; document.documentElement.setAttribute('data-season',S); resize(); init(); start();
+    S=name; CFG=CFGS[S]; document.documentElement.setAttribute('data-season',S); fade=1; fading=false; anchor=window.scrollY; resize(); init(); start();
   }
   resize(); if(valid(S)){ document.documentElement.setAttribute('data-season',S); init(); start(); }
   /* Footer season picker: try each season, then Auto to go back to the real calendar. Remembered for this tab only. */
   var picks=document.querySelectorAll('.season-pick button');
   function markPick(){ var cur=urlSeason(); if(!cur){ try{ cur=sessionStorage.getItem('season')||'auto'; }catch(e){ cur='auto'; } } for(var i=0;i<picks.length;i++) picks[i].classList.toggle('on',picks[i].getAttribute('data-season')===cur); }
-  for(var i=0;i<picks.length;i++) picks[i].addEventListener('click',function(){ if(urlSeason()) history.replaceState(null,'',location.pathname); setSeason(this.getAttribute('data-season')); markPick(); window.scrollTo({top:0,behavior:'smooth'}); });
+  for(var i=0;i<picks.length;i++) picks[i].addEventListener('click',function(){ if(urlSeason()) history.replaceState(null,'',location.pathname); setSeason(this.getAttribute('data-season')); markPick(); });
   markPick();
   /* Phones fire resize whenever the address bar slides in or out; only rebuild the scene when the width really changes. */
-  window.addEventListener('resize',function(){ var w=cv.clientWidth; resize(); if(w!==W) init(); });
-  document.addEventListener('visibilitychange',function(){ running=!document.hidden; last=0; if(running&&active){ sleeping=false; cancelAnimationFrame(raf); raf=requestAnimationFrame(frame); } });
+  window.addEventListener('resize',function(){ if(!active) return; var w=W; resize(); if(W!==w) init(); });
+  document.addEventListener('visibilitychange',function(){ running=!document.hidden; last=0; if(running&&active){ cancelAnimationFrame(raf); raf=requestAnimationFrame(frame); } });
   window.__seasonTick=tick; window.__seasonPs=function(){ return ps; };
 })();
 </script>
