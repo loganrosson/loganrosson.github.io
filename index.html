@@ -301,10 +301,8 @@
   .narwhal.go .nw-water { animation: nw-water 5.6s ease-in-out both; }
   @keyframes nw-peek { 0% { transform: translateY(105%); } 12% { transform: translateY(-5%) rotate(-3deg); } 18% { transform: translateY(0) rotate(-5deg); } 30% { transform: translateY(3%) rotate(3deg); } 42% { transform: translateY(0) rotate(-4deg); } 54% { transform: translateY(4%) rotate(2deg); } 66% { transform: translateY(6%) rotate(0); } 84% { transform: translateY(105%); } 100% { transform: translateY(105%); } }
   @keyframes nw-water { 0% { opacity: 0; } 12% { opacity: 1; } 86% { opacity: 1; } 100% { opacity: 0; } }
-  /* ---- Seamless horizon: the skyline and clouds fade into the mist themselves (instead of a mist layer on top),
-     so nothing else gets dimmed there; the seasonal weather falls in front of the skyline but behind the header text. ---- */
-  .haze { display: none; }
-  .skyline, .clouds { -webkit-mask-image: linear-gradient(to top, transparent 0, rgba(0,0,0,.15) 38px, #000 96px); mask-image: linear-gradient(to top, transparent 0, rgba(0,0,0,.15) 38px, #000 96px); }
+  /* ---- Horizon: buildings and clouds are solid, so the sun passes behind them. The mist layer covers the skyline and the
+     setting sun together (under the bottom clouds); the seasonal weather falls in front of it but behind the header text. ---- */
   .season { z-index: 0; }
   /* ---- Bigger on big screens: from 1700px wide the content column gets wider (1240px) and scales up a little.
      Laptops are unchanged. --colw/--z also keep the side art in the margins. ---- */
