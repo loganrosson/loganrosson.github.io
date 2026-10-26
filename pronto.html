@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Analytics (GA4). Same tag and ?me=1 opt-out as the home page. -->
+<script>
+(function(){
+  try{ if(/[?&]me=1/.test(location.search)) localStorage.setItem('ga_me','1'); if(localStorage.getItem('ga_me')==='1') return; }catch(e){}
+  var s=document.createElement('script'); s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id=G-X5ZJKV8DP0'; document.head.appendChild(s);
+  window.dataLayer=window.dataLayer||[]; function gtag(){ dataLayer.push(arguments); } window.gtag=gtag;
+  gtag('js', new Date()); gtag('config', 'G-X5ZJKV8DP0');
+})();
+</script>
+<title>Pronto: Account Takeover Response on Salesforce | Logan Rosson</title>
+<meta name="description" content="How our three-person team built an account-takeover response on Salesforce in one week for the 2026 Salesforce IDEAthon: a no-login report form, an Agentforce service agent, 10 flows and a Trust &amp; Safety dashboard.">
+<meta name="author" content="Logan Rosson">
+<link rel="canonical" href="https://loganrosson.github.io/pronto.html">
+<meta name="theme-color" content="#f4f7f5">
+<!-- Light version only, to match the home page. -->
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://loganrosson.github.io/pronto.html">
+<meta property="og:title" content="Pronto: Account Takeover Response on Salesforce | Logan Rosson">
+<meta property="og:description" content="A Salesforce IDEAthon build: no-login report form, Agentforce agent, 10 flows and a Trust &amp; Safety dashboard, built in one week.">
+<meta property="og:image" content="https://loganrosson.github.io/img/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+  --bg: #f4f7f5; --surface: #ffffff; --text: #132019; --muted: #55665c; --line: #dbe4de;
+  --accent: #2f7a55; --accent-soft: #e1f0e7; --chip: #ecf2ee; --on-accent: #ffffff;
+  --shadow: 0 1px 2px rgba(16,24,40,.06), 0 4px 16px rgba(16,24,40,.06);
+  --display-font: 'Lora', Georgia, 'Times New Roman', serif; --body-font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 var(--body-font); }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  .read { max-width: 760px; }
+  nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  nav .brand { font-family: var(--display-font); font-weight: 600; letter-spacing: .01em; text-decoration: none; }
+  nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; }
+  nav ul a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; }
+  nav ul a:hover { color: var(--text); }
+  .back { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 14px; font-weight: 600; text-decoration: none; margin-bottom: 22px; }
+  .back:hover { color: var(--accent); }
+  header.case { padding: 48px 0 8px; }
+  .badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+  header.case h1 { font-family: var(--display-font); font-weight: 600; font-size: clamp(32px, 5vw, 46px); line-height: 1.08; letter-spacing: -0.01em; margin: 14px 0 14px; }
+  .lead { font-size: 18px; color: var(--muted); margin: 0 0 26px; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 0 0 22px; }
+  .fact { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .fact .k { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; }
+  .fact .v { font-weight: 600; margin-top: 2px; line-height: 1.4; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 12px; padding: 3px 8px; border-radius: 999px; background: var(--chip); color: var(--muted); font-weight: 500; }
+  figure { margin: 30px 0; }
+  figure img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--chip); }
+  figure.narrow img { max-width: 520px; margin: 0 auto; }
+  figcaption { color: var(--muted); font-size: 14px; margin-top: 10px; }
+  section { padding: 40px 0 8px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin: 0 0 14px; }
+  h3 { font-family: var(--display-font); font-size: 21px; margin: 34px 0 8px; letter-spacing: -0.01em; }
+  section p { margin: 0 0 16px; }
+  ul.points { margin: 0 0 16px; padding-left: 20px; }
+  ul.points li { margin: 0 0 6px; }
+  .pills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 6px 0 22px; }
+  .pill { border-radius: 14px; padding: 14px 16px; border: 1px solid var(--line); background: var(--surface); }
+  .pill b { display: block; font-size: 30px; line-height: 1.1; letter-spacing: -0.02em; color: var(--accent); }
+  .pill span { color: var(--muted); font-size: 14px; }
+  .table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-size: 14.5px; margin-bottom: 18px; }
+  .table th, .table td { text-align: left; padding: 10px 14px; border-top: 1px solid var(--line); vertical-align: top; }
+  .table thead th { border-top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); background: var(--chip); }
+  .table td:first-child { font-weight: 600; width: 42%; }
+  .callout { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 12px; padding: 14px 18px; margin: 18px 0; color: var(--muted); font-size: 15px; }
+  .next { display: flex; flex-wrap: wrap; gap: 10px; margin: 34px 0 10px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; border: 1px solid var(--line); background: var(--surface); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary:hover { filter: brightness(1.08); }
+  footer { margin-top: 48px; padding: 40px 0 60px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  footer .btns { margin-bottom: 16px; }
+  @media (max-width: 720px) {
+    nav .wrap { height: auto; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; row-gap: 6px; }
+    nav ul { width: 100%; gap: 16px; overflow-x: auto; scrollbar-width: none; padding-right: 24px; }
+    nav ul::-webkit-scrollbar { display: none; }
+    nav ul a { white-space: nowrap; font-size: 13px; }
+    header.case { padding-top: 32px; }
+    .lead { font-size: 17px; }
+    .facts { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .fact { padding: 12px 14px; }
+    .fact .v { font-size: 15px; }
+    .pills { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .pill { padding: 12px; }
+    .pill b { font-size: 26px; }
+    .table th, .table td { padding: 9px 10px; }
+    .table td:first-child { width: 45%; }
+  }
+</style>
+</head>
+<body>
+<nav aria-label="Main"><div class="wrap">
+  <a class="brand" href="./">Logan Rosson</a>
+  <ul><li><a href="./#projects">Projects</a></li><li><a href="./#experience">Experience</a></li><li><a href="./#community">Community</a></li><li><a href="./#education">Education</a></li><li><a href="./#skills">Skills</a></li><li><a href="./#contact">Contact</a></li></ul>
+</div></nav>
+
+<main>
+<header class="case"><div class="wrap read">
+  <a class="back" href="./#projects">← Back to projects</a><br>
+  <span class="badge">Salesforce IDEAthon · Oct 2026 · Team of 3</span>
+  <h1>Pronto: Account Takeover Response on Salesforce</h1>
+  <p class="lead">Pronto is an online food-ordering marketplace, and our IDEAthon case asked what happens when a customer's account gets hijacked. In one week our team built a Salesforce solution that gets every hacked-account report to a real person on the Trust &amp; Safety team fast, and protects the customer while they wait.</p>
+  <div class="facts">
+    <div class="fact"><div class="k">Team</div><div class="v">Cloud 9: Logan Rosson, Logan Riley, Jung Ko</div></div>
+    <div class="fact"><div class="k">Built in</div><div class="v">One week, in a Salesforce Developer org</div></div>
+    <div class="fact"><div class="k">Presented</div><div class="v">Oct 2, 2026, 15 minutes live to judges</div></div>
+    <div class="fact"><div class="k">What we built</div><div class="v">A site, an AI agent, 10 flows and a dashboard</div></div>
+  </div>
+  <div class="tags"><span class="tag">Service Cloud</span><span class="tag">Experience Cloud</span><span class="tag">Agentforce</span><span class="tag">Flow Builder</span><span class="tag">Reports &amp; Dashboards</span></div>
+</div></header>
+
+<div class="wrap read">
+
+  <figure>
+    <img src="img/pronto-dashboard.webp" width="1568" height="612" alt="Trust &amp; Safety Acceptance dashboard in Salesforce showing average minutes to accept, cases waiting now, minutes to accept by reason, cases by channel and refund dollars protected.">
+    <figcaption>Our Trust &amp; Safety Acceptance dashboard. Every number on it comes from fields and flows we built, using test cases our team created.</figcaption>
+  </figure>
+
+  <section>
+    <h2>The problem</h2>
+    <p>When someone breaks into a food-delivery account, the damage follows a pattern. They change the email so the real owner can't sign back in, then place orders on the saved card. The customer is now locked out, so a support chat that needs them to be signed in can't help them. Every minute nobody picks up the report, refunds and frustration pile up.</p>
+    <p>So we focused on one question: when a customer reports a hijacked account, how fast does a real person on Trust &amp; Safety pick it up, and what protects the customer in the meantime?</p>
+  </section>
+
+  <section>
+    <h2>What we built</h2>
+    <div class="pills">
+      <div class="pill"><b>1</b><span>customer site with a no-login report form</span></div>
+      <div class="pill"><b>6</b><span>subagents behind one Agentforce agent</span></div>
+      <div class="pill"><b>10</b><span>custom flows</span></div>
+      <div class="pill"><b>1</b><span>Trust &amp; Safety dashboard</span></div>
+    </div>
+
+    <h3>A way to report without logging in</h3>
+    <p>We built the customer site in Experience Cloud with an Account Security page. A locked-out customer picks what happened, leaves their name and an email they can still reach, and sends it. The form is a screen flow, so every submission creates an Account Security case right away, shows the customer their case number, and emails them a confirmation.</p>
+    <figure class="narrow">
+      <img src="img/pronto-report-form.webp" width="1040" height="618" loading="lazy" alt="Pronto report form titled Tell us what happened, with options for orders placed without permission, can't log in, and account details changed, plus name, email, phone and details fields.">
+      <figcaption>The no-login report form on our customer site.</figcaption>
+    </figure>
+
+    <h3>An agent that knows when to hand off</h3>
+    <p>Our Pronto Service Agent in Agentforce has one router that greets the customer and passes the conversation to one of six subagents: Account Security, Order Issues &amp; Refunds, Storefront Search, Ambiguous Question, Escalation and Off Topic.</p>
+    <figure>
+      <img src="img/pronto-agent-builder.webp" width="1600" height="666" loading="lazy" alt="Agentforce Builder canvas showing the Pronto Service Agent, an Agent Router, and subagents for order issues, storefront search, ambiguous questions and escalation.">
+      <figcaption>Inside Agentforce Builder: one router, six subagents.</figcaption>
+    </figure>
+    <p>The agent asks for the email on the order before it shares anything, and it never asks for a password, card number or code. When a customer says their account was hacked, it warns them not to share passwords or codes in chat, takes the account email, and runs a flow that opens a Critical case for Trust &amp; Safety, with refunds already frozen.</p>
+    <figure class="narrow">
+      <img src="img/pronto-agent-hacked-chat.webp" width="812" height="652" loading="lazy" alt="Chat transcript: the customer says My account was hacked; the agent asks for the account email, reminds them never to share passwords or codes, and says it is escalating the case to the Trust and Safety team.">
+      <figcaption>A real conversation with our agent on the live site.</figcaption>
+    </figure>
+
+    <h3>Automation that routes, protects and times every case</h3>
+    <p>Behind the site and the agent, ten flows handle each case the moment it is created, with no one typing anything into Salesforce.</p>
+    <table class="table">
+      <thead><tr><th>Flow</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td>Site: Report Account Takeover</td><td>The no-login form. Creates the case and shows the case number.</td></tr>
+        <tr><td>Agent: Escalate Account Takeover</td><td>Opens the case from chat and gives the agent the case number.</td></tr>
+        <tr><td>Route Account Security to Trust &amp; Safety</td><td>Puts every new account-security case in the Trust &amp; Safety queue.</td></tr>
+        <tr><td>Set Critical for Unauthorized Orders</td><td>Raises the priority to Critical when orders were placed without permission.</td></tr>
+        <tr><td>Freeze Refunds on Account Security</td><td>Freezes refunds so an attacker can't redirect them.</td></tr>
+        <tr><td>Trust &amp; Safety Acceptance Alerts</td><td>Alerts the queue right away, alerts again and flags the case at 15 minutes, then escalates and emails managers at 30.</td></tr>
+        <tr><td>Stamp Accepted At</td><td>Records when a rep takes the case, which feeds Minutes to Accept.</td></tr>
+        <tr><td>Sync Escalated Flag with Status</td><td>Keeps the Escalated checkbox and the case status in step.</td></tr>
+        <tr><td>Secure Account</td><td>A button on the case that lets a rep lock the account down and records when.</td></tr>
+        <tr><td>Email Report Confirmation</td><td>Emails the customer their case number after a web report.</td></tr>
+      </tbody>
+    </table>
+    <figure>
+      <img src="img/pronto-acceptance-alerts-flow.webp" width="1555" height="685" loading="lazy" alt="Flow Builder canvas for the Trust and Safety Acceptance Alerts flow, with an immediate path and scheduled paths at 15 and 30 minutes.">
+      <figcaption>The acceptance-alerts flow, with its 15- and 30-minute scheduled paths.</figcaption>
+    </figure>
+
+    <h3>A dashboard that shows where we miss the window</h3>
+    <p>We added custom fields to the Case object, including Accepted At, Minutes to Accept, Refund Amount at Risk, Refunds Frozen, Account Locked At and Minutes to Lockdown. They feed the dashboard at the top of this page: average minutes to accept, cases waiting right now, how many were picked up within 15 minutes, 15 to 30, or over 30, cases by reason and channel, and refund dollars protected.</p>
+    <p>That is what turns the build into a decision. In the version we presented, Locked Out cases were the slowest to be picked up, so our next step was to move them to the top of the queue.</p>
+    <figure>
+      <img src="img/pronto-case-by-agentforce.webp" width="1568" height="677" loading="lazy" alt="Salesforce case record titled Agentforce escalation: customer could not be verified (possible account takeover), with case details and status fields.">
+      <figcaption>A case our agent opened on its own: origin Agentforce, owned by Trust &amp; Safety, refunds already frozen.</figcaption>
+    </figure>
+    <div class="callout">All cases are test data our team created. The Developer org this ran in is being retired, so every screenshot here was taken from the live org on October 2, 2026.</div>
+  </section>
+
+  <section>
+    <h2>Presenting it</h2>
+    <p>We presented Pronto to a panel of judges in a 15-minute live session. For the demo we started a chat on our public site, asked "Where is my order?" and gave a customer's email. Then we opened the two flows behind the answer, Identify Customer By Email and Get Orders By Contact, so the judges could see how an email leads to the right customer and their orders without the agent ever asking for a password.</p>
+    <div class="next">
+      <a class="btn primary" href="https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Floganrosson%2Fpronto-salesforce-ideathon%2Fmain%2Fpresentation%2FPronto_IDEAthon_Deck.pptx" target="_blank" rel="noopener">View the slides</a>
+      <a class="btn" href="https://github.com/loganrosson/pronto-salesforce-ideathon" target="_blank" rel="noopener">All screenshots on GitHub</a>
+      <a class="btn" href="./#projects">← All projects</a>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer id="contact"><div class="wrap">
+  <div class="btns">
+    <a class="btn primary" href="mailto:loganrosson@gmail.com">loganrosson@gmail.com</a>
+    <a class="btn" href="Logan_Rosson_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+    <a class="btn" href="https://www.linkedin.com/in/logan-rosson" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn" href="https://github.com/loganrosson" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  Salt Lake City, UT
+</div></footer>
+</body>
+</html>
