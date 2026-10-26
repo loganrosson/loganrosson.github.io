@@ -299,6 +299,11 @@
   .narwhal.go .nw-water { animation: nw-water 5.6s ease-in-out both; }
   @keyframes nw-peek { 0% { transform: translateY(105%); } 12% { transform: translateY(-5%) rotate(-3deg); } 18% { transform: translateY(0) rotate(-5deg); } 30% { transform: translateY(3%) rotate(3deg); } 42% { transform: translateY(0) rotate(-4deg); } 54% { transform: translateY(4%) rotate(2deg); } 66% { transform: translateY(6%) rotate(0); } 84% { transform: translateY(105%); } 100% { transform: translateY(105%); } }
   @keyframes nw-water { 0% { opacity: 0; } 12% { opacity: 1; } 86% { opacity: 1; } 100% { opacity: 0; } }
+  /* ---- Seamless horizon: the skyline and clouds fade into the mist themselves (instead of a mist layer on top),
+     so nothing else gets dimmed there; the seasonal weather falls in front of the skyline but behind the header text. ---- */
+  .haze { display: none; }
+  .skyline, .clouds { -webkit-mask-image: linear-gradient(to top, transparent 0, rgba(0,0,0,.15) 38px, #000 96px); mask-image: linear-gradient(to top, transparent 0, rgba(0,0,0,.15) 38px, #000 96px); }
+  .season { z-index: 0; }
 </style>
 </head>
 <body>
@@ -599,40 +604,29 @@
 })();
 </script>
 <script>
-/* The red sun rides along as you scroll, then sets behind Mt. Fuji in the Experience section. On phones it simply sinks behind the Tokyo skyline at the bottom of the header. */
+/* The sun stays in the sky while the page scrolls, so the Tokyo skyline rises in front of it and it sets behind the buildings and the header's bottom edge. No fading: it is simply hidden by the skyline and cut off by the horizon. */
 (function(){
   var hero=document.querySelector('.clouds .sun'), fuji=document.querySelector('.fuji'), sun=document.querySelector('.sunfix'), heroEl=document.querySelector('header.hero');
   if(!hero||!fuji||!sun||window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   hero.style.visibility='hidden'; sun.classList.add('on');
-  var queued=false, R=75, cacheR=-1, cacheY=-1;
+  var queued=false, R=75;
   function ease(t){ return t*t*(3-2*t); }
   /* Left slope of the Fuji silhouette (viewBox 0 0 440 150), sampled so we can ask "how wide is the mountain at height y?" */
   var SLOPE=(function(){ var P=[[100,150],[160,124],[196,94],[224,72]], pts=[]; for(var i=0;i<=40;i++){ var t=i/40, u=1-t; pts.push([u*u*u*P[0][0]+3*u*u*t*P[1][0]+3*u*t*t*P[2][0]+t*t*t*P[3][0], u*u*u*P[0][1]+3*u*u*t*P[1][1]+3*u*t*t*P[2][1]+t*t*t*P[3][1]]); } return pts; })();
   function slopeX(y){ if(y<72) return Infinity; if(y>=150) return 100; for(var i=1;i<SLOPE.length;i++){ var a=SLOPE[i-1], b=SLOPE[i]; if(y<=a[1]&&y>=b[1]){ var k=(a[1]-y)/((a[1]-b[1])||1); return a[0]+(b[0]-a[0])*k; } } return 100; }
   /* Smallest centre height (viewBox units) at which a sun of radius r is completely behind the mountain, or -1 if it never fits. */
   function hideY(r){ for(var cy=72+r; cy+r<=150; cy+=0.5){ var ok=true; for(var a=0;a<=90&&ok;a+=6){ var rad=a*Math.PI/180, px=240-r*Math.sin(rad), py=cy-r*Math.cos(rad); if(px<slopeX(py)) ok=false; } if(ok) return cy; } return -1; }
+  /* Cut the sun off at the horizon (the header's bottom edge) instead of fading it. */
+  function horizon(cy,sc,hb){ var cut=Math.max(0,Math.min(2*R,(cy+R*sc-hb)/sc)); sun.style.clipPath=cut>0?'inset(0 0 '+cut.toFixed(1)+'px 0)':'none'; return cut>=2*R; }
   function update(){
     queued=false;
     var sy=window.scrollY, vh=window.innerHeight;
     var h=hero.getBoundingClientRect(), x0=h.left+h.width/2, y0=h.top+h.height/2+sy;
-    var f=fuji.getBoundingClientRect(), fw=f.width, fh=f.height;
-    var cx, cy, vis='visible', m=1, sc=1, hb=heroEl.getBoundingClientRect().bottom;
-    var mobile=window.matchMedia('(max-width: 720px)').matches;
-    if(mobile){ cx=x0; cy=y0; if(cy-hb>=-40) vis='hidden'; }
-    else if(fw===0){ cx=x0; cy=y0-sy; }
-    else {
-      var u=fh/150, sx=f.left+fw*(240/440), summit=f.top+sy+72*u;
-      var Rt=Math.min(R,fh*0.22), rv=(Rt*0.92+3)/u; if(rv!==cacheR){ cacheR=rv; cacheY=hideY(rv); } var hy=cacheY;
-      var start=summit-Rt*0.84, end, fade=false;
-      if(hy>0){ end=f.top+sy+hy*u; } else { end=summit+58*u; fade=true; }
-      var Yf=vh*0.5, Sf=Math.max(summit-Yf,1), D=Math.max(vh*0.5,320);
-      if(sy<=Sf){ var p=ease(Math.min(sy/Sf,1)); sc=1+(Rt/R-1)*p; cx=x0+(sx-x0)*p; cy=y0+((Yf-Rt*0.84)-y0)*p; }
-      else { var q=Math.min((sy-Sf)/D,1); sc=Rt/R; cx=sx; cy=(start-sy)+((end-start)*q); if(fade&&q>0.35) m=Math.max(0,1-(q-0.35)/0.6); if(q>=1) vis='hidden'; }
-    }
-    sun.style.transform='translate('+(cx-R)+'px,'+(cy-R)+'px) scale('+sc.toFixed(3)+')';
-    sun.style.visibility=vis;
-    var d=cy-hb, k=1; if(d>-171&&d<-40) k=(-40-d)/131; else if(d>=-40&&d<=75) k=0; else if(d>75&&d<200) k=(d-75)/125;
-    sun.style.opacity=(0.42*k*m).toFixed(3);
+    var hb=heroEl.getBoundingClientRect().bottom;
+    var cx=x0, cy=y0+sy*0.25; /* drifts down a little as the skyline rises past it */
+    var gone=horizon(cy,1,hb);
+    sun.style.transform='translate('+(cx-R)+'px,'+(cy-R)+'px)';
+    sun.style.visibility=gone?'hidden':'visible';
   }
   window.addEventListener('scroll',function(){ if(!queued){ queued=true; requestAnimationFrame(update); } },{passive:true});
   window.addEventListener('resize',update);
@@ -702,10 +696,14 @@
       c.save(); c.translate(p.x,p.y); c.rotate(p.r); D[p.kind](c,p); c.restore();
     }
   }
-  /* The weather is pinned to the top of the page (it scrolls away with the header) and fades out as you scroll down. */
+  /* The weather is pinned to the top of the page (it scrolls away with the header). As soon as you start scrolling it fades out
+     over 5 seconds, however fast you scroll, and it fades back in over 3 seconds when you return to the top. */
   /* Motion is scaled by real elapsed time, so 60Hz and 120Hz screens move at the same speed. */
-  var last=0;
-  function frame(now){ if(!running||!active) return; var dt=last?Math.min(2.5,(now-last)/16.667):1; last=now; var f=1-Math.min(1,window.scrollY/(window.innerHeight*0.55)); cv.style.opacity=f.toFixed(3); if(f>0) tick(dt); raf=requestAnimationFrame(frame); }
+  var last=0, fade=window.scrollY>2?0:1, sleeping=false;
+  function frame(now){ if(!running||!active) return; var ms=last?Math.min(100,now-last):16.7, dt=ms/16.667; last=now;
+    var up=window.scrollY<=2; fade=Math.max(0,Math.min(1,fade+(up?ms/3000:-ms/5000))); var f=fade*fade*(3-2*fade); cv.style.opacity=f.toFixed(3);
+    if(f>0) tick(dt); if(fade===0&&!up){ sleeping=true; return; } raf=requestAnimationFrame(frame); }
+  window.addEventListener('scroll',function(){ if(sleeping&&active&&running&&window.scrollY<=2){ sleeping=false; last=0; raf=requestAnimationFrame(frame); } },{passive:true});
   var active=false;
   function start(){ if(active) return; active=true; last=0; raf=requestAnimationFrame(frame); }
   function stop(){ active=false; cancelAnimationFrame(raf); c.clearRect(0,0,W,H); }
@@ -722,7 +720,7 @@
   markPick();
   /* Phones fire resize whenever the address bar slides in or out; only rebuild the scene when the width really changes. */
   window.addEventListener('resize',function(){ var w=cv.clientWidth; resize(); if(w!==W) init(); });
-  document.addEventListener('visibilitychange',function(){ running=!document.hidden; last=0; if(running&&active){ cancelAnimationFrame(raf); raf=requestAnimationFrame(frame); } });
+  document.addEventListener('visibilitychange',function(){ running=!document.hidden; last=0; if(running&&active){ sleeping=false; cancelAnimationFrame(raf); raf=requestAnimationFrame(frame); } });
   window.__seasonTick=tick; window.__seasonPs=function(){ return ps; };
 })();
 </script>
