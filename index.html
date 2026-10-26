@@ -311,12 +311,17 @@
   @media (min-width: 1700px) { :root { --colw: 1240px; --z: 1.06; } .wrap { max-width: 1240px; } .hero p.lead { max-width: 700px; } }
   @media (min-width: 2000px) { :root { --z: 1.1; } }
   @media (min-width: 2250px) { :root { --z: 1.15; } }
+  /* ---- Menu: just Projects and an "About me" pill ---- */
+  nav ul { align-items: center; }
+  nav ul a.nav-about { color: var(--accent); font-weight: 600; padding: 6px 14px; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 999px; }
+  nav ul a.nav-about:hover, nav ul a.nav-about[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
+  @media (max-width: 720px) { nav .wrap { height: 56px; flex-wrap: nowrap; padding-top: 0; padding-bottom: 0; } nav ul { width: auto; gap: 14px; overflow: visible; padding-right: 0; mask-image: none; -webkit-mask-image: none; } }
 </style>
 </head>
 <body>
 <nav aria-label="Main"><div class="wrap">
   <a class="brand" href="#top">Logan Rosson</a>
-  <ul><li><a href="about.html">About</a></li><li><a href="#projects">Projects</a></li><li><a href="#experience">Experience</a></li><li><a href="#community">Community</a></li><li><a href="#education">Education</a></li><li><a href="#skills">Skills</a></li><li><a href="#contact">Contact</a></li></ul>
+  <ul><li><a href="#projects">Projects</a></li><li><a class="nav-about" href="about.html">About me</a></li></ul>
 </div></nav>
 <svg class="sunfix" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/></svg>
 
@@ -661,6 +666,9 @@
     return autoSeason();
   }
   var S=season();
+  /* The weather only plays on the first page view of a visit: coming back to the home page from another page doesn't bring it back. */
+  var seenWeather=false; try{ seenWeather=sessionStorage.getItem('weather-seen')==='1'; sessionStorage.setItem('weather-seen','1'); }catch(e){}
+  if(seenWeather&&!urlSeason()){ cv.style.display='none'; return; }
   var dark=window.matchMedia('(prefers-color-scheme: dark) and (max-width: 0px)').matches;
   var C={
     pink: dark?['rgba(246,170,190,.85)','rgba(240,150,175,.8)','rgba(252,200,214,.8)']:['rgba(226,120,150,.75)','rgba(214,100,135,.7)','rgba(236,150,172,.75)'],
@@ -717,6 +725,8 @@
   var active=false;
   function start(){ if(active) return; active=true; last=0; raf=requestAnimationFrame(frame); }
   function stop(){ active=false; cancelAnimationFrame(raf); c.clearRect(0,0,W,H); }
+  /* Coming back with the browser's Back button can restore the page as it was; stop the weather there too. */
+  window.addEventListener('pageshow',function(e){ if(e.persisted&&!urlSeason()){ stop(); cv.style.display='none'; } });
   function setSeason(name){
     if(name==='auto'){ name=autoSeason(); try{ sessionStorage.removeItem('season'); }catch(e){} } else { try{ sessionStorage.setItem('season',name); }catch(e){} }
     if(!valid(name)){ stop(); document.documentElement.removeAttribute('data-season'); return; }
