@@ -131,6 +131,8 @@
   .flock.sky { inset: auto 0 104px 0; height: 60px; display: none; z-index: 1; }
   .flock .b3 { top: 6px; width: 58px; animation-duration: 44s; animation-delay: -30s; }
   .flock .b4 { top: 30px; width: 26px; animation-duration: 58s; animation-delay: -9s; opacity: .6; }
+  /* The far-off birds are too small for the sketchy wobble (it thinned their wing tips), so they get a clean stroke of even weight. */
+  .flock path { stroke-width: 2.4px; vector-effect: non-scaling-stroke; }
   @media (min-width: 1360px) { .flock.sky { display: block; } }
   @media (prefers-reduced-motion: reduce) { .flock { display: none !important; } }
   .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
@@ -484,7 +486,7 @@
 </div></section>
 
 <section id="experience">
-  <div class="flock sky" aria-hidden="true"><svg class="b3" viewBox="0 0 58 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><g transform="translate(0 10) scale(0.9)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 9q4-6 12-3q8-3 12 3;M0 6q6-6 12 0q6-6 12 0" dur="0.95s" begin="-0.1s" repeatCount="indefinite"/></path></g><g transform="translate(32 0) scale(0.75)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 9q4-6 12-3q8-3 12 3;M0 6q6-6 12 0q6-6 12 0" dur="1.05s" begin="-0.5s" repeatCount="indefinite"/></path></g></svg><svg class="b4" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><g transform="translate(1 2) scale(1)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 9q4-6 12-3q8-3 12 3;M0 6q6-6 12 0q6-6 12 0" dur="1.15s" begin="-0.3s" repeatCount="indefinite"/></path></g></svg></div>
+  <div class="flock sky" aria-hidden="true"><svg class="b3" viewBox="0 0 58 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(0 10) scale(0.9)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 9q4-6 12-3q8-3 12 3;M0 6q6-6 12 0q6-6 12 0" dur="0.95s" begin="-0.1s" repeatCount="indefinite"/></path></g><g transform="translate(32 0) scale(0.75)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 9q4-6 12-3q8-3 12 3;M0 6q6-6 12 0q6-6 12 0" dur="1.05s" begin="-0.5s" repeatCount="indefinite"/></path></g></svg><svg class="b4" viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(1 2) scale(1)"><path d="M0 6q6-6 12 0q6-6 12 0"><animate attributeName="d" values="M0 6q6-6 12 0q6-6 12 0;M0 9q4-6 12-3q8-3 12 3;M0 6q6-6 12 0q6-6 12 0" dur="1.15s" begin="-0.3s" repeatCount="indefinite"/></path></g></svg></div>
   <svg class="fuji" viewBox="0 0 440 150" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)">
     <clipPath id="mFuji"><path d="M100 150C160 124 196 94 224 72h32c28 22 64 52 124 78Z"/></clipPath>
     <path class="fill" stroke="none" d="M100 150C160 124 196 94 224 72h32c28 22 64 52 124 78Z"/>
