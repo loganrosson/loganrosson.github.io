@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://loganrosson.github.io/sitemap.xml
