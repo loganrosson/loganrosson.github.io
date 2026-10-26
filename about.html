@@ -116,25 +116,40 @@
   @media (min-width: 2000px) { :root { --z: 1.1; } }
   @media (min-width: 2250px) { :root { --z: 1.15; } }
   /* ---- About page ---- */
-  .about-head { display: grid; grid-template-columns: 1fr auto; gap: 36px; align-items: center; }
-  .about-head img { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; box-shadow: var(--shadow); border: 4px solid var(--surface); }
   nav ul a[aria-current="page"] { color: var(--text); }
-  .split.has-photo { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 32px; align-items: start; }
-  .split figure { margin: 4px 0 0; }
-  .split figcaption { margin-top: 8px; }
+  .about .wrap.read { max-width: 1040px; }
+  .about header.case { padding: 44px 0 6px; }
+  .about .eyebrow { margin: 0 0 12px; font: 600 13px/1 var(--body-font); letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+  .about-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: center; }
+  .about-head h1 { margin: 0 0 14px; }
+  .about-head .lead { max-width: 640px; margin: 0; }
+  .about-head img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; box-shadow: var(--shadow); border: 4px solid var(--surface); }
+  /* Body: the story on the left; the photos sit in a column on the right and stay in view while you read. */
+  .about-body { padding-bottom: 8px; }
+  .about-body.has-photo { display: grid; grid-template-columns: minmax(0, 1fr) 300px; column-gap: 64px; align-items: start; }
+  .about-body.has-photo > section { grid-column: 1; }
+  .about-body.has-photo > .photos { grid-column: 2; grid-row: 1 / span 4; position: sticky; top: 92px; margin: 44px 0 0; }
+  .about section { padding: 36px 0 4px; }
+  .about section h2 { font-family: var(--display-font); font-size: 24px; font-weight: 600; letter-spacing: -0.005em; text-transform: none; color: var(--text); margin: 0 0 10px; }
+  .about section p { max-width: 680px; }
+  ul.fun { list-style: none; margin: 0 0 6px; padding: 0; max-width: 680px; }
+  ul.fun li { position: relative; padding-left: 24px; margin: 0 0 10px; }
+  ul.fun li::before { content: ""; position: absolute; left: 0; top: .78em; width: 12px; height: 2px; border-radius: 2px; background: var(--accent); }
   /* Two photos that cross-fade every few seconds; click (or tap a dot) to flip. Each one only appears once its file exists. */
   .photos .frame { position: relative; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--chip); cursor: pointer; }
   .photos .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; border-radius: 0; box-shadow: none; opacity: 0; transition: opacity .9s ease; }
   .photos .frame img.on { opacity: 1; }
-  .photos .dots { display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
-  .photos .dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: var(--line); cursor: pointer; }
+  .photos figcaption { margin-top: 10px; }
+  .photos .dots { display: flex; gap: 8px; margin-top: 12px; }
+  .photos .dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: color-mix(in srgb, var(--muted) 30%, var(--bg)); cursor: pointer; }
   .photos .dots button.on { background: var(--accent); }
   @media (prefers-reduced-motion: reduce) { .photos .frame img { transition: none; } }
-  @media (min-width: 1700px) { .split.has-photo { grid-template-columns: minmax(0, 820px) 320px; gap: 48px; } }
-  @media (max-width: 720px) { .about-head { grid-template-columns: 1fr; gap: 18px; } .about-head img { width: 120px; height: 120px; order: -1; } .split.has-photo { grid-template-columns: 1fr; gap: 6px; } .split figure { max-width: 420px; } }
+  @media (min-width: 1700px) { .about .wrap.read { max-width: 1240px; } .about-body.has-photo { grid-template-columns: minmax(0, 1fr) 340px; column-gap: 80px; } .about section p, ul.fun { max-width: 760px; } }
+  @media (max-width: 900px) { .about-body.has-photo { display: block; } .about-body.has-photo > .photos { position: static; max-width: 420px; margin: 32px 0 4px; } }
+  @media (max-width: 720px) { .about-head { grid-template-columns: 1fr; gap: 18px; } .about-head img { width: 120px; height: 120px; order: -1; } .about section h2 { font-size: 22px; } }
 </style>
 </head>
-<body>
+<body class="about">
 <nav aria-label="Main"><div class="wrap">
   <a class="brand" href="./">Logan Rosson</a>
   <ul><li><a href="about.html" aria-current="page">About</a></li><li><a href="./#projects">Projects</a></li><li><a href="./#experience">Experience</a></li><li><a href="./#community">Community</a></li><li><a href="./#education">Education</a></li><li><a href="./#skills">Skills</a></li><li><a href="./#contact">Contact</a></li></ul>
@@ -142,18 +157,18 @@
 
 <main>
 <header class="case"><div class="wrap read">
-  <a class="back" href="./">← Home</a><br>
+  <a class="back" href="./">← Home</a>
   <div class="about-head">
     <div>
-      <span class="badge">About me</span>
+      <p class="eyebrow">About me</p>
       <h1>Hi, I'm Logan.</h1>
       <p class="lead">I'm a senior in the Honors Information Systems program at the University of Utah's David Eccles School of Business, graduating in May 2027. Most of my work comes down to getting systems to work and explaining them to the people who use them.</p>
     </div>
-    <img src="https://github.com/loganrosson.png?size=400" width="200" height="200" alt="Portrait of Logan Rosson">
+    <img src="https://github.com/loganrosson.png?size=400" width="180" height="180" alt="Portrait of Logan Rosson">
   </div>
 </div></header>
 
-<div class="wrap read">
+<div class="wrap read about-body">
 
   <section>
     <h2>Where I'm from</h2>
@@ -168,11 +183,10 @@
 
   <section>
     <h2>Outside of work</h2>
-    <div class="split">
-    <div>
     <p>In winter I'm skiing at Alta and Snowbird, usually more than 40 days a season. The rest of the year I'm bouldering at the Front, riding trails on my Privateer 141, or out with my dog, Luna. I've traveled to Japan, France and Vietnam, and I listen to a lot of melodic house, like Lane 8 and Tinlicker.</p>
     <p>I also like giving back outdoors. I've led Tree Utah planting crews since 2022, and I coordinate volunteers for Joe's Valley Fest, a bouldering festival in Castle Dale.</p>
-    </div>
+  </section>
+
     <figure class="photos" hidden>
       <div class="frame">
         <img src="img/about-canyon.webp" width="720" height="960" style="object-position: 50% 70%" data-cap="A fall day in the mountains." alt="Logan and his partner sitting on a rock by a mountain road on a sunny fall day, with aspens and sagebrush on the hillside behind them.">
@@ -180,19 +194,17 @@
       </div>
       <figcaption></figcaption>
     </figure>
-    </div>
-  </section>
 
   <section>
     <h2>A few fun facts</h2>
-    <ul class="points">
+    <ul class="fun">
       <li>I was born just outside Canyonlands National Park, near Island in the Sky.</li>
       <li>I've loved roller coasters since I was a kid, and I still can't fully explain why.</li>
       <li>I love trains, especially high-speed rail, and I'm hoping America gets real high-speed trains soon.</li>
     </ul>
     <div class="next">
-      <a class="btn primary" href="./#projects">See my projects</a>
-      <a class="btn" href="Logan_Rosson_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+      <a class="btn primary" href="Logan_Rosson_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+      <a class="btn" href="./#projects">See my projects</a>
       <a class="btn" href="mailto:loganrosson@gmail.com">Get in touch</a>
     </div>
   </section>
@@ -220,7 +232,7 @@
     cap.textContent=shown[cur].getAttribute('data-cap'); if(dots) [].forEach.call(dots.children,function(d,k){ d.classList.toggle('on',k===cur); d.setAttribute('aria-pressed',k===cur); }); }
   function play(){ clearInterval(timer); if(shown.length>1&&!calm) timer=setInterval(function(){ show(cur+1); },5000); }
   function ready(im){ if(shown.indexOf(im)>-1) return; shown.push(im); shown.sort(function(a,b){ return all.indexOf(a)-all.indexOf(b); });
-    fig.hidden=false; fig.closest('.split').classList.add('has-photo');
+    fig.hidden=false; fig.closest('.about-body').classList.add('has-photo');
     if(shown.length>1&&!dots){ dots=document.createElement('div'); dots.className='dots';
       shown.forEach(function(im,k){ var b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label','Show photo '+(k+1)); b.addEventListener('click',function(e){ e.stopPropagation(); show(k); play(); }); dots.appendChild(b); });
       fig.insertBefore(dots,cap); }
