@@ -122,6 +122,14 @@
   .split.has-photo { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 32px; align-items: start; }
   .split figure { margin: 4px 0 0; }
   .split figcaption { margin-top: 8px; }
+  /* Two photos that cross-fade every few seconds; click (or tap a dot) to flip. Each one only appears once its file exists. */
+  .photos .frame { position: relative; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--chip); cursor: pointer; }
+  .photos .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; border-radius: 0; box-shadow: none; opacity: 0; transition: opacity .9s ease; }
+  .photos .frame img.on { opacity: 1; }
+  .photos .dots { display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
+  .photos .dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: var(--line); cursor: pointer; }
+  .photos .dots button.on { background: var(--accent); }
+  @media (prefers-reduced-motion: reduce) { .photos .frame img { transition: none; } }
   @media (min-width: 1700px) { .split.has-photo { grid-template-columns: minmax(0, 820px) 320px; gap: 48px; } }
   @media (max-width: 720px) { .about-head { grid-template-columns: 1fr; gap: 18px; } .about-head img { width: 120px; height: 120px; order: -1; } .split.has-photo { grid-template-columns: 1fr; gap: 6px; } .split figure { max-width: 420px; } }
 </style>
@@ -165,7 +173,13 @@
     <p>In winter I'm skiing at Alta and Snowbird, usually more than 40 days a season. The rest of the year I'm bouldering at the Front, riding trails on my Privateer 141, or out with my dog, Luna. I've traveled to Japan, France and Vietnam, and I listen to a lot of melodic house, like Lane 8 and Tinlicker.</p>
     <p>I also like giving back outdoors. I've led Tree Utah planting crews since 2022, and I coordinate volunteers for Joe's Valley Fest, a bouldering festival in Castle Dale.</p>
     </div>
-    <figure hidden><img src="img/about-canyon.webp" width="720" height="960" alt="Logan and his partner sitting on a rock by a mountain road on a sunny fall day, with aspens and sagebrush on the hillside behind them." onload="this.parentNode.hidden=false;this.closest('.split').classList.add('has-photo')"><figcaption>A fall day in the mountains.</figcaption></figure>
+    <figure class="photos" hidden>
+      <div class="frame">
+        <img src="img/about-canyon.webp" width="720" height="960" style="object-position: 50% 70%" data-cap="A fall day in the mountains." alt="Logan and his partner sitting on a rock by a mountain road on a sunny fall day, with aspens and sagebrush on the hillside behind them.">
+        <img src="img/about-green-river.webp" width="1200" height="904" style="object-position: 40% 50%" data-cap="Hiking in canyon country." alt="Logan and a friend in sun hats on a red-rock ridge high above a winding river canyon.">
+      </div>
+      <figcaption></figcaption>
+    </figure>
     </div>
   </section>
 
@@ -195,5 +209,26 @@
   </div>
   Salt Lake City, UT
 </div></footer>
+<script>
+/* About photos: show whichever photo files exist; with two, cross-fade every 5 seconds (paused while the pointer is on them,
+   and off for people who prefer reduced motion). Click the photo or a dot to flip. */
+(function(){
+  var fig=document.querySelector('.photos'); if(!fig) return;
+  var all=[].slice.call(fig.querySelectorAll('.frame img')), cap=fig.querySelector('figcaption'), shown=[], cur=0, timer=0, dots=null;
+  var calm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function show(n){ cur=(n+shown.length)%shown.length; shown.forEach(function(im,k){ im.classList.toggle('on',k===cur); });
+    cap.textContent=shown[cur].getAttribute('data-cap'); if(dots) [].forEach.call(dots.children,function(d,k){ d.classList.toggle('on',k===cur); d.setAttribute('aria-pressed',k===cur); }); }
+  function play(){ clearInterval(timer); if(shown.length>1&&!calm) timer=setInterval(function(){ show(cur+1); },5000); }
+  function ready(im){ if(shown.indexOf(im)>-1) return; shown.push(im); shown.sort(function(a,b){ return all.indexOf(a)-all.indexOf(b); });
+    fig.hidden=false; fig.closest('.split').classList.add('has-photo');
+    if(shown.length>1&&!dots){ dots=document.createElement('div'); dots.className='dots';
+      shown.forEach(function(im,k){ var b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label','Show photo '+(k+1)); b.addEventListener('click',function(e){ e.stopPropagation(); show(k); play(); }); dots.appendChild(b); });
+      fig.insertBefore(dots,cap); }
+    show(cur); play(); }
+  all.forEach(function(im){ if(im.complete&&im.naturalWidth) ready(im); else im.addEventListener('load',function(){ ready(im); }); });
+  fig.querySelector('.frame').addEventListener('click',function(){ if(shown.length>1){ show(cur+1); play(); } });
+  fig.addEventListener('mouseenter',function(){ clearInterval(timer); }); fig.addEventListener('mouseleave',play);
+})();
+</script>
 </body>
 </html>
