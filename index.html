@@ -261,8 +261,8 @@
   .mini li { font-size: 14px; line-height: 1.45; }
   .mini a { color: var(--accent); font-weight: 600; text-decoration: none; }
   .mini a:hover { text-decoration: underline; }
+  .mini b { font-weight: 600; }
   .mini span { display: block; color: var(--muted); font-size: 13.5px; }
-  .card .links .note { color: var(--muted); font-weight: 500; }
   /* ---- Hero label (the darker green keeps the small uppercase text above 4.5:1 contrast) ---- */
   .hero .eyebrow { display: inline-block; margin: 0 0 10px -8px; padding: 4px 8px; border-radius: 6px; background: color-mix(in srgb, var(--bg) 85%, transparent); font: 600 13px/1 var(--body-font); letter-spacing: .16em; text-transform: uppercase; color: #276747; }
   /* card screenshots carry width/height for faster layout; keep the 16:10 crop */
@@ -391,17 +391,6 @@
       </div>
     </article>
 
-    <article class="card">
-      <div class="cover" aria-hidden="true"><svg viewBox="0 0 320 200" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketch)"><rect class="paper" x="26" y="30" width="268" height="146" rx="12"/><path d="M26 54h268"/><circle cx="40" cy="42" r="3"/><circle cx="51" cy="42" r="3"/><circle cx="62" cy="42" r="3"/><path d="M38 74h52" opacity=".5"/><rect class="paper" x="38" y="84" width="52" height="20" rx="4"/><path d="M45 92h26M45 97h16" opacity="0.55"/><rect class="paper" x="38" y="110" width="52" height="20" rx="4"/><path d="M45 118h26M45 123h16" opacity="0.55"/><rect class="paper" x="38" y="136" width="52" height="20" rx="4"/><path d="M45 144h26M45 149h16" opacity="0.55"/><path d="M102 74h52" opacity=".5"/><rect class="paper" x="102" y="84" width="52" height="20" rx="4"/><path d="M109 92h26M109 97h16" opacity="0.55"/><rect class="paper" x="102" y="110" width="52" height="20" rx="4"/><path d="M109 118h26M109 123h16" opacity="0.55"/><path d="M166 74h52" opacity=".5"/><rect class="paper" x="166" y="84" width="52" height="20" rx="4"/><path d="M173 92h26M173 97h16" opacity="0.55"/><rect class="hi" x="166" y="110" width="52" height="20" rx="4"/><path d="M173 118h26M173 123h16" opacity="1"/><path d="M230 74h52" opacity=".5"/><rect class="paper" x="230" y="84" width="52" height="20" rx="4"/><path d="M237 92h26M237 97h16" opacity="0.55"/><path class="hiline" d="M218 116c10 0 14-8 22-8"/><path class="hiline" d="M234 103l7 5-6 6"/><rect class="hi ghost" x="230" y="110" width="52" height="20" rx="4" stroke-dasharray="4 4"/></g><text class="lbl" x="38" y="69">Prospect</text><text class="lbl" x="102" y="69">Contacted</text><text class="lbl" x="166" y="69">Visit</text><text class="lbl" x="230" y="69">Committed</text></svg></div>
-      <div class="body">
-        <span class="badge">Eccles Ideathon · Sep 2025 · 6th overall</span>
-        <h3>Student-Athlete Recruiting CRM</h3>
-        <p>For the Eccles School's design and development competition, my team built a Salesforce CRM with dashboards and pipelines for prospecting student athletes, then presented it to the judges. We placed 6th overall and were recognized by the panel as one of the strongest teams at presenting.</p>
-        <div class="tags"><span class="tag">Salesforce</span><span class="tag">CRM</span><span class="tag">Dashboards</span><span class="tag">Presenting</span></div>
-        <div class="links"><span class="note">Built in a private Salesforce org · <a href="mailto:loganrosson@gmail.com?subject=Recruiting%20CRM%20walkthrough">ask me for a walkthrough →</a></span></div>
-      </div>
-    </article>
-
     <article class="card clickable">
       <img src="img/sql-lab.webp" width="960" height="634" alt="SQL Lab stepping through a GROUP BY query" loading="lazy">
       <div class="body">
@@ -409,6 +398,16 @@
         <p>I built this to feature ~170 practice questions verified by running real queries. It includes a lab feature that replays any SELECT clause by clause, letting you literally see how the rows change at each step.</p>
         <div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">SQLite</span><span class="tag">Tkinter</span></div>
         <div class="links"><a href="https://github.com/loganrosson/is4420-sql-midterm-study-tool" target="_blank" rel="noopener">View on GitHub →</a></div>
+      </div>
+    </article>
+
+    <article class="card clickable">
+      <img src="img/python-devmode.webp" width="960" height="634" alt="Dev Mode stepping through Python code" loading="lazy">
+      <div class="body">
+        <h3><a class="stretch" href="https://github.com/loganrosson/is4085-python-midterm-study-tool" target="_blank" rel="noopener">Python Study Tool with Code Stepper</a></h3>
+        <p>Runs each question's code in a sandbox and explains every miss. My favorite feature is "Dev Mode," which traces the program line by line so you can visualize the call stack and variable history in real time.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">sys.settrace</span><span class="tag">Tkinter</span></div>
+        <div class="links"><a href="https://github.com/loganrosson/is4085-python-midterm-study-tool" target="_blank" rel="noopener">View on GitHub →</a></div>
       </div>
     </article>
 
@@ -425,12 +424,12 @@
 
     <article class="card more-card">
       <div class="body">
-        <h3>More on GitHub</h3>
-        <p>Smaller tools I built along the way, mostly to study for exams.</p>
+        <h3>More projects</h3>
+        <p>Smaller builds, mostly tools I made to study for exams.</p>
         <ul class="mini">
           <li><a href="https://github.com/loganrosson/is4487-analytics-midterm-trainer" target="_blank" rel="noopener">Business Analytics Trainer</a><span>Business cases plus a Code Lab that runs pandas one statement at a time.</span></li>
-          <li><a href="https://github.com/loganrosson/is4085-python-midterm-study-tool" target="_blank" rel="noopener">Python Study Tool with Code Stepper</a><span>Sandboxed questions and a Dev Mode that traces the call stack line by line.</span></li>
           <li><a href="https://github.com/loganrosson/is4440-networking-midterm-trainer" target="_blank" rel="noopener">Networking &amp; Subnetting Trainer</a><span>350+ Network+ style questions, a timed exam and step-by-step subnetting labs.</span></li>
+          <li><b>Student-Athlete Recruiting CRM</b><span>Salesforce CRM with dashboards and pipelines, built for the Eccles Ideathon (Sep 2025, 6th overall).</span></li>
           <li><a href="https://github.com/loganrosson/music-cover-maker" target="_blank" rel="noopener">Music Cover Maker</a><span>Embeds cover art into MP3s as ID3v2.3 frames so it shows everywhere.</span></li>
           <li><a href="https://github.com/loganrosson/blackjack" target="_blank" rel="noopener">Blackjack</a><span>Terminal game with dealer logic, soft and hard aces, splits and win tracking.</span></li>
         </ul>
