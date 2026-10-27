@@ -34,7 +34,7 @@
 <meta property="og:image:alt" content="Logan Rosson, Professional Portfolio. Information Systems (Honors), University of Utah.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="google-site-verification" content="4dhxPQzFCLl_Y_M3VXUpLvwbZTjqgn4rkAOuGA9gQUo">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Logan Rosson","url":"https://loganrosson.github.io/","image":"https://github.com/loganrosson.png?size=400","email":"mailto:loganrosson@gmail.com","jobTitle":"Information Systems (Honors) student","affiliation":{"@type":"CollegeOrUniversity","name":"University of Utah, David Eccles School of Business"},"address":{"@type":"PostalAddress","addressLocality":"Salt Lake City","addressRegion":"UT"},"sameAs":["https://github.com/loganrosson","https://www.linkedin.com/in/logan-rosson"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Logan Rosson","url":"https://loganrosson.github.io/","image":"https://loganrosson.github.io/img/portrait.webp","email":"mailto:loganrosson@gmail.com","jobTitle":"Information Systems (Honors) student","affiliation":{"@type":"CollegeOrUniversity","name":"University of Utah, David Eccles School of Business"},"address":{"@type":"PostalAddress","addressLocality":"Salt Lake City","addressRegion":"UT"},"sameAs":["https://github.com/loganrosson","https://www.linkedin.com/in/logan-rosson"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
@@ -254,18 +254,17 @@
   .sunfix, .clouds .sun { color: var(--sun); fill: var(--sun); }
   /* five skill groups: on 4-column and 2-column screens the fifth spans the full row instead of sitting alone */
   @media (min-width: 1008px), (max-width: 761px) { .skills > div:nth-child(5):last-child { grid-column: 1 / -1; } }
-  /* ---- Projects: See more ---- */
-  .grid.collapsed .extra { display: none; }
-  .grid .extra.reveal { animation: rise .45s ease backwards; }
-  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
-  .more-wrap { display: flex; justify-content: center; margin-top: 26px; }
-  .see-more { font: inherit; font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; gap: 10px; }
-  .see-more::after { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s ease; }
-  .see-more[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }
-  .see-more[hidden] { display: none; }
-  @media (prefers-reduced-motion: reduce) { .grid .extra.reveal { animation: none; } .see-more::after { transition: none; } }
-  /* ---- Hero label ---- */
-  .hero .eyebrow { display: inline-block; margin: 0 0 10px -8px; padding: 4px 8px; border-radius: 6px; background: color-mix(in srgb, var(--bg) 85%, transparent); font: 600 13px/1 var(--body-font); letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+  /* ---- Projects: the six strongest get full cards; the smaller ones share one "More on GitHub" card ---- */
+  .card.more-card .body { gap: 12px; }
+  .card.more-card p { font-size: 14px; }
+  .mini { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .mini li { font-size: 14px; line-height: 1.45; }
+  .mini a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .mini a:hover { text-decoration: underline; }
+  .mini span { display: block; color: var(--muted); font-size: 13.5px; }
+  .card .links .note { color: var(--muted); font-weight: 500; }
+  /* ---- Hero label (the darker green keeps the small uppercase text above 4.5:1 contrast) ---- */
+  .hero .eyebrow { display: inline-block; margin: 0 0 10px -8px; padding: 4px 8px; border-radius: 6px; background: color-mix(in srgb, var(--bg) 85%, transparent); font: 600 13px/1 var(--body-font); letter-spacing: .16em; text-transform: uppercase; color: #276747; }
   /* card screenshots carry width/height for faster layout; keep the 16:10 crop */
   .card img { height: auto; }
   /* ---- Illustrated covers for projects without a screenshot ---- */
@@ -318,15 +317,25 @@
   nav ul a.nav-about { color: var(--accent); font-weight: 600; padding: 6px 14px; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 999px; }
   nav ul a.nav-about:hover, nav ul a.nav-about[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
   @media (max-width: 720px) { nav .wrap { height: 56px; flex-wrap: nowrap; padding-top: 0; padding-bottom: 0; } nav ul { width: auto; gap: 14px; overflow: visible; padding-right: 0; mask-image: none; -webkit-mask-image: none; } }
+  /* ---- Keyboard focus: one green ring everywhere, shown only when navigating by keyboard ---- */
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .btn:focus-visible, nav ul a.nav-about:focus-visible, .tag:focus-visible { outline-offset: 2px; }
+  .card.clickable h3 a:focus-visible { outline: none; }
+  .badge { color: #276747; }
+  /* ---- Skip link: invisible until a keyboard user tabs to it ---- */
+  .skip { position: absolute; left: 16px; top: -60px; z-index: 20; padding: 8px 12px; border-radius: 8px; background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 14px; text-decoration: none; }
+  .skip:focus { top: 10px; }
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main"><div class="wrap">
   <a class="brand" href="#top">Logan Rosson</a>
   <ul><li><a href="#projects">Projects</a></li><li><a class="nav-about" href="about.html">About me</a></li></ul>
 </div></nav>
 <svg class="sunfix" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/></svg>
 
+<main id="main">
 <header class="hero" id="top">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="sketch"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter></defs></svg>
 <div class="skyline" aria-hidden="true"><svg class="bld tower" viewBox="0 0 60 140" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" stroke="none" d="M30 14L8 140H52Z"/><path d="M30 0V14M27 14h6M30 14L8 140M30 14L52 140"/><path class="fill" d="M19 62h22v10H19zM13 96h34v8H13z"/><path d="M24 40h12M24 40l10 22M36 40l-10 22M18 72l17 24M42 72l-17 24M10 104l22 36M50 104l-22 36"/></svg><svg class="bld skytree" viewBox="0 0 44 190" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" stroke="none" d="M18 34L8 190h28L26 34Z"/><path d="M22 0V34M18 34L8 190M26 34L36 190"/><path class="fill" d="M12 40h20v8H12zM8 98h28v10H8z"/><path d="M18 48l8 50M26 48l-8 50M12 108l12 82M32 108l-12 82M14 150h16"/></svg><svg class="bld parkhyatt" viewBox="0 0 110 150" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M6 150V58l16-14 16 14v92Z"/><path d="M22 44v106M12 58h20M14 80h16M14 100h16M14 120h16"/><path class="fill" d="M38 150V32l16-14 16 14v118Z"/><path d="M54 18v132M44 32h20M46 56h16M46 78h16M46 100h16M46 122h16"/><path class="fill" d="M70 150V12l16-12 16 12v138Z"/><path d="M86 0v150M76 12h20M78 36h16M78 58h16M78 80h16M78 102h16M78 124h16"/></svg><svg class="bld twin" viewBox="0 0 90 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M8 120V14h12V6h12v8h8v106Z"/><path class="fill" d="M50 120V8h12V0h12v8h8v112Z"/><path class="fill" d="M40 120V52h10v68Z"/><path d="M14 30h20M14 50h20M14 70h20M14 90h20M56 24h20M56 44h20M56 64h20M56 84h20M56 104h20"/></svg><svg class="bld cocoon" viewBox="0 0 70 150" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M35 2C14 20 6 60 8 100c2 30 14 48 27 48s25-18 27-48c2-40-6-80-27-98Z"/><path d="M14 40l40 66M12 70l34 56M22 20l34 58M10 100l24 42M56 40L16 106M58 70L24 126M48 20L14 78M60 100L36 142M35 2v148"/></svg><svg class="bld g1" viewBox="0 0 50 70" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path d="M14 8V0M38 8V2"/><path class="fill" d="M2 70V8h46v62Z"/><path d="M8 16h34M8 30h34M8 44h34M8 58h34"/></svg><svg class="bld g2" viewBox="0 0 40 90" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M12 8V2h16v6Z"/><path class="fill" d="M2 90V8h36v82Z"/><path d="M8 16h24M8 28h24M8 40h24M8 52h24M8 64h24M8 76h24"/></svg><svg class="bld g3" viewBox="0 0 66 60" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M2 60V8h62v52Z"/><path d="M8 16h50M8 30h50M8 44h50"/></svg><svg class="bld g4" viewBox="0 0 34 110" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path d="M17 8V0"/><path class="fill" d="M2 110V8h30v102Z"/><path d="M8 16h18M8 28h18M8 40h18M8 52h18M8 64h18M8 76h18M8 88h18M8 100h18"/></svg><svg class="bld g5" viewBox="0 0 60 76" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M20 8V0h20v8Z"/><path class="fill" d="M2 76V8h56v68Z"/><path d="M8 16h44M8 30h44M8 44h44M8 58h44"/></svg><svg class="bld g6" viewBox="0 0 44 96" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M2 96V8h40v88Z"/><path d="M8 16h28M8 28h28M8 40h28M8 52h28M8 64h28M8 76h28M8 88h28"/></svg><svg class="bld g7" viewBox="0 0 72 56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path d="M20 8V2M52 8V2M20 2h32"/><path class="fill" d="M2 56V8h68v48Z"/><path d="M8 16h56M8 30h56M8 44h56"/></svg></div><div class="haze" aria-hidden="true"></div><div class="clouds" aria-hidden="true"><svg class="sun" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46"/></svg><svg class="c1" viewBox="0 0 200 76" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M10 56C4 42 14 32 26 36C30 18 54 14 64 28C72 8 104 6 114 24C128 10 154 16 156 34C172 28 190 40 182 56Z"/><path d="M150 64H198M162 71H190"/></svg><svg class="c2" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M8 46C2 34 12 26 22 30C28 14 50 12 58 26C66 12 92 14 96 30C108 28 116 38 110 46Z"/><path d="M86 54H118M96 60H114"/></svg><svg class="c3" viewBox="0 0 200 76" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M10 56C4 42 14 32 26 36C30 18 54 14 64 28C72 8 104 6 114 24C128 10 154 16 156 34C172 28 190 40 182 56Z"/><path d="M150 64H198M162 71H190"/></svg><svg class="c4" viewBox="0 0 256 90" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M12 60C6 48 16 40 28 44C32 30 52 26 62 36C68 20 96 18 106 32C114 18 142 18 150 32C160 22 184 26 188 40C204 34 218 44 216 58C228 56 236 62 232 70H12Z"/><path d="M40 62H120M196 78H250M206 85H238"/></svg><svg class="c5" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M8 46C2 34 12 26 22 30C28 14 50 12 58 26C66 12 92 14 96 30C108 28 116 38 110 46Z"/><path d="M86 54H118M96 60H114"/></svg><svg class="c6" viewBox="0 0 256 90" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketch)"><path class="fill" d="M12 60C6 48 16 40 28 44C32 30 52 26 62 36C68 20 96 18 106 32C114 18 142 18 150 32C160 22 184 26 188 40C204 34 218 44 216 58C228 56 236 62 232 70H12Z"/><path d="M40 62H120M196 78H250M206 85H238"/></svg></div>
@@ -343,7 +352,7 @@
       <a class="btn" href="mailto:loganrosson@gmail.com">Email</a>
     </div>
   </div>
-  <img src="https://github.com/loganrosson.png?size=400" alt="Portrait of Logan Rosson">
+  <img src="img/portrait.webp" width="480" height="480" fetchpriority="high" decoding="async" alt="Portrait of Logan Rosson">
 </div></header>
 
 <section id="projects"><div class="wrap">
@@ -361,13 +370,35 @@
     </article>
 
     <article class="card clickable">
-      <img src="chatbot-qa-test.png" alt="Telegram chat where a support chatbot diagnoses an order error from a screenshot" loading="lazy">
+      <img src="img/chatbot-qa-test.webp" width="800" height="500" alt="Telegram chat: Logan posts an order error and the support chatbot explains that the signature expiry was set too close to the current time" loading="lazy">
       <div class="body">
         <span class="badge">QA testing · Oct 2026 · Team of 2</span>
         <h3><a class="stretch" href="chatbot-qa.html">QA Testing a Telegram Support Chatbot</a></h3>
-        <p>I was the second tester for an AI support bot a friend built for a crypto derivatives exchange. Using an AI browser agent in a live Telegram group, I ran a 32-check test plan covering simultaneous users, handovers to the human team, error screenshots, leaked keys and prompt-injection attempts, then wrote up the results.</p>
+        <p>I was the second tester for an AI support bot a friend built for a crypto derivatives exchange. With an AI browser agent in a live Telegram group, I ran a 32-check test plan covering simultaneous users, human handovers, error screenshots, leaked keys and prompt injection, then wrote up the results.</p>
         <div class="tags"><span class="tag">LLM chatbot QA</span><span class="tag">Prompt-injection testing</span><span class="tag">Browser automation</span><span class="tag">Telegram</span><span class="tag">Test plans</span></div>
         <div class="links"><a href="chatbot-qa.html">Read the case study →</a></div>
+      </div>
+    </article>
+
+    <article class="card clickable">
+      <div class="cover" aria-hidden="true"><svg viewBox="0 0 320 200" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketch)"><rect class="paper" x="30" y="66" width="44" height="56" rx="4" transform="rotate(-8 52 94)"/><rect class="paper" x="34" y="62" width="44" height="56" rx="4"/><path d="M42 74h26M42 82h20M42 90h26M42 98h14M42 106h22" opacity=".55"/><path d="M86 92h18M98 86l7 6-7 6"/><path class="paper" d="M114 70h44l-16 22v20l-12 6V92Z"/><path d="M122 76h28" opacity=".5"/><path d="M168 92h18M180 86l7 6-7 6"/><rect class="hi" x="196" y="66" width="38" height="16" rx="8"/><rect class="paper" x="196" y="88" width="38" height="16" rx="8"/><rect class="paper" x="196" y="110" width="38" height="16" rx="8"/><path d="M242 96h10M248 90l7 6-7 6"/><rect class="paper" x="262" y="62" width="40" height="62" rx="4"/><path d="M270 114v-12M279 114v-22M288 114v-16M296 114v-30"/><path class="hiline" d="M270 100l9-12 9 6 8-16"/></g><text class="lbl tag" x="215" y="77.5" text-anchor="middle">LLM</text><text class="lbl" x="54" y="148" text-anchor="middle">Messy data</text><text class="lbl" x="136" y="148" text-anchor="middle">Clean</text><text class="lbl" x="215" y="148" text-anchor="middle">Score</text><text class="lbl" x="282" y="148" text-anchor="middle">Compare</text><text class="lbl small" x="160" y="168" text-anchor="middle">Python  →  LangChain + LLMs  →  R (tidyverse)</text></svg></div>
+      <div class="body">
+        <span class="badge">Honors thesis · In progress · Apr 2027</span>
+        <h3><a class="stretch" href="thesis.html">Automated Financial Data Pipeline</a></h3>
+        <p>Is a bigger LLM worth it for cleaning messy financial data? I built a Python pipeline that generates messy transaction data with known answers, cleans it with a rule-based baseline and with LLMs of different sizes, and then scores every run on accuracy and cost in R.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">R</span><span class="tag">LangChain</span><span class="tag">LLM APIs</span><span class="tag">ETL</span></div>
+        <div class="links"><a href="thesis.html">Read the case study →</a></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="cover" aria-hidden="true"><svg viewBox="0 0 320 200" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketch)"><rect class="paper" x="26" y="30" width="268" height="146" rx="12"/><path d="M26 54h268"/><circle cx="40" cy="42" r="3"/><circle cx="51" cy="42" r="3"/><circle cx="62" cy="42" r="3"/><path d="M38 74h52" opacity=".5"/><rect class="paper" x="38" y="84" width="52" height="20" rx="4"/><path d="M45 92h26M45 97h16" opacity="0.55"/><rect class="paper" x="38" y="110" width="52" height="20" rx="4"/><path d="M45 118h26M45 123h16" opacity="0.55"/><rect class="paper" x="38" y="136" width="52" height="20" rx="4"/><path d="M45 144h26M45 149h16" opacity="0.55"/><path d="M102 74h52" opacity=".5"/><rect class="paper" x="102" y="84" width="52" height="20" rx="4"/><path d="M109 92h26M109 97h16" opacity="0.55"/><rect class="paper" x="102" y="110" width="52" height="20" rx="4"/><path d="M109 118h26M109 123h16" opacity="0.55"/><path d="M166 74h52" opacity=".5"/><rect class="paper" x="166" y="84" width="52" height="20" rx="4"/><path d="M173 92h26M173 97h16" opacity="0.55"/><rect class="hi" x="166" y="110" width="52" height="20" rx="4"/><path d="M173 118h26M173 123h16" opacity="1"/><path d="M230 74h52" opacity=".5"/><rect class="paper" x="230" y="84" width="52" height="20" rx="4"/><path d="M237 92h26M237 97h16" opacity="0.55"/><path class="hiline" d="M218 116c10 0 14-8 22-8"/><path class="hiline" d="M234 103l7 5-6 6"/><rect class="hi ghost" x="230" y="110" width="52" height="20" rx="4" stroke-dasharray="4 4"/></g><text class="lbl" x="38" y="69">Prospect</text><text class="lbl" x="102" y="69">Contacted</text><text class="lbl" x="166" y="69">Visit</text><text class="lbl" x="230" y="69">Committed</text></svg></div>
+      <div class="body">
+        <span class="badge">Eccles Ideathon · Sep 2025 · 6th overall</span>
+        <h3>Student-Athlete Recruiting CRM</h3>
+        <p>For the Eccles School's design and development competition, my team built a Salesforce CRM with dashboards and pipelines for prospecting student athletes, then presented it to the judges. We placed 6th overall and were recognized by the panel as one of the strongest teams at presenting.</p>
+        <div class="tags"><span class="tag">Salesforce</span><span class="tag">CRM</span><span class="tag">Dashboards</span><span class="tag">Presenting</span></div>
+        <div class="links"><span class="note">Built in a private Salesforce org · <a href="mailto:loganrosson@gmail.com?subject=Recruiting%20CRM%20walkthrough">ask me for a walkthrough →</a></span></div>
       </div>
     </article>
 
@@ -382,36 +413,6 @@
     </article>
 
     <article class="card clickable">
-      <img src="img/analytics-trainer.webp" width="960" height="634" alt="Business analytics question with pandas code" loading="lazy">
-      <div class="body">
-        <h3><a class="stretch" href="https://github.com/loganrosson/is4487-analytics-midterm-trainer" target="_blank" rel="noopener">Business Analytics Trainer</a></h3>
-        <p>A practice suite featuring business cases and a custom "Code Lab" that executes pandas code one statement at a time on real data sets, showing you exactly what changes.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Data analytics</span></div>
-        <div class="links"><a href="https://github.com/loganrosson/is4487-analytics-midterm-trainer" target="_blank" rel="noopener">View on GitHub →</a></div>
-      </div>
-    </article>
-
-    <article class="card">
-      <div class="cover" aria-hidden="true"><svg viewBox="0 0 320 200" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketch)"><rect class="paper" x="26" y="30" width="268" height="146" rx="12"/><path d="M26 54h268"/><circle cx="40" cy="42" r="3"/><circle cx="51" cy="42" r="3"/><circle cx="62" cy="42" r="3"/><path d="M38 74h52" opacity=".5"/><rect class="paper" x="38" y="84" width="52" height="20" rx="4"/><path d="M45 92h26M45 97h16" opacity="0.55"/><rect class="paper" x="38" y="110" width="52" height="20" rx="4"/><path d="M45 118h26M45 123h16" opacity="0.55"/><rect class="paper" x="38" y="136" width="52" height="20" rx="4"/><path d="M45 144h26M45 149h16" opacity="0.55"/><path d="M102 74h52" opacity=".5"/><rect class="paper" x="102" y="84" width="52" height="20" rx="4"/><path d="M109 92h26M109 97h16" opacity="0.55"/><rect class="paper" x="102" y="110" width="52" height="20" rx="4"/><path d="M109 118h26M109 123h16" opacity="0.55"/><path d="M166 74h52" opacity=".5"/><rect class="paper" x="166" y="84" width="52" height="20" rx="4"/><path d="M173 92h26M173 97h16" opacity="0.55"/><rect class="hi" x="166" y="110" width="52" height="20" rx="4"/><path d="M173 118h26M173 123h16" opacity="1"/><path d="M230 74h52" opacity=".5"/><rect class="paper" x="230" y="84" width="52" height="20" rx="4"/><path d="M237 92h26M237 97h16" opacity="0.55"/><path class="hiline" d="M218 116c10 0 14-8 22-8"/><path class="hiline" d="M234 103l7 5-6 6"/><rect class="hi ghost" x="230" y="110" width="52" height="20" rx="4" stroke-dasharray="4 4"/></g><text class="lbl" x="38" y="69">Prospect</text><text class="lbl" x="102" y="69">Contacted</text><text class="lbl" x="166" y="69">Visit</text><text class="lbl" x="230" y="69">Committed</text></svg></div>
-      <div class="body">
-        <span class="badge">Eccles Ideathon · Sep 2025 · 6th overall</span>
-        <h3>Student-Athlete Recruiting CRM</h3>
-        <p>For the Eccles School's design and development competition, my team built a Salesforce CRM with dashboards and pipelines for prospecting student athletes, then presented it to the judges. We placed 6th overall and were recognized by the panel as one of the strongest teams at presenting.</p>
-        <div class="tags"><span class="tag">Salesforce</span><span class="tag">CRM</span><span class="tag">Dashboards</span><span class="tag">Presenting</span></div>
-      </div>
-    </article>
-
-    <article class="card">
-      <div class="cover" aria-hidden="true"><svg viewBox="0 0 320 200" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketch)"><rect class="paper" x="30" y="66" width="44" height="56" rx="4" transform="rotate(-8 52 94)"/><rect class="paper" x="34" y="62" width="44" height="56" rx="4"/><path d="M42 74h26M42 82h20M42 90h26M42 98h14M42 106h22" opacity=".55"/><path d="M86 92h18M98 86l7 6-7 6"/><path class="paper" d="M114 70h44l-16 22v20l-12 6V92Z"/><path d="M122 76h28" opacity=".5"/><path d="M168 92h18M180 86l7 6-7 6"/><rect class="hi" x="196" y="66" width="38" height="16" rx="8"/><rect class="paper" x="196" y="88" width="38" height="16" rx="8"/><rect class="paper" x="196" y="110" width="38" height="16" rx="8"/><path d="M242 96h10M248 90l7 6-7 6"/><rect class="paper" x="262" y="62" width="40" height="62" rx="4"/><path d="M270 114v-12M279 114v-22M288 114v-16M296 114v-30"/><path class="hiline" d="M270 100l9-12 9 6 8-16"/></g><text class="lbl tag" x="215" y="77.5" text-anchor="middle">LLM</text><text class="lbl" x="54" y="148" text-anchor="middle">Raw data</text><text class="lbl" x="136" y="148" text-anchor="middle">Clean</text><text class="lbl" x="215" y="148" text-anchor="middle">Classify</text><text class="lbl" x="282" y="148" text-anchor="middle">Summarize</text><text class="lbl small" x="160" y="168" text-anchor="middle">Python  →  LLM API  →  R (dplyr, lubridate)</text></svg></div>
-      <div class="body">
-        <span class="badge">Honors thesis · Expected Apr 2027</span>
-        <h3>Automated Financial Data Pipeline</h3>
-        <p>For my honors thesis, I'm building an automated Python and R pipeline that extracts, cleans, and standardizes unstructured financial data, classifying records with an LLM API before aggregating daily summaries with dplyr and lubridate.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">R</span><span class="tag">LLM APIs</span><span class="tag">ETL</span></div>
-      </div>
-    </article>
-
-    <article class="card clickable">
       <div class="cover" aria-hidden="true"><svg viewBox="0 0 320 200" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketch)"><path class="paper" d="M60 56c28-8 58-6 92 6v100c-34-12-64-14-92-6Z"/><path class="paper" d="M244 56c-28-8-58-6-92 6v100c34-12 64-14 92-6Z"/><path d="M72 75c22-4 44-3 68 3" opacity=".5"/><path d="M164 79c22-6 44-6 68-3" opacity=".5"/><path d="M72 87c22-4 44-3 68 3" opacity=".5"/><path d="M164 91c22-6 44-6 68-3" opacity=".5"/><path d="M72 99c22-4 44-3 68 3" opacity=".5"/><path class="hiline thick" d="M164 102c22-6 44-6 68-3"/><path d="M164 103c22-6 44-6 68-3" opacity=".5"/><path d="M72 111c22-4 44-3 68 3" opacity=".5"/><path d="M164 115c22-6 44-6 68-3" opacity=".5"/><path d="M72 123c22-4 44-3 68 3" opacity=".5"/><path d="M164 127c22-6 44-6 68-3" opacity=".5"/><path d="M72 135c22-4 44-3 68 3" opacity=".5"/><path d="M164 139c22-6 44-6 68-3" opacity=".5"/><path class="hiline" d="M262 92c6 6 6 16 0 22M272 84c11 11 11 27 0 38M282 76c16 16 16 38 0 54"/><circle class="paper" cx="40" cy="104" r="14"/><path class="hiline" d="M36 97v14l11-7Z"/></g></svg></div>
       <div class="body">
         <span class="badge">AI · Text-to-speech</span>
@@ -422,67 +423,21 @@
       </div>
     </article>
 
-    <article class="extra card clickable">
-      <img src="img/python-devmode.webp" width="960" height="634" alt="Dev Mode stepping through Python code" loading="lazy">
+    <article class="card more-card">
       <div class="body">
-        <h3><a class="stretch" href="https://github.com/loganrosson/is4085-python-midterm-study-tool" target="_blank" rel="noopener">Python Study Tool with Code Stepper</a></h3>
-        <p>Runs each question's code in a sandbox and explains every miss. My favorite feature is "Dev Mode," which traces the program line by line so you can visualize the call stack and variable history in real time.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">sys.settrace</span><span class="tag">Tkinter</span></div>
-        <div class="links"><a href="https://github.com/loganrosson/is4085-python-midterm-study-tool" target="_blank" rel="noopener">View on GitHub →</a></div>
-      </div>
-    </article>
-
-    <article class="extra card clickable">
-      <img src="img/networking-lab.webp" width="960" height="634" alt="Subnetting lab showing a worked solution in binary" loading="lazy">
-      <div class="body">
-        <h3><a class="stretch" href="https://github.com/loganrosson/is4440-networking-midterm-trainer" target="_blank" rel="noopener">Networking &amp; Subnetting Trainer</a></h3>
-        <p>Features over 350 Network+ style questions and a timed exam simulation. I also designed interactive labs that walk through subnetting, routing, and frame-traversal problems step by step.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Networking</span><span class="tag">Subnetting</span></div>
-        <div class="links"><a href="https://github.com/loganrosson/is4440-networking-midterm-trainer" target="_blank" rel="noopener">View on GitHub →</a></div>
-      </div>
-    </article>
-
-    <article class="extra card clickable">
-      <div class="cover" aria-hidden="true"><svg viewBox="0 0 320 200" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketch)"><path class="paper" d="M56 50h46l18 18v82H56Z"/><path d="M102 50v18h18"/><rect class="paper" x="200" y="54" width="76" height="76" rx="6"/><path d="M206 122l22-30 14 16 10-10 20 24"/><circle class="hi" cx="256" cy="78" r="9"/><path class="hiline" d="M194 100c-22 0-36-2-58 2M146 95l-9 7 9 7"/><path d="M78 128V96l22-5v30"/><circle cx="73" cy="129" r="5"/><circle cx="95" cy="122" r="5"/></g><text class="lbl strong" x="88" y="84" text-anchor="middle">MP3</text><text class="lbl small" x="160" y="166" text-anchor="middle">ID3v2.3 front cover</text></svg></div>
-      <div class="body">
-        <h3><a class="stretch" href="https://github.com/loganrosson/music-cover-maker" target="_blank" rel="noopener">Music Cover Maker</a></h3>
-        <p>A lightweight utility script that embeds cover art directly into MP3 files as ID3v2.3 front-cover frames so they display cleanly across Windows and Google Drive.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">mutagen</span></div>
-        <div class="links"><a href="https://github.com/loganrosson/music-cover-maker" target="_blank" rel="noopener">View on GitHub →</a></div>
-      </div>
-    </article>
-
-    <article class="extra card clickable">
-      <div class="cover" aria-hidden="true"><svg viewBox="0 0 320 200" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketch)"><rect class="paper" x="96" y="44" width="76" height="108" rx="8" transform="rotate(-10 134 98)"/><rect class="paper" x="150" y="46" width="76" height="108" rx="8" transform="rotate(8 188 100)"/><circle class="hi" cx="252" cy="140" r="17"/><circle cx="252" cy="140" r="9"/></g><g transform="rotate(-10 134 98)"><text class="card-t" x="106" y="66">A</text><text class="suit" x="134" y="110" text-anchor="middle">♠</text></g><g transform="rotate(8 188 100)"><text class="card-t" x="160" y="68">K</text><text class="suit" x="188" y="112" text-anchor="middle">♥</text></g><text class="lbl strong big" x="72" y="150" text-anchor="middle">21</text></svg></div>
-      <div class="body">
-        <h3><a class="stretch" href="https://github.com/loganrosson/blackjack" target="_blank" rel="noopener">Blackjack</a></h3>
-        <p>A terminal-based Blackjack game I built to handle dealer logic, soft/hard aces, split mechanics, and win tracking.</p>
-        <div class="tags"><span class="tag">Python</span></div>
-        <div class="links"><a href="https://github.com/loganrosson/blackjack" target="_blank" rel="noopener">View on GitHub →</a></div>
+        <h3>More on GitHub</h3>
+        <p>Smaller tools I built along the way, mostly to study for exams.</p>
+        <ul class="mini">
+          <li><a href="https://github.com/loganrosson/is4487-analytics-midterm-trainer" target="_blank" rel="noopener">Business Analytics Trainer</a><span>Business cases plus a Code Lab that runs pandas one statement at a time.</span></li>
+          <li><a href="https://github.com/loganrosson/is4085-python-midterm-study-tool" target="_blank" rel="noopener">Python Study Tool with Code Stepper</a><span>Sandboxed questions and a Dev Mode that traces the call stack line by line.</span></li>
+          <li><a href="https://github.com/loganrosson/is4440-networking-midterm-trainer" target="_blank" rel="noopener">Networking &amp; Subnetting Trainer</a><span>350+ Network+ style questions, a timed exam and step-by-step subnetting labs.</span></li>
+          <li><a href="https://github.com/loganrosson/music-cover-maker" target="_blank" rel="noopener">Music Cover Maker</a><span>Embeds cover art into MP3s as ID3v2.3 frames so it shows everywhere.</span></li>
+          <li><a href="https://github.com/loganrosson/blackjack" target="_blank" rel="noopener">Blackjack</a><span>Terminal game with dealer logic, soft and hard aces, splits and win tracking.</span></li>
+        </ul>
+        <div class="links"><a href="https://github.com/loganrosson" target="_blank" rel="noopener">All repositories →</a></div>
       </div>
     </article>
   </div>
-  <div class="more-wrap"><button type="button" class="btn see-more" aria-expanded="false" aria-controls="project-grid" hidden>See more projects</button></div>
-  <script>
-  /* Projects: the first seven show, the rest wait behind "See more". Without JavaScript every project simply shows. */
-  (function(){
-    var grid=document.getElementById('project-grid'), btn=document.querySelector('.see-more');
-    if(!grid||!btn) return;
-    var extra=grid.querySelectorAll('.extra'); if(!extra.length) return;
-    var more='See '+extra.length+' more project'+(extra.length>1?'s':''), less='Show fewer projects';
-    grid.classList.add('collapsed'); btn.textContent=more; btn.hidden=false;
-    btn.addEventListener('click',function(){
-      var opening=grid.classList.contains('collapsed'), top=btn.getBoundingClientRect().top;
-      grid.classList.toggle('collapsed',!opening);
-      btn.setAttribute('aria-expanded',opening?'true':'false'); btn.textContent=opening?less:more;
-      for(var i=0;i<extra.length;i++){ extra[i].classList.remove('reveal'); if(opening){ void extra[i].offsetWidth; extra[i].style.animationDelay=(i*70)+'ms'; extra[i].classList.add('reveal'); } }
-      /* when closing, keep the button where it was on screen instead of leaving you further down the page */
-      if(!opening) window.scrollTo({top:window.scrollY+btn.getBoundingClientRect().top-top,behavior:'instant'});
-      window.dispatchEvent(new Event('scroll'));
-      if(window.gtag) gtag('event', opening?'projects_see_more':'projects_show_fewer');
-    });
-  })();
-  </script>
 </div></section>
 
 <section id="experience">
@@ -592,6 +547,7 @@
     <div><h3>AI &amp; Automation</h3><div class="tags"><span class="tag">LLM chatbot QA testing</span><span class="tag">Prompt-injection &amp; security testing</span><span class="tag">Browser automation</span><span class="tag">Telegram bots</span><span class="tag">Test plans &amp; bug reports</span></div></div>
   </div>
 </div></section>
+</main>
 
 <footer id="contact"><div class="wrap">
   <div class="btns">
@@ -693,7 +649,8 @@
   var D={
     petal:function(c,p){ var s=p.s; c.fillStyle=p.col; c.beginPath(); c.moveTo(0,-s); c.bezierCurveTo(s*0.95,-s*0.55,s*0.85,s*0.55,0,s); c.bezierCurveTo(-s*0.85,s*0.55,-s*0.95,-s*0.55,0,-s); c.fill(); },
     seed:function(c,p){ var s=p.s; c.strokeStyle=C.fluff; c.lineWidth=1; c.beginPath(); c.moveTo(0,0); c.lineTo(0,s); c.stroke(); c.fillStyle=C.fluff; c.beginPath(); c.arc(0,s+1,1.4,0,6.28); c.fill(); c.beginPath(); for(var i=0;i<9;i++){ var a=-Math.PI/2+(i-4)*0.3; c.moveTo(0,0); c.lineTo(Math.cos(a)*s*0.7,Math.sin(a)*s*0.7); } c.stroke(); },
-    leaf:function(c,p){ var s=p.s, L=[[0,-1],[0.22,-0.45],[0.9,-0.5],[0.45,-0.05],[0.75,0.55],[0.18,0.3],[0,0.75],[-0.18,0.3],[-0.75,0.55],[-0.45,-0.05],[-0.9,-0.5],[-0.22,-0.45]]; c.fillStyle=p.col; c.beginPath(); c.moveTo(0,-s); for(var i=1;i<L.length;i++){ var a=L[i-1], b=L[i]; c.quadraticCurveTo((a[0]+b[0])/2*s*1.05,(a[1]+b[1])/2*s*1.05,b[0]*s,b[1]*s); } c.closePath(); c.fill(); c.strokeStyle=p.col; c.lineWidth=1; c.beginPath(); c.moveTo(0,s*0.7); c.lineTo(0,s*1.35); c.stroke(); },
+    /* A simple pointed leaf (slightly fuller on one side), with a pale midrib and a stem. At 8 to 14px the old maple outline read as a red star. */
+    leaf:function(c,p){ var s=p.s; c.fillStyle=p.col; c.beginPath(); c.moveTo(0,-s); c.bezierCurveTo(s*0.95,-s*0.6,s*0.8,s*0.5,0,s*0.78); c.bezierCurveTo(-s*0.7,s*0.5,-s*0.8,-s*0.6,0,-s); c.closePath(); c.fill(); c.strokeStyle='rgba(255,255,255,.45)'; c.lineWidth=1; c.beginPath(); c.moveTo(0,-s*0.7); c.quadraticCurveTo(s*0.12,0,0,s*0.6); c.stroke(); c.strokeStyle=p.col; c.lineWidth=1.3; c.beginPath(); c.moveTo(0,s*0.75); c.lineTo(-s*0.1,s*1.35); c.stroke(); },
     crystal:function(c,p){ var s=p.s; c.strokeStyle=C.snow; c.lineWidth=1; c.beginPath(); for(var i=0;i<6;i++){ var a=i*Math.PI/3; c.moveTo(0,0); c.lineTo(Math.cos(a)*s,Math.sin(a)*s); var bx=Math.cos(a)*s*0.6, by=Math.sin(a)*s*0.6; c.moveTo(bx,by); c.lineTo(bx+Math.cos(a+0.9)*s*0.3,by+Math.sin(a+0.9)*s*0.3); c.moveTo(bx,by); c.lineTo(bx+Math.cos(a-0.9)*s*0.3,by+Math.sin(a-0.9)*s*0.3); } c.stroke(); },
     fly:function(c,p){ var a=0.25+0.75*(0.5+0.5*Math.sin(p.t*p.pf*60+p.ph)); c.fillStyle=C.glow+(a*0.95)+')'; c.shadowBlur=16; c.shadowColor=C.glow+a+')'; c.beginPath(); c.arc(0,0,p.s,0,6.28); c.fill(); c.shadowBlur=0; }
   };

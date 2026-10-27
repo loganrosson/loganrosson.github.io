@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found | Logan Rosson</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f4f7f5">
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+  --bg: #f4f7f5; --surface: #ffffff; --text: #132019; --muted: #55665c; --line: #dbe4de;
+  --accent: #2f7a55; --accent-soft: #e1f0e7; --on-accent: #ffffff;
+  --shadow: 0 1px 2px rgba(16,24,40,.06), 0 4px 16px rgba(16,24,40,.06);
+  --display-font: 'Lora', Georgia, 'Times New Roman', serif; --body-font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font: 16px/1.6 var(--body-font); }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .wrap { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  nav { background: color-mix(in srgb, var(--bg) 88%, transparent); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  nav .brand { font-family: var(--display-font); font-weight: 600; letter-spacing: .01em; text-decoration: none; }
+  nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; align-items: center; }
+  nav ul a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; }
+  nav ul a:hover { color: var(--text); }
+  nav ul a.nav-about { color: var(--accent); font-weight: 600; padding: 6px 14px; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 999px; }
+  nav ul a.nav-about:hover { background: var(--accent-soft); }
+  main { flex: 1; display: grid; place-items: center; padding: 48px 0; }
+  .lost { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center; max-width: 720px; }
+  .lost svg { width: 200px; height: auto; color: var(--muted); }
+  .lost .paper { fill: var(--surface); }
+  .lost .sea { fill: var(--bg); }
+  .eyebrow { margin: 0 0 10px; font: 600 13px/1 var(--body-font); letter-spacing: .16em; text-transform: uppercase; color: #276747; }
+  h1 { font-family: var(--display-font); font-weight: 600; font-size: clamp(32px, 5vw, 46px); line-height: 1.08; letter-spacing: -0.01em; margin: 0 0 12px; }
+  p { margin: 0 0 22px; color: var(--muted); font-size: 17px; max-width: 46ch; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; border: 1px solid var(--line); background: var(--surface); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary:hover { filter: brightness(1.08); }
+  footer { padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  @media (max-width: 720px) {
+    .lost { grid-template-columns: 1fr; gap: 20px; }
+    .lost svg { width: 150px; }
+    nav ul a { white-space: nowrap; font-size: 13px; }
+  }
+  @keyframes bob { from { transform: translateY(2px) rotate(-3deg); } to { transform: translateY(-3px) rotate(3deg); } }
+  .boat { transform-origin: 50% 80%; animation: bob 3.6s ease-in-out infinite alternate; }
+  @media (prefers-reduced-motion: reduce) { .boat { animation: none; } }
+</style>
+</head>
+<body>
+<nav aria-label="Main"><div class="wrap">
+  <a class="brand" href="/">Logan Rosson</a>
+  <ul><li><a href="/#projects">Projects</a></li><li><a class="nav-about" href="/about.html">About me</a></li></ul>
+</div></nav>
+
+<main>
+  <div class="wrap"><div class="lost">
+    <svg viewBox="0 0 200 150" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <g class="boat">
+        <path class="paper" d="M50 96h100l-14 22H64Z"/>
+        <path d="M98 96V30"/>
+        <path class="paper" d="M98 34l44 52H98Z"/>
+        <path class="paper" d="M94 40L60 88h34Z"/>
+        <path d="M98 30l12-6-12-4"/>
+      </g>
+      <path class="sea" stroke="none" d="M0 118h200v32H0Z"/>
+      <path d="M6 120c10-8 20-8 30 0s20 8 30 0 20-8 30 0 20 8 30 0 20-8 30 0 20 8 30 0" opacity=".7"/>
+      <path d="M16 134c10-8 20-8 30 0s20 8 30 0 20-8 30 0 20 8 30 0 20-8 30 0" opacity=".45"/>
+      <path d="M24 22c4-6 10-8 16-4M150 18c6-5 12-4 16 2" opacity=".6"/>
+    </svg>
+    <div>
+      <p class="eyebrow">404 · Page not found</p>
+      <h1>That page drifted off.</h1>
+      <p>The link you followed points at a page that isn't here. It may have moved, or there may be a typo in the address.</p>
+      <div class="btns">
+        <a class="btn primary" href="/">Back to the home page</a>
+        <a class="btn" href="/#projects">See the projects</a>
+        <a class="btn" href="/about.html">About me</a>
+      </div>
+    </div>
+  </div></div>
+</main>
+
+<footer><div class="wrap">Logan Rosson · Salt Lake City, UT · <a href="mailto:loganrosson@gmail.com">loganrosson@gmail.com</a></div></footer>
+</body>
+</html>
