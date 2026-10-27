@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Analytics (GA4). Same tag and ?me=1 opt-out as the home page. -->
+<script>
+(function(){
+  try{ if(/[?&]me=1/.test(location.search)) localStorage.setItem('ga_me','1'); if(localStorage.getItem('ga_me')==='1') return; }catch(e){}
+  var s=document.createElement('script'); s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id=G-X5ZJKV8DP0'; document.head.appendChild(s);
+  window.dataLayer=window.dataLayer||[]; function gtag(){ dataLayer.push(arguments); } window.gtag=gtag;
+  gtag('js', new Date()); gtag('config', 'G-X5ZJKV8DP0');
+})();
+</script>
+<title>Automated Financial Data Pipeline: Is a Bigger LLM Worth It? | Logan Rosson</title>
+<meta name="description" content="My honors thesis: a Python and R pipeline that generates messy financial transactions with known answers, cleans them with rules and with LLMs of different sizes, and scores every run on accuracy and cost.">
+<meta name="author" content="Logan Rosson">
+<link rel="canonical" href="https://loganrosson.github.io/thesis.html">
+<meta name="theme-color" content="#f4f7f5">
+<!-- Light version only, to match the home page. -->
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://loganrosson.github.io/thesis.html">
+<meta property="og:title" content="Automated Financial Data Pipeline: Is a Bigger LLM Worth It? | Logan Rosson">
+<meta property="og:description" content="Honors thesis in progress: messy financial data with known answers, cleaned by rules and by LLMs of different sizes, scored on accuracy and cost.">
+<meta property="og:image" content="https://loganrosson.github.io/img/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+  --bg: #f4f7f5; --surface: #ffffff; --text: #132019; --muted: #55665c; --line: #dbe4de;
+  --accent: #2f7a55; --accent-soft: #e1f0e7; --chip: #ecf2ee; --on-accent: #ffffff;
+  --shadow: 0 1px 2px rgba(16,24,40,.06), 0 4px 16px rgba(16,24,40,.06);
+  --display-font: 'Lora', Georgia, 'Times New Roman', serif; --body-font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 var(--body-font); }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  .read { max-width: 760px; }
+  nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  nav .brand { font-family: var(--display-font); font-weight: 600; letter-spacing: .01em; text-decoration: none; }
+  nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; align-items: center; }
+  nav ul a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; }
+  nav ul a:hover { color: var(--text); }
+  nav ul a.nav-about { color: var(--accent); font-weight: 600; padding: 6px 14px; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 999px; }
+  nav ul a.nav-about:hover, nav ul a.nav-about[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
+  .skip { position: absolute; left: 16px; top: -60px; z-index: 20; padding: 8px 12px; border-radius: 8px; background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 14px; text-decoration: none; }
+  .skip:focus { top: 10px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .btn:focus-visible, nav ul a.nav-about:focus-visible { outline-offset: 2px; }
+  .back { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 14px; font-weight: 600; text-decoration: none; margin-bottom: 22px; }
+  .back:hover { color: var(--accent); }
+  header.case { padding: 48px 0 8px; }
+  .badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--accent-soft); color: #276747; }
+  header.case h1 { font-family: var(--display-font); font-weight: 600; font-size: clamp(32px, 5vw, 46px); line-height: 1.08; letter-spacing: -0.01em; margin: 14px 0 14px; }
+  .lead { font-size: 18px; color: var(--muted); margin: 0 0 26px; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 0 0 22px; }
+  .fact { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .fact .k { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; }
+  .fact .v { font-weight: 600; margin-top: 2px; line-height: 1.4; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 12px; padding: 3px 8px; border-radius: 999px; background: var(--chip); color: var(--muted); font-weight: 500; }
+  figure { margin: 30px 0; }
+  figcaption { color: var(--muted); font-size: 14px; margin-top: 10px; }
+  section { padding: 40px 0 8px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin: 0 0 14px; }
+  h3 { font-family: var(--display-font); font-size: 21px; margin: 34px 0 8px; letter-spacing: -0.01em; }
+  section p { margin: 0 0 16px; }
+  ul.points { margin: 0 0 16px; padding-left: 20px; }
+  ul.points li { margin: 0 0 6px; }
+  ol.questions { margin: 0 0 16px; padding-left: 22px; }
+  ol.questions li { margin: 0 0 8px; }
+  ol.questions b { font-weight: 600; }
+  .pills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 6px 0 22px; }
+  .pill { border-radius: 14px; padding: 14px 16px; border: 1px solid var(--line); background: var(--surface); }
+  .pill b { display: block; font-size: 30px; line-height: 1.1; letter-spacing: -0.02em; color: var(--accent); }
+  .pill span { color: var(--muted); font-size: 14px; }
+  .table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-size: 14.5px; margin-bottom: 18px; }
+  .table th, .table td { text-align: left; padding: 10px 14px; border-top: 1px solid var(--line); vertical-align: top; }
+  .table thead th { border-top: 0; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); background: var(--chip); }
+  .table td:first-child { font-weight: 600; width: 30%; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 14px; background: var(--chip); padding: 1px 5px; border-radius: 4px; }
+  .table code { font-size: 13px; }
+  .callout { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 12px; padding: 14px 18px; margin: 18px 0; color: var(--muted); font-size: 15px; }
+  .status { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 6px 0 10px; }
+  .status > div { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .status h4 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+  .status ul { margin: 0; padding-left: 18px; font-size: 15px; }
+  .status li { margin: 0 0 5px; }
+  .status .done li::marker { color: var(--accent); }
+  /* Hand-drawn pipeline diagram, in the same sketch style as the home page covers */
+  .diagram { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 16px 10px; box-shadow: var(--shadow); color: color-mix(in srgb, var(--muted) 80%, var(--text)); }
+  .diagram svg { display: block; width: 100%; height: auto; }
+  .diagram .paper { fill: var(--chip); }
+  .diagram .hi { fill: var(--accent-soft); stroke: var(--accent); }
+  .diagram .hiline { stroke: var(--accent); }
+  .diagram .lbl { fill: var(--text); stroke: none; font: 600 11px/1 var(--body-font); }
+  .diagram .lbl.small { fill: var(--muted); font-weight: 500; font-size: 9.5px; }
+  .diagram .lbl.tag { fill: var(--accent); font-size: 9px; letter-spacing: .04em; }
+  .next { display: flex; flex-wrap: wrap; gap: 10px; margin: 34px 0 10px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; border: 1px solid var(--line); background: var(--surface); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary:hover { filter: brightness(1.08); }
+  footer { margin-top: 48px; padding: 40px 0 60px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  footer .btns { margin-bottom: 16px; }
+  @media (max-width: 720px) {
+    header.case { padding-top: 32px; }
+    .lead { font-size: 17px; }
+    .facts { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .fact { padding: 12px 14px; }
+    .fact .v { font-size: 15px; }
+    .pills { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .pill { padding: 12px; }
+    .pill b { font-size: 26px; }
+    .table th, .table td { padding: 9px 10px; }
+    .table td:first-child { width: 36%; }
+    .status { grid-template-columns: 1fr; }
+    /* on a phone the diagram keeps a readable size and scrolls sideways instead of shrinking */
+    .diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .diagram svg { min-width: 640px; }
+    nav ul { gap: 14px; }
+    nav ul a { white-space: nowrap; font-size: 13px; }
+  }
+  /* ---- Wider on big screens (matches the home page) ---- */
+  .wrap { zoom: var(--z, 1); }
+  @media (min-width: 1500px) { :root { --z: 1.06; } }
+  @media (min-width: 1700px) { .wrap, .wrap.read { max-width: 1240px; } .read p, .read h3, .read .callout, .read ol.questions { max-width: 820px; } }
+  @media (min-width: 2000px) { :root { --z: 1.1; } }
+  @media (min-width: 2250px) { :root { --z: 1.15; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Main"><div class="wrap">
+  <a class="brand" href="./">Logan Rosson</a>
+  <ul><li><a href="./#projects">Projects</a></li><li><a class="nav-about" href="about.html">About me</a></li></ul>
+</div></nav>
+
+<main id="main">
+<header class="case"><div class="wrap read">
+  <a class="back" href="./#projects">← Back to projects</a><br>
+  <span class="badge">Honors thesis · In progress · Expected Apr 2027</span>
+  <h1>Automated Financial Data Pipeline</h1>
+  <p class="lead">Is a bigger LLM worth it for cleaning messy financial data? For my honors thesis I built a pipeline that makes messy transaction records with known correct answers, cleans them with plain rules and with language models of different sizes, and scores every run on accuracy and cost. The pipeline is built and tested; the paid model runs are next.</p>
+  <div class="facts">
+    <div class="fact"><div class="k">Status</div><div class="v">Pipeline built, 23 automated checks passing</div></div>
+    <div class="fact"><div class="k">Stack</div><div class="v">Python (pandas, LangChain, pydantic) and R (tidyverse)</div></div>
+    <div class="fact"><div class="k">Data</div><div class="v">500 synthetic transactions at three messiness levels</div></div>
+    <div class="fact"><div class="k">Cleaners</div><div class="v">A rules baseline, then a ladder of LLMs run two ways each</div></div>
+  </div>
+  <div class="tags"><span class="tag">Python</span><span class="tag">R</span><span class="tag">LangChain</span><span class="tag">pandas</span><span class="tag">tidyverse</span><span class="tag">LLM evaluation</span><span class="tag">ETL</span></div>
+</div></header>
+
+<div class="wrap read">
+
+  <figure>
+    <div class="diagram">
+      <svg viewBox="0 0 760 190" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Pipeline: make messy data with known answers, clean it three ways, score every run, analyze in R">
+        <defs><filter id="sketch"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.4"/></filter></defs>
+        <g filter="url(#sketch)">
+          <!-- 1. messy data: a stack of sheets -->
+          <rect class="paper" x="28" y="42" width="120" height="76" rx="8"/>
+          <rect class="paper" x="22" y="36" width="120" height="76" rx="8"/>
+          <path d="M36 54h52M36 66h70M36 78h44M36 90h62M36 102h36" opacity=".55"/>
+          <path d="M112 54l8 8M120 54l-8 8" class="hiline"/>
+          <!-- arrow -->
+          <path d="M158 76h32M184 70l7 6-7 6"/>
+          <!-- 2. clean three ways: a funnel with three inlets -->
+          <path class="paper" d="M206 40h140l-50 44v26l-40 10V84Z"/>
+          <path d="M222 48h108" opacity=".5"/>
+          <rect class="hi" x="206" y="20" width="44" height="14" rx="7"/>
+          <rect class="paper" x="254" y="20" width="44" height="14" rx="7"/>
+          <rect class="paper" x="302" y="20" width="44" height="14" rx="7"/>
+          <!-- arrow -->
+          <path d="M360 76h32M386 70l7 6-7 6"/>
+          <!-- 3. score: a checklist -->
+          <rect class="paper" x="408" y="36" width="120" height="82" rx="8"/>
+          <path class="hiline" d="M420 54l6 6 10-12M420 74l6 6 10-12"/>
+          <path d="M444 52h70M444 72h70M444 92h70" opacity=".55"/>
+          <path d="M420 96l12 12M432 96l-12 12"/>
+          <!-- arrow -->
+          <path d="M540 76h32M566 70l7 6-7 6"/>
+          <!-- 4. analyze: a chart with a curve that flattens -->
+          <rect class="paper" x="590" y="36" width="140" height="82" rx="8"/>
+          <path d="M606 104V52M606 104h112" opacity=".6"/>
+          <path d="M618 104v-14M636 104v-26M654 104v-34M672 104v-38M690 104v-40M708 104v-41" opacity=".5"/>
+          <path class="hiline" d="M612 100c20-4 30-30 48-36 18-6 34-6 54-7"/>
+          <path d="M606 68h112" stroke-dasharray="3 5" opacity=".5"/>
+        </g>
+        <text class="lbl tag" x="228" y="30.5" text-anchor="middle">RULES</text>
+        <text class="lbl tag" x="276" y="30.5" text-anchor="middle">LLM</text>
+        <text class="lbl tag" x="324" y="30.5" text-anchor="middle">+TOOLS</text>
+        <text class="lbl" x="86" y="142" text-anchor="middle">1. Make messy data</text>
+        <text class="lbl small" x="86" y="158" text-anchor="middle">500 records, 3 levels of mess,</text>
+        <text class="lbl small" x="86" y="171" text-anchor="middle">every error logged</text>
+        <text class="lbl" x="276" y="142" text-anchor="middle">2. Clean it three ways</text>
+        <text class="lbl small" x="276" y="158" text-anchor="middle">plain rules, an LLM on its own,</text>
+        <text class="lbl small" x="276" y="171" text-anchor="middle">an LLM with my functions as tools</text>
+        <text class="lbl" x="468" y="142" text-anchor="middle">3. Score every run</text>
+        <text class="lbl small" x="468" y="158" text-anchor="middle">right, wrong, made up or dropped,</text>
+        <text class="lbl small" x="468" y="171" text-anchor="middle">plus what it cost</text>
+        <text class="lbl" x="660" y="142" text-anchor="middle">4. Analyze in R</text>
+        <text class="lbl small" x="660" y="158" text-anchor="middle">accuracy vs. cost, step by step</text>
+        <text class="lbl small" x="660" y="171" text-anchor="middle">up each model ladder</text>
+      </svg>
+    </div>
+    <figcaption>The pipeline end to end. The dotted line in the last chart is the free rule-based baseline every model has to beat.</figcaption>
+  </figure>
+
+  <section>
+    <h2>The question</h2>
+    <p>Anyone who has pulled a transaction export knows the problem: dates in four formats, amounts written as <code>(1,250.00)</code> or <code>-48.2K</code> or <code>1.200,50 €</code>, the same vendor spelled six ways, categories missing, rows duplicated. Language models are good at this kind of tidying, but they are priced by the token and the biggest ones cost fifty times more than the smallest. Nobody tells you where the extra money stops buying accuracy.</p>
+    <p>So the thesis asks one main question, with five smaller ones behind it:</p>
+    <ol class="questions">
+      <li><b>Is a bigger model worth it?</b> How much accuracy does each step up a provider's ladder buy, in points per extra dollar, and where do the returns flatten out?</li>
+      <li><b>Is any of it better than plain rules?</b> A free, hand-written cleaner is the baseline every model has to beat.</li>
+      <li><b>Which errors do bigger models fix?</b> Formatting mistakes a rule could catch, or the ones that need context, like knowing that <code>AAPL</code> is Apple?</li>
+      <li><b>How often do they make things up?</b> Some fields are deliberately unrecoverable. The right answer is a blank, and a model that guesses gets caught.</li>
+      <li><b>Does size matter more when the data is messier?</b> The same records at 10%, 25% and 40% error rates.</li>
+      <li><b>Can a cheap model with good tools match an expensive one?</b> The same model, once on its own and once with my cleaning functions handed to it as tools.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <div class="pills">
+      <div class="pill"><b>500</b><span>transactions, each with a known correct answer</span></div>
+      <div class="pill"><b>9</b><span>kinds of error, in three families: formatting, context and traps</span></div>
+      <div class="pill"><b>11</b><span>models in the lineup, from a free local one to each provider's top tier</span></div>
+      <div class="pill"><b>23</b><span>automated checks that the pipeline does what it claims</span></div>
+    </div>
+
+    <h3>Data with the answers in hand</h3>
+    <p>Real financial data comes without an answer key, so I generate my own. The generator builds 500 clean transactions across 30 real companies, 10 categories and 5 currencies, with log-uniform amounts so small charges are common and huge ones are rare, the way real ledgers look. Then it makes three messy copies of the same records, hitting each field with errors at a low, medium or high rate, and logs every single error it adds. That log is what makes honest scoring possible: for every run I know exactly which values were fixed, which were missed, which clean values got broken, and which blanks were filled in with a guess.</p>
+    <table class="table">
+      <thead><tr><th>Error</th><th>Kind</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Date format</td><td>Formatting</td><td><code>03/14/2026</code>, <code>14.03.2026</code>, <code>Mar 14th, 2026</code>, or an Excel serial like <code>46095</code></td></tr>
+        <tr><td>Amount format</td><td>Formatting</td><td><code>(4,000.00)</code>, <code>4,000.00-</code>, <code>-$4,000.00</code>, <code>12.5K</code></td></tr>
+        <tr><td>Currency hidden in the amount</td><td>Formatting + context</td><td>Currency column blank; the amount reads <code>-€1.200,50</code> or <code>C$1,234.56</code></td></tr>
+        <tr><td>Spacing and caps</td><td>Formatting</td><td><code>  APPLE INC.  </code></td></tr>
+        <tr><td>Name variant</td><td>Context</td><td><code>AAPL</code>, <code>Xfinity</code>, <code>ZenPayroll</code>, <code>CB Richard Ellis</code></td></tr>
+        <tr><td>Typo</td><td>Context</td><td><code>Micrsoft Corporation</code>, <code>Paychx Inc.</code></td></tr>
+        <tr><td>Missing category</td><td>Context</td><td>Blank; has to be read off the memo</td></tr>
+        <tr><td>Duplicate row</td><td>Formatting</td><td>The same messy row appears twice</td></tr>
+        <tr><td>Trap</td><td>Trap</td><td>A date or account number is removed and cannot be recovered. The only right answer is to leave it blank.</td></tr>
+      </tbody>
+    </table>
+    <p>There is also a held-out set: the same companies and categories, but with new memo wordings and new name variants that neither my rules nor my prompt examples were written against. Nothing gets tuned on it. The same random seed always produces the same data, and each run records a fingerprint of the exact files it saw, so a result can never be quietly compared against data that has since changed.</p>
+
+    <h3>Three kinds of cleaner, one output format</h3>
+    <p>Every cleaner has to return the same seven columns, so the scorer never cares which one produced them.</p>
+    <ul class="points">
+      <li><b>Rules.</b> Plain Python, no AI, $0. My own parsing functions read six date formats including Excel serials, understand accounting negatives, K and M suffixes and European decimals, match company names by spelling similarity, and guess categories from keywords in the memo. Anything they cannot read, they leave blank rather than guess.</li>
+      <li><b>LLM, direct.</b> The model gets the formatting rules, the official company list, a worked example and a batch of 25 messy rows, and returns structured records that are validated against a schema. LangChain gives every provider the same interface, so swapping models is one line.</li>
+      <li><b>LLM with tools.</b> The same model, but my cleaning functions are handed to it as tools. The model decides what to call and makes the judgment calls, such as recognizing a ticker or a brand name, while the functions do the exact formatting. The idea under test is that a cheap model with good tools might match an expensive one working alone.</li>
+    </ul>
+    <p>The model lineup is a price ladder from each of three providers, from the cheapest tier to the most expensive, plus a free 8-billion-parameter model running locally on my own machine as the floor. The main ladder is run three times at every strategy and messiness level, because models at their default randomness do not give the same answer twice, and the spread is part of the result.</p>
+
+    <h3>Guardrails, because every call costs money</h3>
+    <p>The thesis budget is small, so the pipeline is built to make it impossible to overspend by accident.</p>
+    <ul class="points">
+      <li>Every API call's cost is written to a ledger the moment it is paid for, and a run stops before any batch that would push total spending past the cap, even across runs in different windows.</li>
+      <li>A dry run estimates tokens and cost with no API calls at all. A finished run cannot be repeated by accident, and a failed one is retried as a clearly labeled new attempt.</li>
+      <li>Every batch's prompt, tool calls, tool results, answer and any error are saved as an audit trail, along with token counts, the exact model version reported by the provider, and the prices in effect that day.</li>
+    </ul>
+
+    <h3>Scoring that is hard to game</h3>
+    <p>A record only counts as right if it comes back exactly once and every field matches the truth, amounts to the cent, with trap fields left blank. Beyond plain accuracy, the scorer separates the things a business would actually worry about: how many errors were fixed, how many clean values were broken in the process, how many unrecoverable blanks were filled in with a made-up value, how many records were invented or dropped, and whether the column totals per currency still add up. That last check matters because a cleaner that is 95% accurate but quietly doubles a payroll line is worse than one that is 90% accurate and leaves the totals alone.</p>
+
+    <h3>The analysis, in R</h3>
+    <p>The scored runs go into an R script that produces the thesis results: accuracy against cost on a log scale, one line per model family and strategy, with the rules baseline as a dotted line; the accuracy points bought per extra dollar at each step up a ladder; a heatmap of which error types each cleaner fixes; and a total-cost model that adds the time a person would spend fixing the records the cleaner got wrong, with a sensitivity grid over how long a fix takes and what that person is paid. Because the same 500 transactions appear in every run, the logistic regressions cluster their standard errors by transaction, and adjacent model sizes are compared with McNemar tests so a one-point difference is not mistaken for a finding.</p>
+    <div class="callout">A limitation I am tracking: I wrote both the memo templates and the baseline's category keywords, so the rules cleaner is probably better on my synthetic data than it would be on real data. That makes the baseline optimistic, which makes the comparison harder for the models, not easier. The held-out set is there to measure how much that matters.</div>
+  </section>
+
+  <section>
+    <h2>Where it stands</h2>
+    <div class="status">
+      <div class="done"><h4>Built and tested</h4><ul>
+        <li>Data generator, error log and held-out set</li>
+        <li>Rule-based baseline</li>
+        <li>LLM pipeline with both strategies, cost ledger, cap and audit log</li>
+        <li>Scorer and the R analysis, exercised end to end on fake demo runs before spending anything</li>
+        <li>23 automated checks of the data, the parsers, the scorer and the safety features</li>
+      </ul></div>
+      <div><h4>Next</h4><ul>
+        <li>Pilot: 50 rows with the local model and the cheapest API model, to replace the cost estimates with real numbers</li>
+        <li>The full run plan: every model, strategy and messiness level, three repeats, under a hard spending cap</li>
+        <li>The held-out set, untouched until the end</li>
+        <li>Write-up and defense, spring 2027</li>
+      </ul></div>
+    </div>
+    <div class="callout">Everything in this project is synthetic. The company names are real, but every transaction, amount, date and memo is made up, and no real financial data is involved.</div>
+    <div class="next">
+      <a class="btn primary" href="mailto:loganrosson@gmail.com?subject=Your%20honors%20thesis">Ask me about the thesis</a>
+      <a class="btn" href="./#projects">← All projects</a>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer id="contact"><div class="wrap">
+  <div class="btns">
+    <a class="btn primary" href="mailto:loganrosson@gmail.com">loganrosson@gmail.com</a>
+    <a class="btn" href="Logan_Rosson_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+    <a class="btn" href="https://www.linkedin.com/in/logan-rosson" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn" href="https://github.com/loganrosson" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  Salt Lake City, UT
+</div></footer>
+</body>
+</html>
