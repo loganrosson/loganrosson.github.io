@@ -555,8 +555,8 @@
     <a class="btn" href="https://www.linkedin.com/in/logan-rosson" target="_blank" rel="noopener">LinkedIn</a>
     <a class="btn" href="https://github.com/loganrosson" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <!-- Season picker is switched off. To show it again, delete the word "hidden" on the next line. -->
-  <div class="season-pick" hidden role="group" aria-label="Preview a season"><span>Season</span><button type="button" data-season="auto">Auto</button><button type="button" data-season="spring">Spring</button><button type="button" data-season="summer">Summer</button><button type="button" data-season="fall">Fall</button><button type="button" data-season="winter">Winter</button></div>
+  <!-- Season picker: preview each season's weather. To switch it off again, add the word "hidden" after class="season-pick" on the next line. -->
+  <div class="season-pick" role="group" aria-label="Preview a season"><span>Season</span><button type="button" data-season="auto">Auto</button><button type="button" data-season="spring">Spring</button><button type="button" data-season="summer">Summer</button><button type="button" data-season="fall">Fall</button><button type="button" data-season="winter">Winter</button></div>
   Salt Lake City, UT
 </div></footer>
 <script>
@@ -625,7 +625,7 @@
   var S=season();
   /* The weather only plays on the first page view of a visit: coming back to the home page from another page doesn't bring it back. */
   var seenWeather=false; try{ seenWeather=sessionStorage.getItem('weather-seen')==='1'; sessionStorage.setItem('weather-seen','1'); }catch(e){}
-  if(seenWeather&&!urlSeason()){ cv.style.display='none'; return; }
+  var showNow=!(seenWeather&&!urlSeason()); if(!showNow) cv.style.display='none';
   var dark=window.matchMedia('(prefers-color-scheme: dark) and (max-width: 0px)').matches;
   var C={
     pink: dark?['rgba(246,170,190,.85)','rgba(240,150,175,.8)','rgba(252,200,214,.8)']:['rgba(226,120,150,.75)','rgba(214,100,135,.7)','rgba(236,150,172,.75)'],
@@ -672,9 +672,9 @@
   /* The weather follows you down the page (the canvas is fixed to the screen). As soon as you start scrolling it fades out
      over 5 seconds, however fast or slow you scroll, and then it is gone for the rest of the visit, even back at the top. */
   /* Motion is scaled by real elapsed time, so 60Hz and 120Hz screens move at the same speed. */
-  var last=0, fade=window.scrollY>2?0:1, fading=false, anchor=window.scrollY;
+  var last=0, fade=window.scrollY>2?0:1, fading=false, anchor=window.scrollY, preview=false; /* preview: a season picked in the footer stays on while you scroll */
   function frame(now){ if(!running||!active) return; var ms=last?Math.min(100,now-last):16.7, dt=ms/16.667; last=now;
-    if(!fading&&Math.abs(window.scrollY-anchor)>2) fading=true;
+    if(!fading&&!preview&&Math.abs(window.scrollY-anchor)>2) fading=true;
     if(fading) fade=Math.max(0,fade-ms/5000);
     var f=fade*fade*(3-2*fade); cv.style.opacity=f.toFixed(3);
     if(f>0) tick(dt);
@@ -688,9 +688,9 @@
   function setSeason(name){
     if(name==='auto'){ name=autoSeason(); try{ sessionStorage.removeItem('season'); }catch(e){} } else { try{ sessionStorage.setItem('season',name); }catch(e){} }
     if(!valid(name)){ stop(); document.documentElement.removeAttribute('data-season'); return; }
-    S=name; CFG=CFGS[S]; document.documentElement.setAttribute('data-season',S); fade=1; fading=false; anchor=window.scrollY; resize(); init(); start();
+    S=name; CFG=CFGS[S]; document.documentElement.setAttribute('data-season',S); fade=1; fading=false; preview=true; anchor=window.scrollY; cv.style.display=''; resize(); init(); start();
   }
-  resize(); if(valid(S)){ document.documentElement.setAttribute('data-season',S); init(); start(); }
+  resize(); if(valid(S)&&showNow){ document.documentElement.setAttribute('data-season',S); init(); start(); }
   /* Footer season picker: try each season, then Auto to go back to the real calendar. Remembered for this tab only. */
   var picks=document.querySelectorAll('.season-pick button');
   function markPick(){ var cur=urlSeason(); if(!cur){ try{ cur=sessionStorage.getItem('season')||'auto'; }catch(e){ cur='auto'; } } for(var i=0;i<picks.length;i++) picks[i].classList.toggle('on',picks[i].getAttribute('data-season')===cur); }
