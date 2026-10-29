@@ -94,7 +94,7 @@
   .callout { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 12px; padding: 14px 18px; margin: 18px 0; color: var(--muted); font-size: 15px; }
   .status { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 6px 0 10px; }
   .status > div { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
-  .status h4 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+  .status h3 { margin: 0 0 8px; font-family: inherit; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
   .status ul { margin: 0; padding-left: 18px; font-size: 15px; }
   .status li { margin: 0 0 5px; }
   .status .done li::marker { color: var(--accent); }
@@ -168,7 +168,7 @@
   <figure>
     <div class="diagram">
       <svg viewBox="0 0 760 190" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Pipeline: make messy data with known answers, clean it three ways, score every run, analyze in R">
-        <defs><filter id="sketch"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.4"/></filter></defs>
+        <defs><filter id="sketch"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="2.4"/></filter></defs>
         <g filter="url(#sketch)">
           <!-- 1. messy data: a stack of sheets -->
           <rect class="paper" x="28" y="42" width="120" height="76" rx="8"/>
@@ -288,14 +288,14 @@
   <section>
     <h2>Where it stands</h2>
     <div class="status">
-      <div class="done"><h4>Built and tested</h4><ul>
+      <div class="done"><h3>Built and tested</h3><ul>
         <li>Data generator, error log and held-out set</li>
         <li>Rule-based baseline</li>
         <li>LLM pipeline with both strategies, cost ledger, cap and audit log</li>
         <li>Scorer and the R analysis, exercised end to end on fake demo runs before spending anything</li>
         <li>23 automated checks of the data, the parsers, the scorer and the safety features</li>
       </ul></div>
-      <div><h4>Next</h4><ul>
+      <div><h3>Next</h3><ul>
         <li>Pilot: 50 rows with the local model and the cheapest API model, to replace the cost estimates with real numbers</li>
         <li>The full run plan: every model, strategy and messiness level, three repeats, under a hard spending cap</li>
         <li>The held-out set, untouched until the end</li>

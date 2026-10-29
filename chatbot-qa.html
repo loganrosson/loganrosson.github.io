@@ -143,15 +143,18 @@ footer .btns { margin-bottom: 16px; }
   nav ul a.nav-about { color: var(--accent); font-weight: 600; padding: 6px 14px; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 999px; }
   nav ul a.nav-about:hover, nav ul a.nav-about[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
   @media (max-width: 720px) { nav .wrap { height: 56px; flex-wrap: nowrap; padding-top: 0; padding-bottom: 0; } nav ul { width: auto; gap: 14px; overflow: visible; padding-right: 0; mask-image: none; -webkit-mask-image: none; } }
+  .skip { position: absolute; left: 16px; top: -60px; z-index: 20; padding: 8px 12px; border-radius: 8px; background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 14px; text-decoration: none; }
+  .skip:focus { top: 10px; }
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main"><div class="wrap">
 <a class="brand" href="./">Logan Rosson</a>
 <ul><li><a href="./#projects">Projects</a></li><li><a class="nav-about" href="about.html">About me</a></li></ul>
 </div></nav>
 
-<main>
+<main id="main">
 <header class="case"><div class="wrap read">
   <a class="back" href="./#projects">← Back to projects</a><br>
   <span class="badge">QA testing · Oct 2026 · Team of 2</span>
