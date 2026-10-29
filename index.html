@@ -187,7 +187,7 @@
     .hero-grid { grid-template-columns: 1fr; }
     .hero img { width: 150px; height: 150px; order: -1; }
     .card.featured { grid-template-columns: 1fr; }
-    .card.featured img { border-right: 0; border-bottom: 1px solid var(--line); aspect-ratio: 16/10; }
+    .card.featured img { height: auto; border-right: 0; border-bottom: 1px solid var(--line); aspect-ratio: 16/10; } /* height: auto, or Safari on iPhone stretches the image down behind the text */
     .item { grid-template-columns: 1fr; }
   }
   #education { position: relative; overflow: hidden; padding-bottom: 100px; }
