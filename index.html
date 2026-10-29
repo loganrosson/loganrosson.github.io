@@ -141,6 +141,7 @@
   .hero p.lead { max-width: 620px; margin: 0 0 28px; }
   .hero img { width: 240px; height: 240px; border-radius: 50%; object-fit: cover; box-shadow: var(--shadow); border: 4px solid var(--surface); }
   .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  @media (max-width: 520px) { .hero .btns { display: grid; grid-template-columns: 1fr 1fr; } .hero .btns .btn { justify-content: center; } } /* phones: the four hero buttons as an even 2x2 grid */
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; border: 1px solid var(--line); background: var(--surface); }
   .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
   .btn:hover { filter: brightness(0.96); }
@@ -484,7 +485,6 @@
       <ul>
         <li>Guide undergraduates on degree sequencing, course selection, and on-time graduation requirements.</li>
         <li>Evaluate academic records and process transfer credits in line with university policy.</li>
-        <li>Automated Salesforce check-in email alerts to advisors, replacing 50–100 manual Teams messages weekly.</li>
       </ul>
     </div>
     <div class="item">
